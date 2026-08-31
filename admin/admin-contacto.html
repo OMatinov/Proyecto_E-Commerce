@@ -128,30 +128,7 @@
     </main>
   </div>
 
-  <script>
-    function cargarMensajes() {
-      const mensajes = JSON.parse(localStorage.getItem('grwu_contactos') || '[]');
-      
-      const total = mensajes.length;
-      const noLeidos = mensajes.filter(m => !m.leido).length;
-      const leidos = mensajes.filter(m => m.leido).length;
-      
-      document.getElementById('totalMensajes').textContent = total;
-      document.getElementById('noLeidos').textContent = noLeidos;
-      document.getElementById('leidos').textContent = leidos;
-      
-      if (mensajes.length === 0) {
-        document.getElementById('listaMensajes').innerHTML = `
-          <div class="empty-state">
-            <p>📭 No hay mensajes aún</p>
-            <p>Los mensajes aparecerán aquí cuando alguien envíe el formulario de contacto.</p>
-          </div>
-        `;
-      }
-    }
-
-    document.addEventListener('DOMContentLoaded', cargarMensajes);
-  </script>
+  <script src="../js/admin-contacto.js"></script>
 
 </body>
 </html>

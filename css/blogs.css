@@ -474,3 +474,38 @@
   font-size: 0.7rem;
   color: var(--color-gris);
 }
+
+/* Responsive */
+@media (max-width: 768px) {
+  .header-blogs {
+    flex-direction: column;
+    gap: 16px;
+    padding: 16px;
+  }
+  
+  .header-blogs-nav {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+  }
+  
+  .blogs-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .blog-meta-detail {
+    flex-direction: column;
+    gap: 4px;
+  }
+}
+
+@media (max-width: 480px) {
+  .filters-blog {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .filter-btn {
+    width: 100%;
+  }
+}
