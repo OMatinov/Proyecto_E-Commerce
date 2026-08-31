@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Tiendas Urbano - Inicio</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<script src="cart.js"></script>
+<body>
+  <div class="container">
+    <header>
+      <div class="brand">
+        <div class="brand-logo">
+          <img src="img/LogoTiendasUrbano.jpeg" alt="Logo Tiendas Urbano">
+        </div>
+        <div class="brand-text">
+          <h1>Tiendas Urbano</h1>
+          <p>Moda femenina urbana, compras seguras y con estilo.</p>
+        </div>
+      </div>
+      <div class="login-link">
+        <a href="inicio-sesion.html" id="linkSesion">Iniciar sesión</a>
+        <a href="checkout.html"> Carrito (<span id="cart-count">0</span>)</a>
+      </div>
+    </header>
+
+    <section class="hero">
+      <div class="hero-left">
+        <h2>Tu destino online para la moda urbana femenina</h2>
+        <p>
+          Descubre vestidos, chaquetas y conjuntos pensados para tu día a día.
+          Compra con total confianza, paga en línea y recibe tus productos en casa.
+        </p>
+
+        <div class="hero-badges">
+          <span class="badge">Pago seguro Webpay</span>
+          <span class="badge">Despacho a todo Chile</span>
+          <span class="badge">Ropa 100% femenina</span>
+        </div>
+
+        <div class="hero-actions">
+          <a class="btn-primary" href="catalogo.html">Ver catálogo</a>
+        </div>
+        <p class="hero-note">
+          También puedes continuar como invitada y registrarte al finalizar tu compra.
+        </p>
+      </div>
+    </section>
+
+    <section class="section">
+      <h3>¿Por qué comprar en Tiendas Urbano?</h3>
+      <div class="benefits">
+        <div class="benefit-card">
+          <div class="benefit-title">Pago seguro y formal</div>
+          <div class="benefit-desc">
+            Transacciones protegidas con Webpay y boleta electrónica enviada a tu correo.
+          </div>
+        </div>
+        <div class="benefit-card">
+          <div class="benefit-title">Despacho con seguimiento</div>
+          <div class="benefit-desc">
+            Sigue el estado de tu pedido: preparación, envío y entrega a domicilio.
+          </div>
+        </div>
+        <div class="benefit-card">
+          <div class="benefit-title">Stock en tiempo real</div>
+          <div class="benefit-desc">
+            Solo ves productos disponibles, con control de inventario actualizado.
+          </div>
+        </div>
+        <div class="benefit-card">
+          <div class="benefit-title">Ofertas para ti</div>
+          <div class="benefit-desc">
+            Historial de compras y preferencias para recomendarte lo que más te gusta.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h3>Cómo comprar en Tiendas Urbano</h3>
+      <div class="steps">
+        <div class="step-card">
+          <div class="step-number">1</div>
+          <div class="step-title">Crea tu cuenta o inicia sesión</div>
+          <div class="step-desc">
+            Registra tu nombre y correo para guardar tus pedidos y promociones.
+          </div>
+        </div>
+        <div class="step-card">
+          <div class="step-number">2</div>
+          <div class="step-title">Elige tus prendas favoritas</div>
+          <div class="step-desc">
+            Explora el catálogo, filtra por categoría y talla, y agrega al carrito.
+          </div>
+        </div>
+        <div class="step-card">
+          <div class="step-number">3</div>
+          <div class="step-title">Paga y recibe en casa</div>
+          <div class="step-desc">
+            Paga en línea con Webpay y recibe tu pedido con seguimiento de despacho.
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <footer>
+    <div class="footer-content">
+      <div>
+        © 2025 Tiendas Urbano Online. Moda urbana femenina en Chile.
+      </div>
+      <div class="footer-links">
+        <a href="#">Cómo comprar</a>
+        <a href="#">Cambios y devoluciones</a>
+        <a href="#">Tiempos y costos de despacho</a>
+        <a href="#">Medios de pago</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // ---------- Contador del carrito ----------
+    const cart = getCart();
+    const totalItems = cart.reduce((total, item) => total + item.qty, 0);
+    document.getElementById("cart-count").textContent = totalItems;
+
+    // ---------- Botón dinámico: Iniciar sesión / Cerrar sesión ----------
+    const linkSesion = document.getElementById("linkSesion");
+    const hayUsuario = localStorage.getItem("tiendaUrbanoUsuario");
+
+    if (hayUsuario) {
+      linkSesion.textContent = "Cerrar sesión";
+      linkSesion.href = "#";
+      linkSesion.addEventListener("click", (evento) => {
+        evento.preventDefault();
+        localStorage.removeItem("tiendaUrbanoUsuario");
+        window.location.reload();
+      });
+    }
+  </script>
+</body>
+</html>

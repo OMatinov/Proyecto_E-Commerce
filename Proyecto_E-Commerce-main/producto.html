@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Tiendas Urbano - Detalle de producto</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="brand">
+        <div class="brand-logo">
+          <img src="img/LogoTiendasUrbano.jpeg" alt="">
+        </div>
+        <div class="brand-text">
+          <h1>Tiendas Urbano</h1>
+          <p>Detalle de producto</p>
+        </div>
+      </div>
+      <div class="login-link">
+        <a href="catalogo.html">Volver al catálogo</a>
+        <a href="checkout.html"> Carrito (<span id="cart-count">0</span>)</a>
+      </div>
+    </header>
+
+    <section class="product-detail">
+      <div class="product-gallery">
+        <div class="product-main-image">
+          <img id="carousel-img" src="img/" alt="">
+          <button id="prev-btn" class="carousel-nav prev">‹</button>
+          <button id="next-btn" class="carousel-nav next">›</button>
+          <div id="carousel-indicator" class="carousel-indicator">1 / 4</div>
+        </div>
+      </div>
+
+      <div class="product-info">
+      <div class="product-section">
+        <h3>Disponibilidad</h3>
+        <p style="color:var(--color-primario); font-weight:600;">✓ En stock - Despacho en 24-48 hrs</p>
+      </div>  
+        <p class="product-category" id="p-category"></p>
+        <h2 class="product-title" id="p-title"></h2>
+        <p class="product-price product-price-lg" id="p-price"></p>
+
+        <p class="product-description" id="p-description"></p>
+   
+        <div class="product-section">
+          <h3>Tallas disponibles</h3>
+          <div class="size-options">
+            <button class="size-chip">S</button>
+            <button class="size-chip size-chip-active">M</button>
+            <button class="size-chip">L</button>
+            <button class="size-chip size-chip-disabled">XL</button>
+          </div>
+          <p class="stock-note">
+            Stock por talla de referencia, puede variar según el producto.
+          </p>
+        </div>
+
+        <div class="product-actions">
+          <button id="btn-agregar" class="btn-primary">Agregar al carrito</button>
+          <button class="btn-secondary" onclick="history.back()">Volver atrás</button>
+        </div>
+
+        <p class="product-note">
+          Compra segura con Webpay. Recibirás tu boleta electrónica y podrás hacer seguimiento de tu pedido.
+        </p>
+      </div>
+    </section>
+  </div>
+
+  <footer>
+    <div class="footer-content">
+      <div>© 2025 Tiendas Urbano Online. Moda urbana femenina en Chile.</div>
+      <div class="footer-links">
+        <a href="#">Cómo comprar</a>
+        <a href="#">Cambios y devoluciones</a>
+        <a href="#">Tiempos y costos de despacho</a>
+        <a href="#">Medios de pago</a>
+      </div>
+    </div>
+  </footer>
+  <script src="cart.js"></script>
+  <script>
+    const PRODUCTS = {
+      // ABRIGOS
+      abrigo1: {
+        category: 'Abrigos',
+        title: 'Abrigo Classic Camel',
+        price: '$18.990',
+        description: 'Abrigo largo color camel de corte recto y solapas clásicas, ideal para looks urbanos elegantes y para usar sobre vestidos o jeans.',
+        images:['img/abrigo1.png']
+      },
+      abrigo2: {
+        category: 'Abrigos',
+        title: 'Blazer Coat City Café',
+        price: '$16.990',
+        description: 'Abrigo tipo blazer en tono café, de silueta relajada y botones frontales, perfecto para la oficina o para elevar un outfit casual.',
+        images:['img/abrigo2.png','img/abrigo2-1.png','img/abrigo2-2.png','img/abrigo2-3.png']
+      },
+      abrigo3: {
+        category: 'Abrigos',
+        title: 'Cardigan Urbano Arena',
+        price: '$14.990',
+        description: 'Cárdigan corto en tono arena con bolsillos frontales, tejido suave y liviano para usar en capas durante la transición de temporada.',
+        images:['img/abrigo3.png','img/abrigo3-1.png','img/abrigo3-2.png','img/abrigo3-3.png']
+      },
+
+      // ACCESORIOS
+      accesorio1: {
+        category: 'Accesorios',
+        title: 'Pinza Azul Pastel',
+        price: '$2.990',
+        description: 'Pinza para el pelo en tono azul pastel, ideal para recogidos rápidos y para sumar un toque de color suave al look.',
+        images:['img/accesorio1.png']
+      },
+      accesorio2: {
+        category: 'Accesorios',
+        title: 'Pinza Black Matte',
+        price: '$2.990',
+        description: 'Pinza negra para el pelo, de acabado mate y agarre firme, perfecta para peinados diarios.',
+        images:['img/accesorio2.png']
+      },
+      accesorio3: {
+        category: 'Accesorios',
+        title: 'Pinza Carey Clásica',
+        price: '$2.990',
+        description: 'Pinza en acabado carey, resistente y cómoda, pensada para recogidos elegantes y casuales.',
+        images:['img/accesorio3.png']
+      },
+      accesorio4: {
+        category: 'Accesorios',
+        title: 'Collar Charm Multicolor',
+        price: '$8.990',
+        description: 'Collar dorado de varias capas con charms y piedras de colores, ideal para hacer protagonista cualquier outfit básico.',
+        images:['img/accesorio4.png']
+      },
+      accesorio5: {
+        category: 'Accesorios',
+        title: 'Collar Medallas Astro',
+        price: '$6.990',
+        description: 'Collar doble con cordón estampado y medallas doradas tipo sol y luna, perfecto para looks boho urbanos.',
+        images:['img/accesorio5.png']
+      },
+      accesorio6: {
+        category: 'Accesorios',
+        title: 'Bolso Macramé Arena',
+        price: '$12.990',
+        description: 'Bolso tejido tipo macramé en tono arena, liviano y amplio, ideal para verano y fines de semana casuales.',
+        images:['img/accesorio6.png']
+      },
+      accesorio7: {
+        category: 'Accesorios',
+        title: 'Bolso Cuerda Black Gold',
+        price: '$13.990',
+        description: 'Bolso de cuerda negro con finas líneas doradas, perfecto para la playa o para un look relajado con brillo discreto.',
+        images:['img/accesorio7.png']
+      },
+      accesorio8: {
+        category: 'Accesorios',
+        title: 'Bandolera Minimal Black',
+        price: '$11.990',
+        description: 'Carterita bandolera negra de diseño minimal, ideal para salir ligera llevando solo lo esencial.',
+        images:['img/accesorio8.png']
+      },
+      accesorio9: {
+        category: 'Accesorios',
+        title: 'Tote Básico Black',
+        price: '$15.990',
+        description: 'Bolso tote negro grande y estructurado, perfecto para el día a día, trabajo o universidad.',
+        images:['img/accesorio9.png']
+      },
+      accesorio10: {
+        category: 'Accesorios',
+        title: 'Tote Urban Caramel',
+        price: '$16.990',
+        description: 'Tote en color caramelo, amplio y versátil, combina bien con jeans, vestidos y looks de oficina.',
+        images:['img/accesorio10.png']
+      },
+      accesorio11: {
+        category: 'Accesorios',
+        title: 'Mochila Urban Waterproof',
+        price: '$18.990',
+        description: 'Mochila negra de acabado waterproof con bolsillos frontales, ideal para ciudad y días lluviosos.',
+        images:['img/accesorio11.png','img/accesorio11-1.png']
+      },
+      accesorio12: {
+        category: 'Accesorios',
+        title: 'Cinturón Western Black',
+        price: '$9.990',
+        description: 'Cinturón negro con hebilla estilo western grabada, suma un toque boho-rockero a vestidos y jeans.',
+        images:['img/accesorio12.png']
+      },
+      accesorio13: {
+        category: 'Accesorios',
+        title: 'Cinturón Aro Silver',
+        price: '$8.990',
+        description: 'Cinturón negro con hebilla circular plateada, perfecto para marcar la cintura en outfits urbanos.',
+        images:['img/accesorio13.png']
+      },
+      accesorio14: {
+        category: 'Accesorios',
+        title: 'Gorra Dancing Queen',
+        price: '$13.990',
+        description: 'Gorra gris desgastada con bordado “DANCING QUEEN”, ideal para looks relajados con actitud.',
+        images:['img/accesorio14.png']
+      },
+
+      // CALZADO
+      calzado1: {
+        category: 'Calzado',
+        title: 'Zapatillas Classic White',
+        price: '$34.990',
+        description: 'Zapatillas blancas de plataforma baja y diseño limpio, perfectas para combinar con jeans, vestidos o faldas urbanas.',
+        images:['img/calzado1.png','img/calzado1-1.png','img/calzado1-2.png']
+      },
+      calzado2: {
+        category: 'Calzado',
+        title: 'Zapatillas Old School Black',
+        price: '$32.990',
+        description: 'Zapatillas negras tipo skate con detalles blancos y suela blanca, un clásico urbano para el uso diario.',
+        images:['img/calzado2.png','img/calzado2-1.png','img/calzado2-2.png','img/calzado2-3.png']
+      },
+      calzado3: {
+        category: 'Calzado',
+        title: 'Zapatillas Retro Stripe',
+        price: '$33.990',
+        description: 'Zapatillas negras con tres franjas blancas y suela color miel, ideales para looks sporty con un aire retro.',
+        images:['img/calzado3.png','img/calzado3-1.png','img/calzado3-2.png','img/calzado3-3.png']
+      },
+      calzado4: {
+        category: 'Calzado',
+        title: 'Botas Chunky Black',
+        price: '$39.990',
+        description: 'Botas negras de caña alta con suela chunky, perfectas para outfits de invierno con actitud, desde vestidos hasta shorts.',
+        images:['img/calzado4.png','img/calzado4-1.png','img/calzado4-2.png']
+      },
+      calzado5: {
+        category: 'Calzado',
+        title: 'Oxford Chunky Black',
+        price: '$36.990',
+        description: 'Zapatos tipo oxford negros con suela gruesa y costuras contrastantes, ideales para dar un giro alternativo a looks formales o casuales.',
+        images:['img/calzado5.png','img/calzado5-1.png']
+      },
+
+      // CHAQUETAS
+      chaqueta1: {
+        category: 'Chaquetas',
+        title: 'Chaqueta Acolchada Grafito',
+        price: '$26.990',
+        description: 'Chaqueta corta acolchada en gris grafito con cuello alto y ajuste en la basta, ideal para días fríos con estilo urbano.',
+        images:['img/chaqueta1.png']
+      },
+      chaqueta2: {
+        category: 'Chaquetas',
+        title: 'Chaqueta Biker Black',
+        price: '$31.990',
+        description: 'Chaqueta negra tipo biker con cierre frontal y cuello alzado, perfecta para dar actitud a jeans y vestidos.',
+        images:['img/chaqueta2.png','img/chaqueta2-1.png']
+      },
+      chaqueta3: {
+        category: 'Chaquetas',
+        title: 'Chaqueta Oversize Olive',
+        price: '$25.990',
+        description: 'Chaqueta oversize en tono verde oliva con caída suelta, pensada para looks relajados en capas.',
+        images:['img/chaqueta3.png','img/chaqueta3-1.png','img/chaqueta3-2.png']
+      },
+      chaqueta4: {
+        category: 'Chaquetas',
+        title: 'Chaqueta Oversize Borgoña',
+        price: '$25.990',
+        description: 'Chaqueta oversize en color borgoña, de textura suave y volumen en la basta, ideal para destacar en outfits neutros.',
+        images:['img/chaqueta4.png','img/chaqueta4-1.png','img/chaqueta4-2.png']
+      },
+      chaqueta5: {
+        category: 'Chaquetas',
+        title: 'Chaleco Puffer Black',
+        price: '$21.990',
+        description: 'Chaleco puffer negro con cuello alto y cierre frontal, perfecto para sumar abrigo sin perder movilidad.',
+        images:['img/chaqueta5.png','img/chaqueta5-1.png']
+      },
+      chaqueta6: {
+        category: 'Chaquetas',
+        title: 'Chaqueta Biker Black II',
+        price: '$31.990',
+        description: 'Chaqueta tipo biker negra de efecto cuero con solapas y cierres metálicos, un básico clave para looks nocturnos y urbanos.',
+        images:['img/chaqueta6.png','img/chaqueta6-1.png']
+      },
+
+      // CONJUNTOS
+      conjunto1: {
+        category: 'Conjuntos',
+        title: 'Set Chochet Cream',
+        price: '$26.990',
+        description: 'Conjunto de top y falda corta en tejido crochet color crema, ideal para looks veraniegos femeninos y ligeros.',
+        images:['img/conjunto1.png']
+      },
+      conjunto2: {
+        category: 'Conjuntos',
+        title: 'Set Chochet Black',
+        price: '$26.990',
+        description: 'Conjunto de top y falda corta en crochet negro, perfecto para una versión nocturna del look veraniego clásico.',
+        images:['img/conjunto2.png']
+      },
+      conjunto3: {
+        category: 'Conjuntos',
+        title: 'Set Beach Layer',
+        price: '$31.990',
+        description: 'Conjunto tejido de pantalón ancho y chaleco largo abierto en tono crudo, perfecto para usar sobre traje de baño o outfits playeros',
+        images:['img/conjunto3.png']
+      },
+      conjunto4: {
+        category: 'Conjuntos',
+        title: 'Set Knit Wide Leg',
+        price: '$28.990',
+        description: 'Conjunto de top sin mangas y pantalón ancho de punto calado en color crudo, ideal para looks relajados pero pulidos.',
+        images:['img/conjunto4.png']
+      },
+
+      // FALDAS
+      falda1: {
+        category: 'Faldas',
+        title: 'Mini Falda Denim Indigo',
+        price: '$11.990',
+        description: 'Mini falda de mezclilla en tono índigo con botón decorativo, un básico urbano para combinar con poleras y sweaters.',
+        images:['img/falda1.png','img/falda1-1.png']
+      },
+      falda2: {
+        category: 'Faldas',
+        title: 'Falda Knit Black',
+        price: '$9.990',
+        description: 'Falda de punto negra, corte recto y textura acanalada, ideal para looks cómodos pero pulidos.',
+        images:['img/falda2.png','img/falda2-1.png']
+      },
+      falda3: {
+        category: 'Faldas',
+        title: 'Mini Falda Animal Print',
+        price: '$12.990',
+        description: 'Mini falda con estampado animal print, perfecta para outfits nocturnos o para dar protagonismo a un look básico.',
+        images:['img/falda3.png','img/falda3-1.png']
+      },
+      falda4: {
+        category: 'Faldas',
+        title: 'Falda Midi Tiered Gris',
+        price: '$14.990',
+        description: 'Falda midi gris de capas con pretina elástica, fluida y cómoda para uso diario.',
+        images:['img/falda4.png','img/falda4-1.png']
+      },
+      falda5: {
+        category: 'Faldas',
+        title: 'Mini Falda Wrap Black',
+        price: '$10.990',
+        description: 'Mini falda negra tipo pareo con amarra lateral, ideal para combinar con tops ajustados o camisas oversize.',
+        images:['img/falda5.png','img/falda5-1.png']
+      },
+      falda6: {
+        category: 'Faldas',
+        title: 'Falda Wrap Olive Midi',
+        price: '$12.990',
+        description: 'Falda midi cruzada en tono verde oliva con lazo lateral, perfecta para looks frescos y versátiles.',
+        images:['img/falda6.png','img/falda6-1.png']
+      },
+      falda7: {
+        category: 'Faldas',
+        title: 'Mini Falda Denim Plisada',
+        price: '$11.990',
+        description: 'Mini falda denim azul con pliegues, estilo colegial urbano para usar con zapatillas o botas.',
+        images:['img/falda7.png','img/falda7-1.png']
+      },
+      falda8: {
+        category: 'Faldas',
+        title: 'Falda Crochet Cream',
+        price: '$9.990',
+        description: 'Falda corta de crochet color crema con vuelo en el ruedo, ideal para conjuntos veraniegos o playeros.',
+        images:['img/falda8.png','img/falda8-1.png']
+      },
+
+      // PANTALONES
+      pantalon1: {
+        category: 'Pantalones',
+        title: 'Pantalón Knit Cream',
+        price: '$16.990',
+        description: 'Pantalón tejido color crema de punto calado, pierna ancha y pretina elasticada con amarra, ideal para looks relajados o playeros.',
+        images:['img/pantalon1.png','img/pantalon1-1.png']
+      },
+      pantalon2: {
+        category: 'Pantalones',
+        title: 'Jeans Wide Choco',
+        price: '$19.990',
+        description: 'Jeans ancho en color café chocolate con bolsillos delanteros decorativos, perfecto para outfits urbanos en tonos tierra.',
+        images:['img/pantalon2.png','img/pantalon2-1.png','img/pantalon2-2.png','img/pantalon2-3.png']
+      },
+      pantalon3: {
+        category: 'Pantalones',
+        title: 'Jeans Wide Black',
+        price: '$21.990',
+        description: 'Jeans negros de tiro medio y pierna ancha, un básico versátil para combinar con poleras, blusas o chaquetas.',
+        images:['img/pantalon3.png','img/pantalon3-1.png','img/pantalon3-2.png','img/pantalon3-3.png']
+      },
+      pantalon4: {
+        category: 'Pantalones',
+        title: 'Jeans Sailor Indigo',
+        price: '$23.990',
+        description: 'Jeans azul índigo de pierna recta ancha con bolsillos frontales tipo sailor, ideales para un look retro pero moderno.',
+        images:['img/pantalon4.png','img/pantalon4-1.png','img/pantalon4-2.png','img/pantalon4-3.png']
+      },
+      pantalon5: {
+        category: 'Pantalones',
+        title: 'Jeans Wide Azul Medio',
+        price: '$21.990',
+        description: 'Jeans azul medio de tiro medio y pierna ancha, pensados para el uso diario con zapatillas o botines.',
+        images:['img/pantalon5.png','img/pantalon5-1.png']
+      },
+
+      // POLERAS
+      polera1: {
+        category: 'Poleras',
+        title: 'Top Rib Azul',
+        price: '$5.990',
+        description: 'Top corto acanalado en tono azul marino, de cuello redondo y corte ajustado, ideal para usar con jeans o faldas tiro alto.',
+        images:['img/polera1.png','img/polera1-1.png']
+      },
+      polera2: {
+        category: 'Poleras',
+        title: 'Top Rib Verde',
+        price: '$5.990',
+        description: 'Top sin mangas acanalado en verde suave, perfecto para looks frescos de diario o capas bajo chaquetas.',
+        images:['img/polera2.png','img/polera2-1.png']
+      },
+      polera3: {
+        category: 'Poleras',
+        title: 'Top Rib Grafito',
+        price: '$5.990',
+        description: 'Top acanalado gris oscuro, de fit ceñido y cuello redondo, un básico versátil para combinar con todo',
+        images:['img/polera3.png','img/polera3-1.png']
+      },
+      polera4: {
+        category: 'Poleras',
+        title: 'Polera Basic Off White',
+        price: '$4.490',
+        description: 'Polera de algodón en tono off white, de manga corta y silueta recta, ideal como básico de fondo de clóset.',
+        images:['img/polera4.png','img/polera4-1.png']
+      },
+      polera5: {
+        category: 'Poleras',
+        title: 'Top Crochet Cream',
+        price: '$9.990',
+        description: 'Top de tirantes en crochet color crema con botones frontales, perfecto para noches de verano o para combinar con denim.',
+        images:['img/polera5.png']
+      },
+      polera6: {
+        category: 'Poleras',
+        title: 'Top Crochet Black',
+        price: '$9.990',
+        description: 'Top de tirantes en crochet negro con botones, ideal para noches de verano o para combinar con denim.',
+        images:['img/polera6.png']
+      },
+      polera7: {
+        category: 'Poleras',
+        title: 'Top Halter Black',
+        price: '$7.490',
+        description: 'Top negro tipo halter acanalado, ceñido y minimalista, perfecto para outfits urbanos con pantalones anchos o faldas.',
+        images:['img/polera7.png','img/polera7-2.png']
+      },
+
+      // POLERONES
+      poleron1: {
+        category: 'Polerones',
+        title: 'Polerón NWRK Navy',
+        price: '$19.990',
+        description: 'Polerón oversize azul marino con estampado frontal “NWRK”, de estilo universitario, ideal para looks urbanos y cómodos.',
+        images:['img/poleron1.png','img/poleron1-1.png','img/poleron1-2.png']
+      },
+      poleron2: {
+        category: 'Polerones',
+        title: 'Polerón Knoxville Grey',
+        price: '$18.990',
+        description: 'Polerón gris jaspeado con estampado frontal “Knoxville”, de corte relajado y cuello redondo, ideal para el día a día.',
+        images:['img/poleron2.png','img/poleron2-1.png','img/poleron2-2.png']
+      },
+      poleron3: {
+        category: 'Polerones',
+        title: 'Polerón Hoodie Brooklyn Black',
+        price: '$21.990',
+        description: 'Polerón negro con capucha y cierre frontal, estampado “BROOKLYN New York City”, perfecto para outfits relajados con jeans o joggers.',
+        images:['img/poleron3.png','img/poleron3-1.png']
+      },
+      poleron4: {
+        category: 'Polerones',
+        title: 'Polerón Hoodie Angel Grey',
+        price: '$20.990',
+        description: 'Buzo gris con capucha y bolsillo canguro, liso por delante y con diseño de alas y texto en la espalda, ideal para un look básico con detalle especial.',
+        images:['img/poleron4.png','img/poleron4-1.png']
+      },
+
+      // SHORTS
+      short1: {
+        category: 'Shorts',
+        title: 'Short Denim Black Chain',
+        price: '$10.990',
+        description: 'Short de mezclilla negro con cinturón cadena metálica decorativa, ideal para looks nocturnos o urbanos con actitud.',
+        images:['img/short1.png','img/short1-2.png']
+      },
+      short2: {
+        category: 'Shorts',
+        title: 'Short Denim Doblado Azul',
+        price: '$9.990',
+        description: 'Short de mezclilla azul con ruedo doblado y tiro alto, perfecto para outfits veraniegos con poleras o tops.',
+        images:['img/short2.png','img/short2-2.png']
+      },
+      short3: {
+        category: 'Shorts',
+        title: 'Short Denim Light',
+        price: '$9.990',
+        description: 'Short de mezclilla azul claro de tiro medio y corte recto, un básico cómodo para el día a día.',
+        images:['img/short3.png','img/short3-2.png']
+      },
+      short4: {
+        category: 'Shorts',
+        title: 'Short Denim Medio',
+        price: '$9.990',
+        description: 'Short de mezclilla azul medio con fit relajado, ideal para looks casuales con zapatillas.',
+        images:['img/short4.png','img/short4-2.png']
+      },
+      short5: {
+        category: 'Shorts',
+        title: 'Short Tailored Black',
+        price: '$12.990',
+        description: 'Short negro tipo sastre de tiro alto con pinzas frontales, perfecto para looks más pulidos con camisas o blusas.',
+        images:['img/short5.png']
+      },
+      short6: {
+        category: 'Shorts',
+        title: 'Short Tailored Sand',
+        price: '$12.990',
+        description: 'Short tipo sastre en tono arena con cinturón delgado, ideal para looks elegantes de verano o trabajo.',
+        images:['img/short6.png']
+      },
+
+      // SUÉTERS
+      sueter1: {
+        category: 'Suéters',
+        title: 'Suéter Crochet Cream',
+        price: '$16.990',
+        description: 'Suéter tejido color crema con calado en patrón geométrico, ideal para usar sobre tops básicos y crear capas livianas.',
+        images:['img/sueter1.png', 'img/sueter1-1.png', 'img/sueter1-2.png']
+      },
+      sueter2: {
+        category: 'Suéters',
+        title: 'Chaleco Largo Beach Cream',
+        price: '$18.990',
+        description: 'Chaleco largo sin mangas de punto calado color crema, perfecto para looks playeros o para usar sobre vestidos ajustados.',
+        images:['img/sueter2.png']
+      },
+
+      // VESTIDOS
+      vestido1: {
+        category: 'Vestidos',
+        title: 'Vestido Bubble Black',
+        price: '$21.990',
+        description: 'Vestido negro sin mangas con parte superior ajustada y falda tipo bubble con volumen, ideal para salidas nocturnas.',
+        images:['img/vestido1.png','img/vestido1-2.png','img/vestido1-3.png']
+      },
+      vestido2: {
+        category: 'Vestidos',
+        title: 'Vestido Dark Borgoña Split',
+        price: '$24.990',
+        description: 'Vestido midi borgoña con tirantes finos y abertura lateral alta, perfecto para looks nocturnos con botines o sandalias.',
+        images:['img/vestido2.png','img/vestido2-1.png']
+      },
+      vestido3: {
+        category: 'Vestidos',
+        title: 'Vestido Skater Borgoña',
+        price: '$19.990',
+        description: 'Vestido corto en tono borgoña con escote cuadrado y falda skater, femenino y versátil para día o noche.',
+        images:['img/vestido3.png','img/vestido3-1.png','img/vestido3-2.png']
+      },
+      vestido4: {
+        category: 'Vestidos',
+        title: 'Vestido Corduroy Button Black',
+        price: '$9.990',
+        description: 'Vestido corto negro de cotelé con botones frontales, perfecto para usar con poleras o suéters debajo.',
+        images:['img/vestido4.png','img/vestido4-1.png','img/vestido4-2.png']
+      },
+      vestido5: {
+        category: 'Vestidos',
+        title: 'Vestido Strapless Choco',
+        price: '$9.990',
+        description: 'Vestido midi strapless color chocolate con frunce lateral y abertura, ideal para eventos o salidas de noche.',
+        images:['img/vestido5.png','img/vestido5-1.png']
+      },
+      vestido6: {
+        category: 'Vestidos',
+        title: 'Vestido Midi Olive Split',
+        price: '$9.990',
+        description: 'Vestido midi ajustado en tono verde oliva con abertura lateral, perfecto para looks urbanos con bototos.',
+        images:['img/vestido6.png','img/vestido6-1.png']
+      },
+      vestido7: {
+        category: 'Vestidos',
+        title: 'Vestido Mesh Ombre Grey',
+        price: '$9.990',
+        description: 'Vestido midi de tirantes con efecto degradé en tonos grises y falda ligeramente acampanada, ideal para noches especiales.',
+        images:['img/vestido7.png','img/vestido7-1.png']
+      },
+    };
+
+    const params = new URLSearchParams(window.location.search);
+    const productId = params.get('id');
+    const product = PRODUCTS[productId];
+
+    if (!product) {
+      document.getElementById('p-title').textContent = 'Producto no encontrado';
+      document.getElementById('p-category').textContent = '';
+      document.getElementById('p-price').textContent = '';
+      document.getElementById('p-description').textContent = '';
+    } else {
+      // Inyectar datos
+      document.getElementById('p-category').textContent = product.category;
+      document.getElementById('p-title').textContent = product.title;
+      document.getElementById('p-price').textContent = product.price;
+      document.getElementById('p-description').textContent = product.description;
+
+      // Carrusel
+      let current = 0;
+      const images = product.images || ['img/default.png'];
+      const img = document.getElementById('carousel-img');
+      const indicator = document.getElementById('carousel-indicator');
+      const prevBtn = document.getElementById('prev-btn');
+      const nextBtn = document.getElementById('next-btn');
+
+      function updateCarousel() {
+        img.src = images[current];
+        img.alt = product.title;
+        indicator.textContent = (current + 1) + ' / ' + images.length;
+      }
+
+      if (prevBtn) prevBtn.onclick = () => {
+        current = (current - 1 + images.length) % images.length;
+        updateCarousel();
+      };
+      if (nextBtn) nextBtn.onclick = () => {
+        current = (current + 1) % images.length;
+        updateCarousel();
+      };
+
+      updateCarousel(); // Inicializar
+      document.getElementById("btn-agregar").addEventListener("click", (e) => {
+        e.preventDefault();
+        const precioNumero = parseInt(product.price.replace(/[^0-9]/g, ""));
+        addToCart({
+          id: productId,
+          name: product.title,
+          price: precioNumero,
+          qty: 1
+        });
+        window.location.href = "checkout.html";
+      });
+    }
+  </script>
+</body>
+</html>

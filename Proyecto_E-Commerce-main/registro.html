@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Tiendas Urbano - Registro</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="brand">
+        <div class="brand-logo">
+          <img src="img/LogoTiendasUrbano.jpeg" alt="Logo Tiendas Urbano">
+        </div>
+        <div class="brand-text">
+          <h1>Tiendas Urbano</h1>
+          <p>Registro de nueva usuaria</p>
+        </div>
+      </div>
+      <div class="login-link">
+        <a href="index.html">Volver al inicio</a>
+      </div>
+    </header>
+
+    <section class="section">
+      <h3>Crea tu cuenta</h3>
+      <form id="formRegistro" novalidate style="max-width:420px;">
+
+        <div class="form-field">
+          <label for="runRegistro">RUN</label>
+          <input id="runRegistro" name="runRegistro" type="text" required placeholder="19011022K" maxlength="9">
+          <p class="form-error" id="error-runRegistro"></p>
+        </div>
+
+        <div class="form-field">
+          <label for="nombreRegistro">Nombre completo</label>
+          <input id="nombreRegistro" name="nombreRegistro" type="text" required maxlength="100" placeholder="Camila Olmedo">
+          <p class="form-error" id="error-nombreRegistro"></p>
+        </div>
+
+        <div class="form-field">
+          <label for="correoRegistro">Correo electrónico</label>
+          <input id="correoRegistro" name="correoRegistro" type="email" required maxlength="100" placeholder="tu@correo.com">
+          <p class="form-error" id="error-correoRegistro"></p>
+        </div>
+
+        <div class="form-field">
+          <label for="telefonoRegistro">Teléfono</label>
+          <input id="telefonoRegistro" name="telefonoRegistro" type="tel" placeholder="+56 9 1234 5678">
+        </div>
+
+        <div class="form-row">
+          <div class="form-field">
+            <label for="regionRegistro">Región</label>
+            <select id="regionRegistro" name="regionRegistro" required></select>
+            <p class="form-error" id="error-regionRegistro"></p>
+          </div>
+
+          <div class="form-field">
+            <label for="comunaRegistro">Comuna</label>
+            <select id="comunaRegistro" name="comunaRegistro" required></select>
+            <p class="form-error" id="error-comunaRegistro"></p>
+          </div>
+        </div>
+
+        <div class="form-field">
+          <label for="claveRegistro">Contraseña</label>
+          <input id="claveRegistro" name="claveRegistro" type="password" required placeholder="••••••••">
+          <p style="font-size:0.75rem; color:#666; margin-top:4px;">
+            Entre 4 y 10 caracteres, con al menos 1 mayúscula y 1 número.
+          </p>
+          <p class="form-error" id="error-claveRegistro"></p>
+        </div>
+
+        <div class="form-field">
+          <label for="claveRegistro2">Confirmar contraseña</label>
+          <input id="claveRegistro2" name="claveRegistro2" type="password" required placeholder="••••••••">
+          <p class="form-error" id="error-claveRegistro2"></p>
+        </div>
+
+        <div class="form-actions">
+          <button type="submit" class="btn-primary">Registrarse</button>
+        </div>
+      </form>
+      <p style="margin-top:10px; font-size:0.85rem;">
+        Si ya tienes cuenta, puedes <a href="inicio-sesion.html">iniciar sesión aquí</a>.
+      </p>
+    </section>
+  </div>
+
+  <script src="regiones.js"></script>
+  <script src="validaciones.js"></script>
+  <script>
+    const selectRegion = document.getElementById("regionRegistro");
+    const selectComuna = document.getElementById("comunaRegistro");
+    conectarRegionComuna(selectRegion, selectComuna);
+
+    const form = document.getElementById("formRegistro");
+
+    // Validación de cada campo (se reutiliza al escribir y al enviar)
+    function validarCampoRun() {
+      const valor = document.getElementById("runRegistro").value;
+      const resultado = validarRun(valor);
+      mostrarError("runRegistro", resultado.valido ? "" : resultado.mensaje);
+      return resultado.valido;
+    }
+
+    function validarCampoNombre() {
+      const valor = document.getElementById("nombreRegistro").value.trim();
+      let mensaje = "";
+      if (!valor) mensaje = "El nombre es obligatorio.";
+      else if (valor.length > 100) mensaje = "El nombre no puede superar los 100 caracteres.";
+      mostrarError("nombreRegistro", mensaje);
+      return !mensaje;
+    }
+
+    function validarCampoCorreo() {
+      const valor = document.getElementById("correoRegistro").value.trim();
+      const resultado = validarCorreo(valor);
+      mostrarError("correoRegistro", resultado.valido ? "" : resultado.mensaje);
+      return resultado.valido;
+    }
+
+    function validarCampoRegion() {
+      const valor = selectRegion.value;
+      const mensaje = valor === "" ? "Debes seleccionar una región." : "";
+      mostrarError("regionRegistro", mensaje);
+      return !mensaje;
+    }
+
+    function validarCampoComuna() {
+      const valor = selectComuna.value;
+      const mensaje = valor === "" ? "Debes seleccionar una comuna." : "";
+      mostrarError("comunaRegistro", mensaje);
+      return !mensaje;
+    }
+
+    function validarCampoClave() {
+      const valor = document.getElementById("claveRegistro").value;
+      const resultado = validarPassword(valor, { min: 4, max: 10, exigirComplejidad: true });
+      mostrarError("claveRegistro", resultado.valido ? "" : resultado.mensaje);
+      return resultado.valido;
+    }
+
+    function validarCampoClave2() {
+      const clave = document.getElementById("claveRegistro").value;
+      const clave2 = document.getElementById("claveRegistro2").value;
+      const mensaje = clave !== clave2 ? "Las contraseñas no coinciden." : "";
+      mostrarError("claveRegistro2", mensaje);
+      return !mensaje;
+    }
+
+    // Validar en tiempo real, apenas la usuaria sale del campo o cambia el select
+    document.getElementById("runRegistro").addEventListener("blur", validarCampoRun);
+    document.getElementById("nombreRegistro").addEventListener("blur", validarCampoNombre);
+    document.getElementById("correoRegistro").addEventListener("blur", validarCampoCorreo);
+    selectRegion.addEventListener("change", validarCampoRegion);
+    selectComuna.addEventListener("change", validarCampoComuna);
+    document.getElementById("claveRegistro").addEventListener("blur", validarCampoClave);
+    document.getElementById("claveRegistro2").addEventListener("blur", validarCampoClave2);
+
+    form.addEventListener("submit", (evento) => {
+      evento.preventDefault();
+
+      const esValido = [
+        validarCampoRun(),
+        validarCampoNombre(),
+        validarCampoCorreo(),
+        validarCampoRegion(),
+        validarCampoComuna(),
+        validarCampoClave(),
+        validarCampoClave2()
+      ].every(Boolean);
+
+      if (!esValido) return;
+
+      // Guardamos la usuaria en localStorage para que cuenta.html la lea después.
+      const usuario = {
+        run: limpiarRun(document.getElementById("runRegistro").value),
+        nombre: document.getElementById("nombreRegistro").value.trim(),
+        correo: document.getElementById("correoRegistro").value.trim(),
+        clave: document.getElementById("claveRegistro").value,
+        telefono: document.getElementById("telefonoRegistro").value.trim(),
+        region: REGIONES[selectRegion.value].nombre,
+        comuna: selectComuna.value,
+        tipoUsuario: "Cliente"
+      };
+      localStorage.setItem("tiendaUrbanoUsuario", JSON.stringify(usuario));
+
+      window.location.href = "cuenta.html";
+    });
+  </script>
+</body>
+</html>

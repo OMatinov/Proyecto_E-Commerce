@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GRWU - Admin Contactos</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/styles.css" />
+</head>
+<body>
+
+  <div style="display:flex; min-height:100vh; background:#E7D8CA;">
+
+    <!-- ===== SIDEBAR ===== -->
+    <aside style="width:250px; background:#220707; color:#E7D8CA; padding:24px 16px; position:sticky; top:0; height:100vh; overflow-y:auto; border-right:2px solid #531C22;">
+      <div style="display:flex; align-items:center; gap:10px; margin-bottom:32px; padding-bottom:16px; border-bottom:1px solid #AC9185;">
+        <img src="../img/logo-grwu.png" alt="GRWU" style="height:40px;">
+        <div>
+          <h1 style="font-family:'Bebas Neue',sans-serif; font-size:1.6rem; color:#E7D8CA; margin:0; line-height:1;">GRWU</h1>
+          <p style="font-size:0.6rem; color:#AC9185; margin:0; letter-spacing:1px;">PANEL ADMIN</p>
+        </div>
+      </div>
+      <nav style="display:flex; flex-direction:column; gap:4px;">
+        <a href="index.html" style="display:flex; align-items:center; gap:12px; padding:12px 14px; border-radius:10px; color:#AC9185; text-decoration:none; font-family:'Poppins',sans-serif; font-size:0.85rem;">📊 Dashboard</a>
+        <a href="productos.html" style="display:flex; align-items:center; gap:12px; padding:12px 14px; border-radius:10px; color:#AC9185; text-decoration:none; font-family:'Poppins',sans-serif; font-size:0.85rem;">👕 Productos</a>
+        <a href="usuarios.html" style="display:flex; align-items:center; gap:12px; padding:12px 14px; border-radius:10px; color:#AC9185; text-decoration:none; font-family:'Poppins',sans-serif; font-size:0.85rem;">👤 Usuarios</a>
+        <a href="blogs.html" style="display:flex; align-items:center; gap:12px; padding:12px 14px; border-radius:10px; color:#AC9185; text-decoration:none; font-family:'Poppins',sans-serif; font-size:0.85rem;">📝 Blogs</a>
+        <a href="contactos.html" style="display:flex; align-items:center; gap:12px; padding:12px 14px; border-radius:10px; color:#E7D8CA; background:#531C22; text-decoration:none; font-family:'Poppins',sans-serif; font-size:0.85rem;">💬 Contactos</a>
+      </nav>
+      <div style="margin-top:32px; padding-top:16px; border-top:1px solid #AC9185;">
+        <a href="../index.html" style="display:flex; align-items:center; gap:12px; color:#AC9185; text-decoration:none; font-family:'Poppins',sans-serif; font-size:0.8rem;">← Volver a la tienda</a>
+        <a href="../login.html" style="display:flex; align-items:center; gap:12px; color:#AC9185; text-decoration:none; font-family:'Poppins',sans-serif; font-size:0.8rem; margin-top:8px;">🚪 Cerrar sesión</a>
+      </div>
+    </aside>
+
+    <!-- ===== CONTENIDO PRINCIPAL ===== -->
+    <main style="flex:1; padding:32px;">
+
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:32px; flex-wrap:wrap; gap:12px;">
+        <div>
+          <h1 style="font-family:'Bebas Neue',sans-serif; font-size:2.8rem; color:#220707; margin:0;">Mensajes de Contacto</h1>
+          <p style="font-family:'Poppins',sans-serif; color:#AC9185; margin:0;">Revisa los mensajes enviados desde el formulario de contacto</p>
+        </div>
+        <button onclick="cargarMensajes()" style="background:#531C22; color:#E7D8CA; border:none; padding:10px 24px; border-radius:999px; font-family:'Poppins',sans-serif; font-size:0.9rem; cursor:pointer;">
+          🔄 Actualizar
+        </button>
+      </div>
+
+      <!-- ===== ESTADÍSTICAS ===== -->
+      <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(150px,1fr)); gap:16px; margin-bottom:24px;">
+        <div style="background:white; border-radius:12px; padding:16px; border:1px solid #AC9185; text-align:center;">
+          <p style="font-family:'Poppins',sans-serif; font-size:0.7rem; color:#AC9185; margin:0;">Total mensajes</p>
+          <p style="font-family:'Bebas Neue',sans-serif; font-size:2rem; color:#531C22; margin:0;" id="totalMensajes">5</p>
+        </div>
+        <div style="background:white; border-radius:12px; padding:16px; border:1px solid #AC9185; text-align:center;">
+          <p style="font-family:'Poppins',sans-serif; font-size:0.7rem; color:#AC9185; margin:0;">Sin leer</p>
+          <p style="font-family:'Bebas Neue',sans-serif; font-size:2rem; color:#B22222; margin:0;" id="noLeidos">2</p>
+        </div>
+        <div style="background:white; border-radius:12px; padding:16px; border:1px solid #AC9185; text-align:center;">
+          <p style="font-family:'Poppins',sans-serif; font-size:0.7rem; color:#AC9185; margin:0;">Leídos</p>
+          <p style="font-family:'Bebas Neue',sans-serif; font-size:2rem; color:#220707; margin:0;" id="leidos">3</p>
+        </div>
+      </div>
+
+      <!-- ===== LISTA DE MENSAJES ===== -->
+      <div id="listaMensajes" style="display:flex; flex-direction:column; gap:12px;">
+
+        <!-- Mensaje 1 (no leído) -->
+        <div style="background:white; border-radius:12px; padding:16px; border:2px solid #531C22; box-shadow:0 4px 12px rgba(0,0,0,0.05);">
+          <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:8px; margin-bottom:8px;">
+            <div>
+              <span style="background:#531C22; color:#E7D8CA; padding:2px 10px; border-radius:999px; font-family:'Poppins',sans-serif; font-size:0.6rem; text-transform:uppercase;">Nuevo</span>
+              <strong style="font-family:'Poppins',sans-serif; font-size:1rem; color:#220707; margin-left:8px;">María González</strong>
+            </div>
+            <span style="font-family:'Poppins',sans-serif; font-size:0.75rem; color:#AC9185;">📅 30 ago 2026, 14:30</span>
+          </div>
+          <p style="font-family:'Poppins',sans-serif; font-size:0.8rem; color:#AC9185; margin:0 0 4px;">📧 maria@email.com • 📱 +56912345678</p>
+          <p style="font-family:'Poppins',sans-serif; font-size:0.85rem; color:#220707; margin:0 0 8px;"><strong>Asunto:</strong> Consulta sobre pedido</p>
+          <p style="font-family:'Poppins',sans-serif; font-size:0.85rem; color:#220707; margin:0 0 12px;">Hola, quería saber cuándo llegará mi pedido #1234. Gracias!</p>
+          <div style="display:flex; gap:8px;">
+            <button style="background:#531C22; color:#E7D8CA; border:none; padding:4px 14px; border-radius:999px; font-family:'Poppins',sans-serif; font-size:0.75rem; cursor:pointer;">✓ Marcar como leído</button>
+            <button style="background:transparent; border:1px solid #B22222; color:#B22222; padding:4px 14px; border-radius:999px; font-family:'Poppins',sans-serif; font-size:0.75rem; cursor:pointer;">🗑️ Eliminar</button>
+          </div>
+        </div>
+
+        <!-- Mensaje 2 (leído) -->
+        <div style="background:#f0ece8; border-radius:12px; padding:16px; border:1px solid #AC9185; box-shadow:0 4px 12px rgba(0,0,0,0.05);">
+          <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:8px; margin-bottom:8px;">
+            <div>
+              <span style="background:#AC9185; color:#E7D8CA; padding:2px 10px; border-radius:999px; font-family:'Poppins',sans-serif; font-size:0.6rem; text-transform:uppercase;">Leído</span>
+              <strong style="font-family:'Poppins',sans-serif; font-size:1rem; color:#220707; margin-left:8px;">Carlos Rojas</strong>
+            </div>
+            <span style="font-family:'Poppins',sans-serif; font-size:0.75rem; color:#AC9185;">📅 28 ago 2026, 10:15</span>
+          </div>
+          <p style="font-family:'Poppins',sans-serif; font-size:0.8rem; color:#AC9185; margin:0 0 4px;">📧 carlos@email.com • 📱 +56998765432</p>
+          <p style="font-family:'Poppins',sans-serif; font-size:0.85rem; color:#220707; margin:0 0 8px;"><strong>Asunto:</strong> Devolución</p>
+          <p style="font-family:'Poppins',sans-serif; font-size:0.85rem; color:#220707; margin:0 0 12px;">Quiero devolver un producto que compré, ¿cómo hago el proceso?</p>
+          <div style="display:flex; gap:8px;">
+            <button style="background:#AC9185; color:#E7D8CA; border:none; padding:4px 14px; border-radius:999px; font-family:'Poppins',sans-serif; font-size:0.75rem; cursor:pointer;" disabled>✓ Leído</button>
+            <button style="background:transparent; border:1px solid #B22222; color:#B22222; padding:4px 14px; border-radius:999px; font-family:'Poppins',sans-serif; font-size:0.75rem; cursor:pointer;">🗑️ Eliminar</button>
+          </div>
+        </div>
+
+        <!-- Mensaje 3 (leído) -->
+        <div style="background:#f0ece8; border-radius:12px; padding:16px; border:1px solid #AC9185; box-shadow:0 4px 12px rgba(0,0,0,0.05);">
+          <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:8px; margin-bottom:8px;">
+            <div>
+              <span style="background:#AC9185; color:#E7D8CA; padding:2px 10px; border-radius:999px; font-family:'Poppins',sans-serif; font-size:0.6rem; text-transform:uppercase;">Leído</span>
+              <strong style="font-family:'Poppins',sans-serif; font-size:1rem; color:#220707; margin-left:8px;">Valentina Bustamante</strong>
+            </div>
+            <span style="font-family:'Poppins',sans-serif; font-size:0.75rem; color:#AC9185;">📅 25 ago 2026, 16:45</span>
+          </div>
+          <p style="font-family:'Poppins',sans-serif; font-size:0.8rem; color:#AC9185; margin:0 0 4px;">📧 valentina@email.com • 📱 +56911223344</p>
+          <p style="font-family:'Poppins',sans-serif; font-size:0.85rem; color:#220707; margin:0 0 8px;"><strong>Asunto:</strong> Sugerencia de producto</p>
+          <p style="font-family:'Poppins',sans-serif; font-size:0.85rem; color:#220707; margin:0 0 12px;">Me encantaría que agregaran más colores en la colección de polerones unisex.</p>
+          <div style="display:flex; gap:8px;">
+            <button style="background:#AC9185; color:#E7D8CA; border:none; padding:4px 14px; border-radius:999px; font-family:'Poppins',sans-serif; font-size:0.75rem; cursor:pointer;" disabled>✓ Leído</button>
+            <button style="background:transparent; border:1px solid #B22222; color:#B22222; padding:4px 14px; border-radius:999px; font-family:'Poppins',sans-serif; font-size:0.75rem; cursor:pointer;">🗑️ Eliminar</button>
+          </div>
+        </div>
+
+      </div>
+
+      <div style="text-align:center; margin-top:24px; font-family:'Poppins',sans-serif; font-size:0.85rem; color:#AC9185;">
+        <p>Los mensajes se almacenan en el navegador (localStorage).</p>
+        <p style="font-size:0.75rem;">Para ver mensajes de prueba, envía un mensaje desde el formulario de contacto.</p>
+      </div>
+
+    </main>
+  </div>
+
+  <script>
+    // Función para cargar mensajes desde localStorage
+    function cargarMensajes() {
+      const mensajes = JSON.parse(localStorage.getItem('grwu_contactos') || '[]');
+      
+      const total = mensajes.length;
+      const noLeidos = mensajes.filter(m => !m.leido).length;
+      const leidos = mensajes.filter(m => m.leido).length;
+      
+      document.getElementById('totalMensajes').textContent = total;
+      document.getElementById('noLeidos').textContent = noLeidos;
+      document.getElementById('leidos').textContent = leidos;
+      
+      // Aquí podrías reconstruir la lista de mensajes dinámicamente
+      if (mensajes.length === 0) {
+        document.getElementById('listaMensajes').innerHTML = `
+          <div style="background:white; border-radius:16px; padding:40px; text-align:center; border:1px solid #AC9185; color:#AC9185; font-family:'Poppins',sans-serif;">
+            <p style="font-size:1.2rem;">📭 No hay mensajes aún</p>
+            <p>Los mensajes aparecerán aquí cuando alguien envíe el formulario de contacto.</p>
+          </div>
+        `;
+      }
+    }
+
+    // Cargar mensajes al abrir la página
+    document.addEventListener('DOMContentLoaded', cargarMensajes);
+  </script>
+
+</body>
+</html>

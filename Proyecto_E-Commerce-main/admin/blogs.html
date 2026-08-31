@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GRWU - Admin Blogs</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/styles.css" />
+</head>
+<body>
+
+  <div style="display:flex; min-height:100vh; background:#E7D8CA;">
+
+    <!-- ===== SIDEBAR ===== -->
+    <aside style="width:250px; background:#220707; color:#E7D8CA; padding:24px 16px; position:sticky; top:0; height:100vh; overflow-y:auto; border-right:2px solid #531C22;">
+      <div style="display:flex; align-items:center; gap:10px; margin-bottom:32px; padding-bottom:16px; border-bottom:1px solid #AC9185;">
+        <img src="../img/logo-grwu.png" alt="GRWU" style="height:40px;">
+        <div>
+          <h1 style="font-family:'Bebas Neue',sans-serif; font-size:1.6rem; color:#E7D8CA; margin:0; line-height:1;">GRWU</h1>
+          <p style="font-size:0.6rem; color:#AC9185; margin:0; letter-spacing:1px;">PANEL ADMIN</p>
+        </div>
+      </div>
+      <nav style="display:flex; flex-direction:column; gap:4px;">
+        <a href="index.html" style="display:flex; align-items:center; gap:12px; padding:12px 14px; border-radius:10px; color:#AC9185; text-decoration:none; font-family:'Poppins',sans-serif; font-size:0.85rem;">📊 Dashboard</a>
+        <a href="productos.html" style="display:flex; align-items:center; gap:12px; padding:12px 14px; border-radius:10px; color:#AC9185; text-decoration:none; font-family:'Poppins',sans-serif; font-size:0.85rem;">👕 Productos</a>
+        <a href="usuarios.html" style="display:flex; align-items:center; gap:12px; padding:12px 14px; border-radius:10px; color:#AC9185; text-decoration:none; font-family:'Poppins',sans-serif; font-size:0.85rem;">👤 Usuarios</a>
+        <a href="blogs.html" style="display:flex; align-items:center; gap:12px; padding:12px 14px; border-radius:10px; color:#E7D8CA; background:#531C22; text-decoration:none; font-family:'Poppins',sans-serif; font-size:0.85rem;">📝 Blogs</a>
+        <a href="contactos.html" style="display:flex; align-items:center; gap:12px; padding:12px 14px; border-radius:10px; color:#AC9185; text-decoration:none; font-family:'Poppins',sans-serif; font-size:0.85rem;">💬 Contactos</a>
+      </nav>
+      <div style="margin-top:32px; padding-top:16px; border-top:1px solid #AC9185;">
+        <a href="../index.html" style="display:flex; align-items:center; gap:12px; color:#AC9185; text-decoration:none; font-family:'Poppins',sans-serif; font-size:0.8rem;">← Volver a la tienda</a>
+        <a href="../login.html" style="display:flex; align-items:center; gap:12px; color:#AC9185; text-decoration:none; font-family:'Poppins',sans-serif; font-size:0.8rem; margin-top:8px;">🚪 Cerrar sesión</a>
+      </div>
+    </aside>
+
+    <!-- ===== CONTENIDO PRINCIPAL ===== -->
+    <main style="flex:1; padding:32px;">
+
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:32px; flex-wrap:wrap; gap:12px;">
+        <div>
+          <h1 style="font-family:'Bebas Neue',sans-serif; font-size:2.8rem; color:#220707; margin:0;">Blogs</h1>
+          <p style="font-family:'Poppins',sans-serif; color:#AC9185; margin:0;">Gestiona los artículos del blog GRWU</p>
+        </div>
+        <button onclick="abrirModalBlog()" style="background:#531C22; color:#E7D8CA; border:none; padding:10px 24px; border-radius:999px; font-family:'Poppins',sans-serif; font-size:0.9rem; cursor:pointer;">
+          ✍️ Nuevo artículo
+        </button>
+      </div>
+
+      <!-- ===== GRID DE BLOGS ===== -->
+      <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px,1fr)); gap:24px;">
+
+        <!-- Blog 1 -->
+        <div style="background:white; border-radius:16px; overflow:hidden; border:1px solid #AC9185; box-shadow:0 4px 12px rgba(0,0,0,0.05);">
+          <div style="height:160px; background:#531C22; display:flex; align-items:center; justify-content:center; color:#E7D8CA; font-family:'Bebas Neue',sans-serif; font-size:2rem;">📸</div>
+          <div style="padding:16px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+              <span style="font-family:'Poppins',sans-serif; font-size:0.7rem; color:#AC9185;">Tendencias • 15 ago 2026</span>
+              <span style="background:#531C22; color:#E7D8CA; padding:2px 8px; border-radius:999px; font-family:'Poppins',sans-serif; font-size:0.6rem; text-transform:uppercase;">Publicado</span>
+            </div>
+            <h3 style="font-family:'Bebas Neue',sans-serif; font-size:1.2rem; color:#220707; margin:0 0 8px;">5 Tendencias que Dominarán el Otoño 2026</h3>
+            <p style="font-family:'Poppins',sans-serif; font-size:0.8rem; color:#220707; line-height:1.4; margin-bottom:12px;">Descubre los colores, texturas y siluetas que marcarán la temporada...</p>
+            <div style="display:flex; gap:8px;">
+              <button style="background:transparent; border:1px solid #AC9185; padding:4px 12px; border-radius:999px; font-family:'Poppins',sans-serif; font-size:0.7rem; cursor:pointer;">✏️ Editar</button>
+              <button style="background:transparent; border:1px solid #B22222; color:#B22222; padding:4px 12px; border-radius:999px; font-family:'Poppins',sans-serif; font-size:0.7rem; cursor:pointer;">🗑️ Eliminar</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Blog 2 -->
+        <div style="background:white; border-radius:16px; overflow:hidden; border:1px solid #AC9185; box-shadow:0 4px 12px rgba(0,0,0,0.05);">
+          <div style="height:160px; background:#AC9185; display:flex; align-items:center; justify-content:center; color:#E7D8CA; font-family:'Bebas Neue',sans-serif; font-size:2rem;">👔</div>
+          <div style="padding:16px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+              <span style="font-family:'Poppins',sans-serif; font-size:0.7rem; color:#AC9185;">Estilo • 10 ago 2026</span>
+              <span style="background:#AC9185; color:#220707; padding:2px 8px; border-radius:999px; font-family:'Poppins',sans-serif; font-size:0.6rem; text-transform:uppercase;">Borrador</span>
+            </div>
+            <h3 style="font-family:'Bebas Neue',sans-serif; font-size:1.2rem; color:#220707; margin:0 0 8px;">Cómo Armar un Look Unisex en 5 Pasos</h3>
+            <p style="font-family:'Poppins',sans-serif; font-size:0.8rem; color:#220707; line-height:1.4; margin-bottom:12px;">Prendas clave que funcionan para cualquier género y silueta...</p>
+            <div style="display:flex; gap:8px;">
+              <button style="background:transparent; border:1px solid #AC9185; padding:4px 12px; border-radius:999px; font-family:'Poppins',sans-serif; font-size:0.7rem; cursor:pointer;">✏️ Editar</button>
+              <button style="background:transparent; border:1px solid #B22222; color:#B22222; padding:4px 12px; border-radius:999px; font-family:'Poppins',sans-serif; font-size:0.7rem; cursor:pointer;">🗑️ Eliminar</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Blog 3 -->
+        <div style="background:white; border-radius:16px; overflow:hidden; border:1px solid #AC9185; box-shadow:0 4px 12px rgba(0,0,0,0.05);">
+          <div style="height:160px; background:#220707; display:flex; align-items:center; justify-content:center; color:#E7D8CA; font-family:'Bebas Neue',sans-serif; font-size:2rem;">♻️</div>
+          <div style="padding:16px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+              <span style="font-family:'Poppins',sans-serif; font-size:0.7rem; color:#AC9185;">Sostenibilidad • 5 ago 2026</span>
+              <span style="background:#531C22; color:#E7D8CA; padding:2px 8px; border-radius:999px; font-family:'Poppins',sans-serif; font-size:0.6rem; text-transform:uppercase;">Publicado</span>
+            </div>
+            <h3 style="font-family:'Bebas Neue',sans-serif; font-size:1.2rem; color:#220707; margin:0 0 8px;">Moda Sostenible: Nuestro Compromiso</h3>
+            <p style="font-family:'Poppins',sans-serif; font-size:0.8rem; color:#220707; line-height:1.4; margin-bottom:12px;">Conoce nuestras prácticas de producción y materiales responsables...</p>
+            <div style="display:flex; gap:8px;">
+              <button style="background:transparent; border:1px solid #AC9185; padding:4px 12px; border-radius:999px; font-family:'Poppins',sans-serif; font-size:0.7rem; cursor:pointer;">✏️ Editar</button>
+              <button style="background:transparent; border:1px solid #B22222; color:#B22222; padding:4px 12px; border-radius:999px; font-family:'Poppins',sans-serif; font-size:0.7rem; cursor:pointer;">🗑️ Eliminar</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </main>
+  </div>
+
+  <!-- ===== MODAL CREAR/EDITAR BLOG ===== -->
+  <div id="modalBlog" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:1000; align-items:center; justify-content:center;">
+    <div style="background:#E7D8CA; border-radius:16px; padding:32px; max-width:650px; width:90%; max-height:90vh; overflow-y:auto; border:2px solid #531C22; position:relative;">
+      <button onclick="cerrarModalBlog()" style="position:absolute; top:12px; right:16px; background:transparent; border:none; font-size:1.6rem; color:#220707; cursor:pointer;">✕</button>
+      
+      <h2 style="font-family:'Bebas Neue',sans-serif; font-size:2rem; color:#220707; margin:0 0 24px;">Nuevo Artículo</h2>
+      
+      <form style="display:flex; flex-direction:column; gap:14px;">
+        <div>
+          <label style="font-family:'Poppins',sans-serif; font-size:0.85rem; color:#220707; display:block; margin-bottom:4px;">Título del artículo *</label>
+          <input type="text" style="width:100%; padding:10px 14px; border:1px solid #AC9185; border-radius:8px; font-family:'Poppins',sans-serif; background:white;">
+        </div>
+        <div>
+          <label style="font-family:'Poppins',sans-serif; font-size:0.85rem; color:#220707; display:block; margin-bottom:4px;">Categoría *</label>
+          <select style="width:100%; padding:10px 14px; border:1px solid #AC9185; border-radius:8px; font-family:'Poppins',sans-serif; background:white;">
+            <option value="">Seleccionar categoría</option>
+            <option>Tendencias</option>
+            <option>Estilo</option>
+            <option>Moda Unisex</option>
+            <option>Sostenibilidad</option>
+            <option>Calzado</option>
+          </select>
+        </div>
+        <div>
+          <label style="font-family:'Poppins',sans-serif; font-size:0.85rem; color:#220707; display:block; margin-bottom:4px;">Resumen *</label>
+          <input type="text" style="width:100%; padding:10px 14px; border:1px solid #AC9185; border-radius:8px; font-family:'Poppins',sans-serif; background:white;" placeholder="Breve resumen del artículo...">
+        </div>
+        <div>
+          <label style="font-family:'Poppins',sans-serif; font-size:0.85rem; color:#220707; display:block; margin-bottom:4px;">Contenido completo *</label>
+          <textarea rows="5" style="width:100%; padding:10px 14px; border:1px solid #AC9185; border-radius:8px; font-family:'Poppins',sans-serif; background:white; resize:vertical;"></textarea>
+        </div>
+        <div>
+          <label style="font-family:'Poppins',sans-serif; font-size:0.85rem; color:#220707; display:block; margin-bottom:4px;">Imagen destacada</label>
+          <input type="file" style="width:100%; padding:8px; border:1px solid #AC9185; border-radius:8px; font-family:'Poppins',sans-serif; background:white;">
+        </div>
+        <div>
+          <label style="font-family:'Poppins',sans-serif; font-size:0.85rem; color:#220707; display:block; margin-bottom:4px;">Estado</label>
+          <select style="width:100%; padding:10px 14px; border:1px solid #AC9185; border-radius:8px; font-family:'Poppins',sans-serif; background:white;">
+            <option value="borrador">Borrador</option>
+            <option value="publicado">Publicado</option>
+          </select>
+        </div>
+        
+        <div style="display:flex; gap:12px; margin-top:8px;">
+          <button type="submit" style="flex:1; background:#531C22; color:#E7D8CA; padding:12px; border:none; border-radius:999px; font-family:'Poppins',sans-serif; font-size:0.95rem; font-weight:600; cursor:pointer;">Guardar artículo</button>
+          <button type="button" onclick="cerrarModalBlog()" style="flex:1; background:transparent; color:#220707; padding:12px; border:1px solid #AC9185; border-radius:999px; font-family:'Poppins',sans-serif; font-size:0.95rem; cursor:pointer;">Cancelar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    function abrirModalBlog() {
+      document.getElementById('modalBlog').style.display = 'flex';
+    }
+    function cerrarModalBlog() {
+      document.getElementById('modalBlog').style.display = 'none';
+    }
+  </script>
+
+</body>
+</html>
