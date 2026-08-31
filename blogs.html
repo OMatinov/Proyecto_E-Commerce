@@ -7,103 +7,99 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet" href="css/blogs.css" />
 </head>
 <body>
 
-  <!-- ========== HEADER (igual que en nosotros.html) ========== -->
-  <header style="background:#220707; color:#E7D8CA; padding:16px 32px; display:flex; align-items:center; justify-content:space-between; position:sticky; top:0; z-index:100; border-bottom:2px solid #531C22;">
-    <div style="display:flex; align-items:center; gap:12px;">
-      <img src="img/logo-grwu.png" alt="GRWU" style="height:48px; width:auto;">
+  <!-- Encabezado -->
+  <header class="header-grwu">
+    <div class="header-brand">
+      <img src="img/logo-grwu.png" alt="GRWU" class="header-logo" />
       <div>
-        <h1 style="font-family:'Bebas Neue',sans-serif; font-size:1.8rem; color:#E7D8CA; margin:0; line-height:1;">GRWU</h1>
-        <p style="font-size:0.7rem; color:#AC9185; margin:0; letter-spacing:2px;">GET READY WITH US</p>
+        <h1 class="header-title">GRWU</h1>
+        <p class="header-subtitle">GET READY WITH US</p>
       </div>
     </div>
-    <nav style="display:flex; gap:24px; font-family:'Poppins',sans-serif; font-size:0.85rem;">
-      <a href="index.html" style="color:#AC9185; text-decoration:none;">Home</a>
-      <a href="catalogo.html" style="color:#AC9185; text-decoration:none;">Productos</a>
-      <a href="nosotros.html" style="color:#AC9185; text-decoration:none;">Nosotros</a>
-      <a href="blogs.html" style="color:#E7D8CA; text-decoration:none; border-bottom:2px solid #531C22; padding-bottom:4px;">Blogs</a>
-      <a href="contacto.html" style="color:#AC9185; text-decoration:none;">Contacto</a>
+    <nav class="header-nav">
+      <a href="index.html" class="nav-link">Home</a>
+      <a href="catalogo.html" class="nav-link">Productos</a>
+      <a href="nosotros.html" class="nav-link">Nosotros</a>
+      <a href="blogs.html" class="nav-link nav-link-active">Blogs</a>
+      <a href="contacto.html" class="nav-link">Contacto</a>
     </nav>
-    <div style="display:flex; gap:12px;">
-      <a href="login.html" style="color:#E7D8CA; text-decoration:none; font-size:0.85rem; font-family:'Poppins',sans-serif;">Iniciar sesión</a>
-      <a href="registro.html" style="background:#531C22; color:#E7D8CA; padding:6px 16px; border-radius:999px; text-decoration:none; font-size:0.85rem; font-family:'Poppins',sans-serif;">Registrarse</a>
+    <div class="header-actions">
+      <a href="login.html" class="action-link">Iniciar sesión</a>
+      <a href="registro.html" class="action-button">Registrarse</a>
     </div>
   </header>
 
-  <!-- ========== CONTENIDO BLOGS ========== -->
-  <main style="max-width:1100px; margin:0 auto; padding:40px 24px; background:#E7D8CA; min-height:70vh;">
+  <!-- Contenido principal -->
+  <main class="main-grwu">
 
-    <section style="text-align:center; margin-bottom:40px;">
-      <span style="color:#AC9185; font-family:'Poppins',sans-serif; font-size:0.8rem; letter-spacing:3px; text-transform:uppercase;">Inspírate</span>
-      <h2 style="font-family:'Bebas Neue',sans-serif; font-size:3rem; color:#220707; margin:8px 0 16px;">Nuestro Blog</h2>
-      <p style="font-family:'Poppins',sans-serif; color:#220707; max-width:600px; margin:0 auto; font-size:0.95rem;">
+    <section class="page-header">
+      <span class="page-eyebrow">Inspírate</span>
+      <h2 class="page-title">Nuestro Blog</h2>
+      <p class="page-description">
         Tendencias, consejos de estilo y todo lo que necesitas para <strong>Get Ready With Us</strong>.
       </p>
     </section>
 
-    <!-- ===== FILTROS ===== -->
-    <div style="display:flex; justify-content:center; gap:12px; margin-bottom:32px; flex-wrap:wrap;">
-      <button style="background:#220707; color:#E7D8CA; border:none; padding:8px 20px; border-radius:999px; font-family:'Poppins',sans-serif; font-size:0.8rem; cursor:pointer;">Todos</button>
-      <button style="background:transparent; color:#220707; border:1px solid #AC9185; padding:8px 20px; border-radius:999px; font-family:'Poppins',sans-serif; font-size:0.8rem; cursor:pointer;">Tendencias</button>
-      <button style="background:transparent; color:#220707; border:1px solid #AC9185; padding:8px 20px; border-radius:999px; font-family:'Poppins',sans-serif; font-size:0.8rem; cursor:pointer;">Estilo</button>
-      <button style="background:transparent; color:#220707; border:1px solid #AC9185; padding:8px 20px; border-radius:999px; font-family:'Poppins',sans-serif; font-size:0.8rem; cursor:pointer;">Moda Unisex</button>
-      <button style="background:transparent; color:#220707; border:1px solid #AC9185; padding:8px 20px; border-radius:999px; font-family:'Poppins',sans-serif; font-size:0.8rem; cursor:pointer;">Sostenibilidad</button>
+    <!-- Filtros -->
+    <div class="filters-blog">
+      <button class="filter-btn filter-btn-active">Todos</button>
+      <button class="filter-btn">Tendencias</button>
+      <button class="filter-btn">Estilo</button>
+      <button class="filter-btn">Moda Unisex</button>
+      <button class="filter-btn">Sostenibilidad</button>
     </div>
 
-    <!-- ===== GRID DE BLOGS ===== -->
-    <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:24px;">
-
+    <!-- Grid -->
+    <div class="blogs-grid">
       <!-- Blog 1 -->
-      <article style="background:white; border-radius:16px; overflow:hidden; border:1px solid #AC9185; box-shadow:0 4px 12px rgba(0,0,0,0.05);">
-        <div style="height:200px; background:#531C22; display:flex; align-items:center; justify-content:center; color:#E7D8CA; font-family:'Bebas Neue',sans-serif; font-size:2.5rem;">📸</div>
-        <div style="padding:20px;">
-          <span style="font-family:'Poppins',sans-serif; font-size:0.7rem; color:#AC9185; text-transform:uppercase;">Tendencias • 15 ago 2026</span>
-          <h3 style="font-family:'Bebas Neue',sans-serif; font-size:1.4rem; color:#220707; margin:8px 0;">5 Tendencias que Dominarán el Otoño 2026</h3>
-          <p style="font-family:'Poppins',sans-serif; font-size:0.85rem; color:#220707; line-height:1.5; margin-bottom:12px;">
+      <article class="blog-card">
+        <div class="blog-image blog-image-1">📸</div>
+        <div class="blog-body">
+          <div class="blog-meta">
+            <span class="blog-category">Tendencias • 15 ago 2026</span>
+            <span class="blog-status badge-primario">Publicado</span>
+          </div>
+          <h3 class="blog-title">5 Tendencias que Dominarán el Otoño 2026</h3>
+          <p class="blog-excerpt">
             Descubre los colores, texturas y siluetas que marcarán la temporada...
           </p>
-          <a href="blog-detalle.html?id=1" style="color:#531C22; font-family:'Poppins',sans-serif; font-size:0.85rem; font-weight:600; text-decoration:none;">Leer más →</a>
+          <a href="blogs-detalles.html?id=1" class="blog-link">Leer más →</a>
         </div>
       </article>
 
       <!-- Blog 2 -->
-      <article style="background:white; border-radius:16px; overflow:hidden; border:1px solid #AC9185; box-shadow:0 4px 12px rgba(0,0,0,0.05);">
-        <div style="height:200px; background:#AC9185; display:flex; align-items:center; justify-content:center; color:#E7D8CA; font-family:'Bebas Neue',sans-serif; font-size:2.5rem;">👔</div>
-        <div style="padding:20px;">
-          <span style="font-family:'Poppins',sans-serif; font-size:0.7rem; color:#AC9185; text-transform:uppercase;">Estilo • 10 ago 2026</span>
-          <h3 style="font-family:'Bebas Neue',sans-serif; font-size:1.4rem; color:#220707; margin:8px 0;">Cómo Armar un Look Unisex en 5 Pasos</h3>
-          <p style="font-family:'Poppins',sans-serif; font-size:0.85rem; color:#220707; line-height:1.5; margin-bottom:12px;">
+      <article class="blog-card">
+        <div class="blog-image blog-image-2">👔</div>
+        <div class="blog-body">
+          <div class="blog-meta">
+            <span class="blog-category">Estilo • 10 ago 2026</span>
+            <span class="blog-status badge-gris">Borrador</span>
+          </div>
+          <h3 class="blog-title">Cómo Armar un Look Unisex en 5 Pasos</h3>
+          <p class="blog-excerpt">
             Prendas clave que funcionan para cualquier género y silueta...
           </p>
-          <a href="blog-detalle.html?id=2" style="color:#531C22; font-family:'Poppins',sans-serif; font-size:0.85rem; font-weight:600; text-decoration:none;">Leer más →</a>
+          <a href="blogs-detalles.html?id=2" class="blog-link">Leer más →</a>
         </div>
       </article>
 
       <!-- Blog 3 -->
-      <article style="background:white; border-radius:16px; overflow:hidden; border:1px solid #AC9185; box-shadow:0 4px 12px rgba(0,0,0,0.05);">
-        <div style="height:200px; background:#220707; display:flex; align-items:center; justify-content:center; color:#E7D8CA; font-family:'Bebas Neue',sans-serif; font-size:2.5rem;">♻️</div>
-        <div style="padding:20px;">
-          <span style="font-family:'Poppins',sans-serif; font-size:0.7rem; color:#AC9185; text-transform:uppercase;">Sostenibilidad • 5 ago 2026</span>
-          <h3 style="font-family:'Bebas Neue',sans-serif; font-size:1.4rem; color:#220707; margin:8px 0;">Moda Sostenible: Nuestro Compromiso</h3>
-          <p style="font-family:'Poppins',sans-serif; font-size:0.85rem; color:#220707; line-height:1.5; margin-bottom:12px;">
+      <article class="blog-card">
+        <div class="blog-image blog-image-3">♻️</div>
+        <div class="blog-body">
+          <div class="blog-meta">
+            <span class="blog-category">Sostenibilidad • 5 ago 2026</span>
+            <span class="blog-status badge-primario">Publicado</span>
+          </div>
+          <h3 class="blog-title">Moda Sostenible: Nuestro Compromiso</h3>
+          <p class="blog-excerpt">
             Conoce nuestras prácticas de producción y materiales responsables...
           </p>
-          <a href="blog-detalle.html?id=3" style="color:#531C22; font-family:'Poppins',sans-serif; font-size:0.85rem; font-weight:600; text-decoration:none;">Leer más →</a>
-        </div>
-      </article>
-
-      <!-- Blog 4 -->
-      <article style="background:white; border-radius:16px; overflow:hidden; border:1px solid #AC9185; box-shadow:0 4px 12px rgba(0,0,0,0.05);">
-        <div style="height:200px; background:#531C22; display:flex; align-items:center; justify-content:center; color:#E7D8CA; font-family:'Bebas Neue',sans-serif; font-size:2.5rem;">👟</div>
-        <div style="padding:20px;">
-          <span style="font-family:'Poppins',sans-serif; font-size:0.7rem; color:#AC9185; text-transform:uppercase;">Calzado • 28 jul 2026</span>
-          <h3 style="font-family:'Bebas Neue',sans-serif; font-size:1.4rem; color:#220707; margin:8px 0;">Las Zapatillas que Todos Quieren Usar</h3>
-          <p style="font-family:'Poppins',sans-serif; font-size:0.85rem; color:#220707; line-height:1.5; margin-bottom:12px;">
-            Modelos versátiles que combinan con todo tu armario...
-          </p>
-          <a href="blog-detalle.html?id=4" style="color:#531C22; font-family:'Poppins',sans-serif; font-size:0.85rem; font-weight:600; text-decoration:none;">Leer más →</a>
+          <a href="blogs-detalles.html?id=3" class="blog-link">Leer más →</a>
         </div>
       </article>
 
@@ -111,40 +107,40 @@
 
   </main>
 
-  <!-- ========== FOOTER (igual que en nosotros.html) ========== -->
-  <footer style="background:#220707; color:#E7D8CA; padding:32px 24px; font-family:'Poppins',sans-serif;">
-    <div style="max-width:1100px; margin:0 auto; display:grid; grid-template-columns:repeat(auto-fit, minmax(180px,1fr)); gap:32px;">
+  <!-- Pie de página -->
+  <footer class="footer-grwu">
+    <div class="footer-grid">
       <div>
-        <div style="display:flex; align-items:center; gap:8px; margin-bottom:12px;">
-          <img src="img/logo-grwu.png" alt="GRWU" style="height:32px;">
-          <span style="font-family:'Bebas Neue',sans-serif; font-size:1.4rem; color:#E7D8CA;">GRWU</span>
+        <div class="footer-brand">
+          <img src="img/logo-grwu.png" alt="GRWU" class="footer-logo" />
+          <span class="footer-brand-name">GRWU</span>
         </div>
-        <p style="font-size:0.8rem; color:#AC9185; line-height:1.6;">Get Ready With Us. Moda unisex para expresar tu estilo sin límites.</p>
+        <p class="footer-text">Get Ready With Us. Moda unisex para expresar tu estilo sin límites.</p>
       </div>
       <div>
-        <h4 style="font-family:'Bebas Neue',sans-serif; font-size:1rem; color:#E7D8CA; margin-bottom:8px;">Links Rápidos</h4>
-        <a href="#" style="display:block; color:#AC9185; text-decoration:none; font-size:0.8rem; margin-bottom:4px;">Cómo comprar</a>
-        <a href="#" style="display:block; color:#AC9185; text-decoration:none; font-size:0.8rem; margin-bottom:4px;">Devoluciones</a>
-        <a href="#" style="display:block; color:#AC9185; text-decoration:none; font-size:0.8rem; margin-bottom:4px;">Tiempos de despacho</a>
+        <h4 class="footer-heading">Links Rápidos</h4>
+        <a href="#" class="footer-link">Cómo comprar</a>
+        <a href="#" class="footer-link">Devoluciones</a>
+        <a href="#" class="footer-link">Tiempos de despacho</a>
       </div>
       <div>
-        <h4 style="font-family:'Bebas Neue',sans-serif; font-size:1rem; color:#E7D8CA; margin-bottom:8px;">Categorías</h4>
-        <a href="catalogo.html?genero=mujer" style="display:block; color:#AC9185; text-decoration:none; font-size:0.8rem; margin-bottom:4px;">Mujer</a>
-        <a href="catalogo.html?genero=hombre" style="display:block; color:#AC9185; text-decoration:none; font-size:0.8rem; margin-bottom:4px;">Hombre</a>
-        <a href="catalogo.html?categoria=accesorios" style="display:block; color:#AC9185; text-decoration:none; font-size:0.8rem; margin-bottom:4px;">Accesorios</a>
+        <h4 class="footer-heading">Categorías</h4>
+        <a href="catalogo.html?genero=mujer" class="footer-link">Mujer</a>
+        <a href="catalogo.html?genero=hombre" class="footer-link">Hombre</a>
+        <a href="catalogo.html?categoria=accesorios" class="footer-link">Accesorios</a>
       </div>
       <div>
-        <h4 style="font-family:'Bebas Neue',sans-serif; font-size:1rem; color:#E7D8CA; margin-bottom:8px;">Contacto</h4>
-        <p style="font-size:0.8rem; color:#AC9185; margin:0;">📧 hola@grwu.cl</p>
-        <p style="font-size:0.8rem; color:#AC9185; margin:0;">📱 +56 9 1234 5678</p>
-        <div style="display:flex; gap:12px; margin-top:8px;">
-          <a href="#" style="color:#AC9185; text-decoration:none; font-size:1.2rem;">📷</a>
-          <a href="#" style="color:#AC9185; text-decoration:none; font-size:1.2rem;">📘</a>
-          <a href="#" style="color:#AC9185; text-decoration:none; font-size:1.2rem;">🐦</a>
+        <h4 class="footer-heading">Contacto</h4>
+        <p class="footer-text">📧 hola@grwu.cl</p>
+        <p class="footer-text">📱 +56 9 1234 5678</p>
+        <div class="footer-social">
+          <a href="#" class="footer-social-icon">📷</a>
+          <a href="#" class="footer-social-icon">📘</a>
+          <a href="#" class="footer-social-icon">🐦</a>
         </div>
       </div>
     </div>
-    <div style="border-top:1px solid #AC9185; margin-top:24px; padding-top:16px; text-align:center; font-size:0.7rem; color:#AC9185;">
+    <div class="footer-bottom">
       © 2026 GRWU - Get Ready With Us. Todos los derechos reservados.
     </div>
   </footer>

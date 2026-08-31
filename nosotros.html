@@ -7,38 +7,39 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet" href="css/nosotros.css" />
 </head>
 <body>
 
-  <!-- ========== HEADER ========== -->
-  <header style="background:#220707; color:#E7D8CA; padding:16px 32px; display:flex; align-items:center; justify-content:space-between; position:sticky; top:0; z-index:100; border-bottom:2px solid #531C22;">
-    <div style="display:flex; align-items:center; gap:12px;">
-      <img src="img/logo-grwu.png" alt="GRWU" style="height:48px; width:auto;">
+  <!-- Encabezado -->
+  <header class="header-grwu">
+    <div class="header-brand">
+      <img src="img/logo-grwu.png" alt="GRWU" class="header-logo" />
       <div>
-        <h1 style="font-family:'Bebas Neue',sans-serif; font-size:1.8rem; color:#E7D8CA; margin:0; line-height:1;">GRWU</h1>
-        <p style="font-size:0.7rem; color:#AC9185; margin:0; letter-spacing:2px;">GET READY WITH US</p>
+        <h1 class="header-title">GRWU</h1>
+        <p class="header-subtitle">GET READY WITH US</p>
       </div>
     </div>
-    <nav style="display:flex; gap:24px; font-family:'Poppins',sans-serif; font-size:0.85rem;">
-      <a href="index.html" style="color:#AC9185; text-decoration:none;">Home</a>
-      <a href="catalogo.html" style="color:#AC9185; text-decoration:none;">Productos</a>
-      <a href="nosotros.html" style="color:#E7D8CA; text-decoration:none; border-bottom:2px solid #531C22; padding-bottom:4px;">Nosotros</a>
-      <a href="blogs.html" style="color:#AC9185; text-decoration:none;">Blogs</a>
-      <a href="contacto.html" style="color:#AC9185; text-decoration:none;">Contacto</a>
+    <nav class="header-nav">
+      <a href="index.html" class="nav-link">Home</a>
+      <a href="catalogo.html" class="nav-link">Productos</a>
+      <a href="nosotros.html" class="nav-link nav-link-active">Nosotros</a>
+      <a href="blogs.html" class="nav-link">Blogs</a>
+      <a href="contacto.html" class="nav-link">Contacto</a>
     </nav>
-    <div style="display:flex; gap:12px;">
-      <a href="login.html" style="color:#E7D8CA; text-decoration:none; font-size:0.85rem; font-family:'Poppins',sans-serif;">Iniciar sesión</a>
-      <a href="registro.html" style="background:#531C22; color:#E7D8CA; padding:6px 16px; border-radius:999px; text-decoration:none; font-size:0.85rem; font-family:'Poppins',sans-serif;">Registrarse</a>
+    <div class="header-actions">
+      <a href="login.html" class="action-link">Iniciar sesión</a>
+      <a href="registro.html" class="action-button">Registrarse</a>
     </div>
   </header>
 
-  <!-- ========== CONTENIDO NOSOTROS ========== -->
-  <main style="max-width:1100px; margin:0 auto; padding:40px 24px; background:#E7D8CA; min-height:70vh;">
+  <!-- Contenido principal -->
+  <main class="main-grwu">
 
-    <section style="text-align:center; margin-bottom:48px;">
-      <span style="color:#AC9185; font-family:'Poppins',sans-serif; font-size:0.8rem; letter-spacing:3px; text-transform:uppercase;">Conócenos</span>
-      <h2 style="font-family:'Bebas Neue',sans-serif; font-size:3rem; color:#220707; margin:8px 0 16px;">¿Quiénes somos?</h2>
-      <p style="font-family:'Poppins',sans-serif; color:#220707; max-width:700px; margin:0 auto; line-height:1.7; font-size:1rem;">
+    <section class="page-header">
+      <span class="page-eyebrow">Conócenos</span>
+      <h2 class="page-title">¿Quiénes somos?</h2>
+      <p class="page-description">
         GRWU nace con la misión de democratizar la moda unisex en Chile. Creamos prendas versátiles, 
         de calidad y con estilo, para que puedas expresarte sin límites. <strong>Get Ready With Us</strong> 
         es más que una marca, es una comunidad.
@@ -46,19 +47,19 @@
     </section>
 
     <!-- Misión y Visión -->
-    <section style="display:grid; grid-template-columns:1fr 1fr; gap:32px; margin-bottom:48px;">
-      <div style="background:white; border-radius:16px; padding:32px; border:1px solid #AC9185; box-shadow:0 4px 12px rgba(0,0,0,0.05);">
-        <div style="font-size:2.5rem; margin-bottom:8px;">🎯</div>
-        <h3 style="font-family:'Bebas Neue',sans-serif; font-size:1.8rem; color:#220707; margin:0;">Misión</h3>
-        <p style="font-family:'Poppins',sans-serif; color:#220707; line-height:1.6; font-size:0.9rem; margin-top:8px;">
+    <section class="mission-vision-grid">
+      <div class="card-info">
+        <div class="card-icon">🎯</div>
+        <h3 class="card-title">Misión</h3>
+        <p class="card-text">
           Ofrecer moda unisex accesible y sostenible, conectando a las personas a través del estilo 
           y la autenticidad, con un servicio rápido y confiable.
         </p>
       </div>
-      <div style="background:white; border-radius:16px; padding:32px; border:1px solid #AC9185; box-shadow:0 4px 12px rgba(0,0,0,0.05);">
-        <div style="font-size:2.5rem; margin-bottom:8px;">👁️</div>
-        <h3 style="font-family:'Bebas Neue',sans-serif; font-size:1.8rem; color:#220707; margin:0;">Visión</h3>
-        <p style="font-family:'Poppins',sans-serif; color:#220707; line-height:1.6; font-size:0.9rem; margin-top:8px;">
+      <div class="card-info">
+        <div class="card-icon">👁️</div>
+        <h3 class="card-title">Visión</h3>
+        <p class="card-text">
           Ser la marca referente de moda unisex en Latinoamérica, impulsando la diversidad y 
           la inclusión a través de prendas que rompen estereotipos.
         </p>
@@ -67,62 +68,62 @@
 
     <!-- Equipo -->
     <section>
-      <h3 style="font-family:'Bebas Neue',sans-serif; font-size:2rem; color:#220707; text-align:center; margin-bottom:24px;">Nuestro Equipo</h3>
-      <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:24px;">
-        <div style="background:white; border-radius:16px; padding:20px; text-align:center; border:1px solid #AC9185;">
-          <div style="width:80px; height:80px; background:#AC9185; border-radius:50%; margin:0 auto 12px; display:flex; align-items:center; justify-content:center; color:#E7D8CA; font-size:2rem; font-family:'Bebas Neue',sans-serif;">M</div>
-          <h4 style="font-family:'Bebas Neue',sans-serif; font-size:1.2rem; color:#220707; margin:0;">Matías</h4>
-          <p style="font-family:'Poppins',sans-serif; font-size:0.8rem; color:#AC9185; margin:0;">Productos & Catálogo</p>
+      <h3 class="section-title">Nuestro Equipo</h3>
+      <div class="team-grid">
+        <div class="team-card">
+          <div class="team-avatar team-avatar-gris">M</div>
+          <h4 class="team-name">Matías</h4>
+          <p class="team-role">Productos & Catálogo</p>
         </div>
-        <div style="background:white; border-radius:16px; padding:20px; text-align:center; border:1px solid #AC9185;">
-          <div style="width:80px; height:80px; background:#531C22; border-radius:50%; margin:0 auto 12px; display:flex; align-items:center; justify-content:center; color:#E7D8CA; font-size:2rem; font-family:'Bebas Neue',sans-serif;">C</div>
-          <h4 style="font-family:'Bebas Neue',sans-serif; font-size:1.2rem; color:#220707; margin:0;">César</h4>
-          <p style="font-family:'Poppins',sans-serif; font-size:0.8rem; color:#AC9185; margin:0;">Usuarios & Checkout</p>
+        <div class="team-card">
+          <div class="team-avatar team-avatar-primario">C</div>
+          <h4 class="team-name">César</h4>
+          <p class="team-role">Usuarios & Checkout</p>
         </div>
-        <div style="background:white; border-radius:16px; padding:20px; text-align:center; border:1px solid #AC9185;">
-          <div style="width:80px; height:80px; background:#220707; border-radius:50%; margin:0 auto 12px; display:flex; align-items:center; justify-content:center; color:#E7D8CA; font-size:2rem; font-family:'Bebas Neue',sans-serif;">K</div>
-          <h4 style="font-family:'Bebas Neue',sans-serif; font-size:1.2rem; color:#220707; margin:0;">Katerine</h4>
-          <p style="font-family:'Poppins',sans-serif; font-size:0.8rem; color:#AC9185; margin:0;">Contenido & Admin</p>
+        <div class="team-card">
+          <div class="team-avatar team-avatar-oscuro">K</div>
+          <h4 class="team-name">Katerine</h4>
+          <p class="team-role">Contenido & Admin</p>
         </div>
       </div>
     </section>
 
   </main>
 
-  <!-- ========== FOOTER ========== -->
-  <footer style="background:#220707; color:#E7D8CA; padding:32px 24px; font-family:'Poppins',sans-serif;">
-    <div style="max-width:1100px; margin:0 auto; display:grid; grid-template-columns:repeat(auto-fit, minmax(180px,1fr)); gap:32px;">
+  <!-- Pie de página -->
+  <footer class="footer-grwu">
+    <div class="footer-grid">
       <div>
-        <div style="display:flex; align-items:center; gap:8px; margin-bottom:12px;">
-          <img src="img/logo-grwu.png" alt="GRWU" style="height:32px;">
-          <span style="font-family:'Bebas Neue',sans-serif; font-size:1.4rem; color:#E7D8CA;">GRWU</span>
+        <div class="footer-brand">
+          <img src="img/logo-grwu.png" alt="GRWU" class="footer-logo" />
+          <span class="footer-brand-name">GRWU</span>
         </div>
-        <p style="font-size:0.8rem; color:#AC9185; line-height:1.6;">Get Ready With Us. Moda unisex para expresar tu estilo sin límites.</p>
+        <p class="footer-text">Get Ready With Us. Moda unisex para expresar tu estilo sin límites.</p>
       </div>
       <div>
-        <h4 style="font-family:'Bebas Neue',sans-serif; font-size:1rem; color:#E7D8CA; margin-bottom:8px;">Links Rápidos</h4>
-        <a href="#" style="display:block; color:#AC9185; text-decoration:none; font-size:0.8rem; margin-bottom:4px;">Cómo comprar</a>
-        <a href="#" style="display:block; color:#AC9185; text-decoration:none; font-size:0.8rem; margin-bottom:4px;">Devoluciones</a>
-        <a href="#" style="display:block; color:#AC9185; text-decoration:none; font-size:0.8rem; margin-bottom:4px;">Tiempos de despacho</a>
+        <h4 class="footer-heading">Links Rápidos</h4>
+        <a href="#" class="footer-link">Cómo comprar</a>
+        <a href="#" class="footer-link">Devoluciones</a>
+        <a href="#" class="footer-link">Tiempos de despacho</a>
       </div>
       <div>
-        <h4 style="font-family:'Bebas Neue',sans-serif; font-size:1rem; color:#E7D8CA; margin-bottom:8px;">Categorías</h4>
-        <a href="catalogo.html?genero=mujer" style="display:block; color:#AC9185; text-decoration:none; font-size:0.8rem; margin-bottom:4px;">Mujer</a>
-        <a href="catalogo.html?genero=hombre" style="display:block; color:#AC9185; text-decoration:none; font-size:0.8rem; margin-bottom:4px;">Hombre</a>
-        <a href="catalogo.html?categoria=accesorios" style="display:block; color:#AC9185; text-decoration:none; font-size:0.8rem; margin-bottom:4px;">Accesorios</a>
+        <h4 class="footer-heading">Categorías</h4>
+        <a href="catalogo.html?genero=mujer" class="footer-link">Mujer</a>
+        <a href="catalogo.html?genero=hombre" class="footer-link">Hombre</a>
+        <a href="catalogo.html?categoria=accesorios" class="footer-link">Accesorios</a>
       </div>
       <div>
-        <h4 style="font-family:'Bebas Neue',sans-serif; font-size:1rem; color:#E7D8CA; margin-bottom:8px;">Contacto</h4>
-        <p style="font-size:0.8rem; color:#AC9185; margin:0;">📧 hola@grwu.cl</p>
-        <p style="font-size:0.8rem; color:#AC9185; margin:0;">📱 +56 9 1234 5678</p>
-        <div style="display:flex; gap:12px; margin-top:8px;">
-          <a href="#" style="color:#AC9185; text-decoration:none; font-size:1.2rem;">📷</a>
-          <a href="#" style="color:#AC9185; text-decoration:none; font-size:1.2rem;">📘</a>
-          <a href="#" style="color:#AC9185; text-decoration:none; font-size:1.2rem;">🐦</a>
+        <h4 class="footer-heading">Contacto</h4>
+        <p class="footer-text">📧 hola@grwu.cl</p>
+        <p class="footer-text">📱 +56 9 1234 5678</p>
+        <div class="footer-social">
+          <a href="#" class="footer-social-icon">📷</a>
+          <a href="#" class="footer-social-icon">📘</a>
+          <a href="#" class="footer-social-icon">🐦</a>
         </div>
       </div>
     </div>
-    <div style="border-top:1px solid #AC9185; margin-top:24px; padding-top:16px; text-align:center; font-size:0.7rem; color:#AC9185;">
+    <div class="footer-bottom">
       © 2026 GRWU - Get Ready With Us. Todos los derechos reservados.
     </div>
   </footer>

@@ -1,10 +1,11 @@
+
+
 :root {
   --color-oscuro: #220707;
   --color-primario: #531C22;
   --color-claro: #E7D8CA;
   --color-gris: #AC9185;
   --color-blanco: #FFFFFF;
-  --color-error: #B22222;
   
   --font-titulos: 'Bebas Neue', sans-serif;
   --font-cuerpo: 'Poppins', sans-serif;
@@ -18,7 +19,7 @@
 }
 
 /* Header */
-.header-contacto {
+.header-nosotros {
   background: var(--color-oscuro);
   color: var(--color-claro);
   padding: 16px 32px;
@@ -31,18 +32,18 @@
   border-bottom: 2px solid var(--color-primario);
 }
 
-.header-contacto-brand {
+.header-nosotros-brand {
   display: flex;
   align-items: center;
   gap: 12px;
 }
 
-.header-contacto-logo {
+.header-nosotros-logo {
   height: 48px;
   width: auto;
 }
 
-.header-contacto-title {
+.header-nosotros-title {
   font-family: var(--font-titulos);
   font-size: 1.8rem;
   color: var(--color-claro);
@@ -50,44 +51,44 @@
   line-height: 1;
 }
 
-.header-contacto-subtitle {
+.header-nosotros-subtitle {
   font-size: 0.7rem;
   color: var(--color-gris);
   margin: 0;
   letter-spacing: 2px;
 }
 
-.header-contacto-nav {
+.header-nosotros-nav {
   display: flex;
   gap: 24px;
   font-family: var(--font-cuerpo);
   font-size: 0.85rem;
 }
 
-.nav-contacto-link {
+.nav-nosotros-link {
   color: var(--color-gris);
   text-decoration: none;
   transition: color 0.3s;
 }
 
-.nav-contacto-link:hover {
+.nav-nosotros-link:hover {
   color: var(--color-claro);
 }
 
-.nav-contacto-active {
+.nav-nosotros-active {
   color: var(--color-claro);
   border-bottom: 2px solid var(--color-primario);
   padding-bottom: 4px;
 }
 
-.header-contacto-actions {
+.header-nosotros-actions {
   display: flex;
   gap: 12px;
   align-items: center;
 }
 
 /* Main */
-.main-contacto {
+.main-nosotros {
   max-width: 1100px;
   margin: 0 auto;
   padding: 40px 24px;
@@ -96,12 +97,12 @@
 }
 
 /* Encabezado */
-.contacto-header {
+.nosotros-header {
   text-align: center;
-  margin-bottom: 40px;
+  margin-bottom: 48px;
 }
 
-.contacto-eyebrow {
+.nosotros-eyebrow {
   color: var(--color-gris);
   font-family: var(--font-cuerpo);
   font-size: 0.8rem;
@@ -109,39 +110,38 @@
   text-transform: uppercase;
 }
 
-.contacto-title {
+.nosotros-title {
   font-family: var(--font-titulos);
   font-size: 3rem;
   color: var(--color-oscuro);
   margin: 8px 0 16px;
 }
 
-.contacto-description {
+.nosotros-description {
   font-family: var(--font-cuerpo);
   color: var(--color-oscuro);
-  max-width: 600px;
+  max-width: 700px;
   margin: 0 auto;
-  font-size: 0.95rem;
   line-height: 1.7;
+  font-size: 1rem;
 }
 
-/* Grid */
-.contacto-grid {
+/* Misión y Visión */
+.mission-vision-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 40px;
-  align-items: start;
+  gap: 32px;
+  margin-bottom: 48px;
 }
 
 @media (max-width: 768px) {
-  .contacto-grid {
+  .mission-vision-grid {
     grid-template-columns: 1fr;
   }
 }
 
-/* Cards */
-.card-form,
-.card-info {
+.mission-card,
+.vision-card {
   background: var(--color-blanco);
   border-radius: var(--radius-lg);
   padding: 32px;
@@ -149,15 +149,16 @@
   box-shadow: var(--shadow-card);
 }
 
-.card-title {
-  font-family: var(--font-titulos);
-  font-size: 1.6rem;
-  color: var(--color-oscuro);
-  margin: 0 0 24px;
+.card-icon {
+  font-size: 2.5rem;
+  margin-bottom: 8px;
 }
 
-.card-title-light {
-  color: var(--color-claro);
+.card-title {
+  font-family: var(--font-titulos);
+  font-size: 1.8rem;
+  color: var(--color-oscuro);
+  margin: 0;
 }
 
 .card-text {
@@ -168,174 +169,87 @@
   margin-top: 8px;
 }
 
-.card-text-light {
-  font-family: var(--font-cuerpo);
-  font-size: 0.85rem;
-  color: var(--color-gris);
-  margin-bottom: 16px;
+/* Equipo */
+.team-section {
+  margin-bottom: 48px;
 }
 
-/* Formulario */
-.form-field {
-  margin-bottom: 16px;
-}
-
-.form-field label {
-  font-family: var(--font-cuerpo);
-  font-size: 0.85rem;
+.team-title {
+  font-family: var(--font-titulos);
+  font-size: 2rem;
   color: var(--color-oscuro);
-  display: block;
-  margin-bottom: 4px;
-}
-
-.form-field input,
-.form-field textarea,
-.form-field select {
-  width: 100%;
-  padding: 10px 14px;
-  border: 1px solid var(--color-gris);
-  border-radius: var(--radius-sm);
-  font-family: var(--font-cuerpo);
-  background: var(--color-claro);
-  color: var(--color-oscuro);
-  transition: border-color 0.3s;
-}
-
-.form-field input:focus,
-.form-field textarea:focus,
-.form-field select:focus {
-  outline: none;
-  border-color: var(--color-primario);
-}
-
-.form-field textarea {
-  resize: vertical;
-  min-height: 120px;
-}
-
-.input-invalido {
-  border-color: var(--color-error) !important;
-}
-
-.form-error {
-  color: var(--color-error);
-  font-size: 0.8rem;
-  margin-top: 4px;
-  display: none;
-  font-family: var(--font-cuerpo);
-}
-
-/* Botones */
-.btn-primary {
-  background: var(--color-primario);
-  color: var(--color-claro);
-  padding: 12px;
-  border: none;
-  border-radius: var(--radius-full);
-  font-family: var(--font-cuerpo);
-  font-size: 0.95rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background 0.3s;
-}
-
-.btn-primary:hover {
-  background: #6e2730;
-}
-
-.btn-full {
-  width: 100%;
-  margin-top: 8px;
-}
-
-/* Mensaje éxito */
-.success-message {
-  background: var(--color-oscuro);
-  color: var(--color-claro);
-  padding: 12px;
-  border-radius: var(--radius-sm);
-  font-family: var(--font-cuerpo);
-  font-size: 0.85rem;
   text-align: center;
-  margin-top: 12px;
+  margin-bottom: 24px;
 }
 
-/* Info List */
-.contacto-info-column {
-  display: flex;
-  flex-direction: column;
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 24px;
 }
 
-.info-list {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
+.team-card {
+  background: var(--color-blanco);
+  border-radius: var(--radius-lg);
+  padding: 20px;
+  text-align: center;
+  border: 1px solid var(--color-gris);
+  transition: transform 0.3s, box-shadow 0.3s;
 }
 
-.info-item {
+.team-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+}
+
+.team-avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  margin: 0 auto 12px;
   display: flex;
   align-items: center;
-  gap: 12px;
+  justify-content: center;
+  color: var(--color-claro);
+  font-size: 2rem;
+  font-family: var(--font-titulos);
 }
 
-.info-icon {
-  font-size: 1.5rem;
+.team-avatar-gris {
+  background: var(--color-gris);
 }
 
-.info-label {
+.team-avatar-primario {
+  background: var(--color-primario);
+}
+
+.team-avatar-oscuro {
+  background: var(--color-oscuro);
+}
+
+.team-name {
+  font-family: var(--font-titulos);
+  font-size: 1.2rem;
+  color: var(--color-oscuro);
+  margin: 0;
+}
+
+.team-role {
   font-family: var(--font-cuerpo);
   font-size: 0.8rem;
   color: var(--color-gris);
   margin: 0;
 }
 
-.info-value {
-  font-family: var(--font-cuerpo);
-  font-size: 0.95rem;
-  color: var(--color-oscuro);
-  margin: 0;
-}
-
-/* Redes sociales */
-.card-social {
-  background: var(--color-oscuro);
-  border-radius: var(--radius-lg);
-  padding: 24px;
-  color: var(--color-claro);
-  border: 2px solid var(--color-primario);
-}
-
-.social-buttons {
-  display: flex;
-  gap: 12px;
-  margin-top: 16px;
-}
-
-.social-btn {
-  background: var(--color-primario);
-  color: var(--color-claro);
-  text-decoration: none;
-  padding: 8px 16px;
-  border-radius: var(--radius-full);
-  font-family: var(--font-cuerpo);
-  font-size: 0.8rem;
-  transition: background 0.3s;
-}
-
-.social-btn:hover {
-  background: #6e2730;
-}
-
 /* Footer */
-.footer-contacto {
+.footer-nosotros {
   background: var(--color-oscuro);
   color: var(--color-claro);
   padding: 32px 24px;
   font-family: var(--font-cuerpo);
 }
 
-.footer-contacto-grid {
+.footer-nosotros-grid {
   max-width: 1100px;
   margin: 0 auto;
   display: grid;
@@ -343,38 +257,38 @@
   gap: 32px;
 }
 
-.footer-contacto-brand {
+.footer-nosotros-brand {
   display: flex;
   align-items: center;
   gap: 8px;
   margin-bottom: 12px;
 }
 
-.footer-contacto-logo {
+.footer-nosotros-logo {
   height: 32px;
 }
 
-.footer-contacto-name {
+.footer-nosotros-name {
   font-family: var(--font-titulos);
   font-size: 1.4rem;
   color: var(--color-claro);
 }
 
-.footer-contacto-text {
+.footer-nosotros-text {
   font-size: 0.8rem;
   color: var(--color-gris);
   line-height: 1.6;
   margin: 0 0 4px;
 }
 
-.footer-contacto-heading {
+.footer-nosotros-heading {
   font-family: var(--font-titulos);
   font-size: 1rem;
   color: var(--color-claro);
   margin-bottom: 8px;
 }
 
-.footer-contacto-link {
+.footer-nosotros-link {
   display: block;
   color: var(--color-gris);
   text-decoration: none;
@@ -383,28 +297,28 @@
   transition: color 0.3s;
 }
 
-.footer-contacto-link:hover {
+.footer-nosotros-link:hover {
   color: var(--color-claro);
 }
 
-.footer-contacto-social {
+.footer-nosotros-social {
   display: flex;
   gap: 12px;
   margin-top: 8px;
 }
 
-.footer-contacto-social-icon {
+.footer-nosotros-social-icon {
   color: var(--color-gris);
   text-decoration: none;
   font-size: 1.2rem;
   transition: color 0.3s;
 }
 
-.footer-contacto-social-icon:hover {
+.footer-nosotros-social-icon:hover {
   color: var(--color-claro);
 }
 
-.footer-contacto-bottom {
+.footer-nosotros-bottom {
   border-top: 1px solid var(--color-gris);
   margin-top: 24px;
   padding-top: 16px;

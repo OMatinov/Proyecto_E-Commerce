@@ -7,126 +7,122 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet" href="css/blogsDetalles.css" />
 </head>
 <body>
 
-  <!-- ========== HEADER (igual) ========== -->
-  <header style="background:#220707; color:#E7D8CA; padding:16px 32px; display:flex; align-items:center; justify-content:space-between; position:sticky; top:0; z-index:100; border-bottom:2px solid #531C22;">
-    <div style="display:flex; align-items:center; gap:12px;">
-      <img src="img/logo-grwu.png" alt="GRWU" style="height:48px; width:auto;">
+  <!-- Encabezado -->
+  <header class="header-grwu">
+    <div class="header-brand">
+      <img src="img/logo-grwu.png" alt="GRWU" class="header-logo" />
       <div>
-        <h1 style="font-family:'Bebas Neue',sans-serif; font-size:1.8rem; color:#E7D8CA; margin:0; line-height:1;">GRWU</h1>
-        <p style="font-size:0.7rem; color:#AC9185; margin:0; letter-spacing:2px;">GET READY WITH US</p>
+        <h1 class="header-title">GRWU</h1>
+        <p class="header-subtitle">GET READY WITH US</p>
       </div>
     </div>
-    <nav style="display:flex; gap:24px; font-family:'Poppins',sans-serif; font-size:0.85rem;">
-      <a href="index.html" style="color:#AC9185; text-decoration:none;">Home</a>
-      <a href="catalogo.html" style="color:#AC9185; text-decoration:none;">Productos</a>
-      <a href="nosotros.html" style="color:#AC9185; text-decoration:none;">Nosotros</a>
-      <a href="blogs.html" style="color:#E7D8CA; text-decoration:none; border-bottom:2px solid #531C22; padding-bottom:4px;">Blogs</a>
-      <a href="contacto.html" style="color:#AC9185; text-decoration:none;">Contacto</a>
+    <nav class="header-nav">
+      <a href="index.html" class="nav-link">Home</a>
+      <a href="catalogo.html" class="nav-link">Productos</a>
+      <a href="nosotros.html" class="nav-link">Nosotros</a>
+      <a href="blogs.html" class="nav-link nav-link-active">Blogs</a>
+      <a href="contacto.html" class="nav-link">Contacto</a>
     </nav>
-    <div style="display:flex; gap:12px;">
-      <a href="login.html" style="color:#E7D8CA; text-decoration:none; font-size:0.85rem; font-family:'Poppins',sans-serif;">Iniciar sesión</a>
-      <a href="registro.html" style="background:#531C22; color:#E7D8CA; padding:6px 16px; border-radius:999px; text-decoration:none; font-size:0.85rem; font-family:'Poppins',sans-serif;">Registrarse</a>
+    <div class="header-actions">
+      <a href="login.html" class="action-link">Iniciar sesión</a>
+      <a href="registro.html" class="action-button">Registrarse</a>
     </div>
   </header>
 
-  <!-- ========== CONTENIDO DETALLE BLOG ========== -->
-  <main style="max-width:900px; margin:0 auto; padding:40px 24px; background:#E7D8CA; min-height:70vh;">
-
-    <!-- Botón volver -->
-    <a href="blogs.html" style="display:inline-block; color:#531C22; font-family:'Poppins',sans-serif; font-size:0.85rem; text-decoration:none; margin-bottom:24px;">← Volver a blogs</a>
-
-    <!-- ===== IMAGEN DESTACADA ===== -->
-    <div style="width:100%; height:320px; background:#531C22; border-radius:16px; display:flex; align-items:center; justify-content:center; color:#E7D8CA; font-family:'Bebas Neue',sans-serif; font-size:3rem; margin-bottom:24px; border:1px solid #AC9185;">
+  <!-- Contenido -->
+  <main class="main-blog-detail">
+    <a href="blogs.html" class="back-link">← Volver a blogs</a>
+    <div class="blog-detail-image">
       📸 Imagen Destacada
     </div>
 
-    <!-- ===== META DATOS ===== -->
-    <div style="display:flex; gap:16px; font-family:'Poppins',sans-serif; font-size:0.8rem; color:#AC9185; margin-bottom:16px; flex-wrap:wrap;">
+    <!-- Etiquetas -->
+    <div class="blog-meta-detail">
       <span>📅 15 de agosto de 2026</span>
       <span>✍️ Por Katerine</span>
       <span>🏷️ Tendencias</span>
       <span>⏱️ 5 min de lectura</span>
     </div>
 
-    <!-- ===== TÍTULO ===== -->
-    <h1 style="font-family:'Bebas Neue',sans-serif; font-size:2.8rem; color:#220707; margin:0 0 16px;">5 Tendencias que Dominarán el Otoño 2026</h1>
-
-    <!-- ===== CONTENIDO COMPLETO ===== -->
-    <div style="font-family:'Poppins',sans-serif; color:#220707; line-height:1.8; font-size:1rem;">
-
+    <!-- Titulo-->
+    <h1 class="blog-detail-title">5 Tendencias que Dominarán el Otoño 2026</h1>
+    <!-- Contenido -->
+    <div class="blog-content">
+      
       <p><strong>El otoño 2026 trae consigo una revolución de estilo.</strong> Desde colores tierra hasta siluetas oversize, te contamos todo lo que necesitas saber para renovar tu armario esta temporada.</p>
 
-      <h2 style="font-family:'Bebas Neue',sans-serif; font-size:1.6rem; color:#531C22; margin:24px 0 8px;">1. Tonos Tierra y Terracota</h2>
+      <h2 class="blog-subtitle">1. Tonos Tierra y Terracota</h2>
       <p>Los colores que dominarán son el marrón chocolate, terracota, mostaza y verde oliva. Son tonos versátiles que funcionan tanto para hombre como para mujer, y se pueden combinar fácilmente con prendas básicas.</p>
 
-      <h2 style="font-family:'Bebas Neue',sans-serif; font-size:1.6rem; color:#531C22; margin:24px 0 8px;">2. Siluetas Oversize</h2>
+      <h2 class="blog-subtitle">2. Siluetas Oversize</h2>
       <p>Las prendas amplias y holgadas siguen siendo tendencia. Chaquetas, polerones y pantalones anchos son la clave para un look cómodo y con estilo. La regla es: <em>si es grande, mejor</em>.</p>
 
-      <h2 style="font-family:'Bebas Neue',sans-serif; font-size:1.6rem; color:#531C22; margin:24px 0 8px;">3. Tejidos de Punto y Crochet</h2>
+      <h2 class="blog-subtitle">3. Tejidos de Punto y Crochet</h2>
       <p>El tejido vuelve con fuerza. Suéteres, chalecos y accesorios de punto añaden textura y calidez a cualquier outfit. Perfectos para los días frescos de otoño.</p>
 
-      <h2 style="font-family:'Bebas Neue',sans-serif; font-size:1.6rem; color:#531C22; margin:24px 0 8px;">4. Calzado Chunky</h2>
+      <h2 class="blog-subtitle">4. Calzado Chunky</h2>
       <p>Las zapatillas y botas con suela gruesa son el must-have de la temporada. Además de cómodas, añaden un toque urbano y contemporáneo a cualquier look.</p>
 
-      <h2 style="font-family:'Bebas Neue',sans-serif; font-size:1.6rem; color:#531C22; margin:24px 0 8px;">5. Capas y Superposición</h2>
+      <h2 class="blog-subtitle">5. Capas y Superposición</h2>
       <p>Jugar con capas es la tendencia más práctica y estilosa. Combina camisas debajo de suéteres, chalecos sobre poleras y chaquetas oversize para crear looks únicos.</p>
 
-      <div style="background:#220707; color:#E7D8CA; padding:20px; border-radius:12px; margin:32px 0; text-align:center;">
-        <p style="font-family:'Bebas Neue',sans-serif; font-size:1.4rem; margin:0;">"La moda es la forma más inmediata de expresar tu identidad."</p>
-        <p style="font-family:'Poppins',sans-serif; font-size:0.8rem; color:#AC9185; margin-top:4px;">— GRWU Team</p>
+      <div class="quote-box">
+        <p class="quote-text">"La moda es la forma más inmediata de expresar tu identidad."</p>
+        <p class="quote-author">— GRWU Team</p>
       </div>
 
-      <p>¿Listo para renovar tu estilo este otoño? Explora nuestro <a href="catalogo.html" style="color:#531C22; font-weight:600;">catálogo</a> y encuentra las prendas que te harán brillar.</p>
-
+      <p>¿Listo para renovar tu estilo este otoño? Explora nuestro <a href="catalogo.html" class="inline-link">catálogo</a> y encuentra las prendas que te harán brillar.</p>
+    
     </div>
 
-    <!-- ===== BOTONES COMPARTIR ===== -->
-    <div style="border-top:1px solid #AC9185; padding-top:24px; margin-top:32px; display:flex; gap:16px; justify-content:center;">
-      <span style="font-family:'Poppins',sans-serif; font-size:0.85rem; color:#220707; font-weight:600;">Comparte este artículo:</span>
-      <a href="#" style="color:#531C22; text-decoration:none; font-family:'Poppins',sans-serif; font-size:0.85rem;">📘 Facebook</a>
-      <a href="#" style="color:#531C22; text-decoration:none; font-family:'Poppins',sans-serif; font-size:0.85rem;">🐦 Twitter</a>
-      <a href="#" style="color:#531C22; text-decoration:none; font-family:'Poppins',sans-serif; font-size:0.85rem;">📷 Instagram</a>
+    <!-- Boton compartir -->
+    <div class="share-section">
+      <span class="share-label">Comparte este artículo:</span>
+      <a href="#" class="share-link">📘 Facebook</a>
+      <a href="#" class="share-link">🐦 Twitter</a>
+      <a href="#" class="share-link">📷 Instagram</a>
     </div>
 
   </main>
 
-  <!-- ========== FOOTER (igual) ========== -->
-  <footer style="background:#220707; color:#E7D8CA; padding:32px 24px; font-family:'Poppins',sans-serif;">
-    <div style="max-width:1100px; margin:0 auto; display:grid; grid-template-columns:repeat(auto-fit, minmax(180px,1fr)); gap:32px;">
+  <!-- Pie de pagina -->
+  <footer class="footer-grwu">
+    <div class="footer-grid">
       <div>
-        <div style="display:flex; align-items:center; gap:8px; margin-bottom:12px;">
-          <img src="img/logo-grwu.png" alt="GRWU" style="height:32px;">
-          <span style="font-family:'Bebas Neue',sans-serif; font-size:1.4rem; color:#E7D8CA;">GRWU</span>
+        <div class="footer-brand">
+          <img src="img/logo-grwu.png" alt="GRWU" class="footer-logo" />
+          <span class="footer-brand-name">GRWU</span>
         </div>
-        <p style="font-size:0.8rem; color:#AC9185; line-height:1.6;">Get Ready With Us. Moda unisex para expresar tu estilo sin límites.</p>
+        <p class="footer-text">Get Ready With Us. Moda unisex para expresar tu estilo sin límites.</p>
       </div>
       <div>
-        <h4 style="font-family:'Bebas Neue',sans-serif; font-size:1rem; color:#E7D8CA; margin-bottom:8px;">Links Rápidos</h4>
-        <a href="#" style="display:block; color:#AC9185; text-decoration:none; font-size:0.8rem; margin-bottom:4px;">Cómo comprar</a>
-        <a href="#" style="display:block; color:#AC9185; text-decoration:none; font-size:0.8rem; margin-bottom:4px;">Devoluciones</a>
-        <a href="#" style="display:block; color:#AC9185; text-decoration:none; font-size:0.8rem; margin-bottom:4px;">Tiempos de despacho</a>
+        <h4 class="footer-heading">Links Rápidos</h4>
+        <a href="#" class="footer-link">Cómo comprar</a>
+        <a href="#" class="footer-link">Devoluciones</a>
+        <a href="#" class="footer-link">Tiempos de despacho</a>
       </div>
       <div>
-        <h4 style="font-family:'Bebas Neue',sans-serif; font-size:1rem; color:#E7D8CA; margin-bottom:8px;">Categorías</h4>
-        <a href="catalogo.html?genero=mujer" style="display:block; color:#AC9185; text-decoration:none; font-size:0.8rem; margin-bottom:4px;">Mujer</a>
-        <a href="catalogo.html?genero=hombre" style="display:block; color:#AC9185; text-decoration:none; font-size:0.8rem; margin-bottom:4px;">Hombre</a>
-        <a href="catalogo.html?categoria=accesorios" style="display:block; color:#AC9185; text-decoration:none; font-size:0.8rem; margin-bottom:4px;">Accesorios</a>
+        <h4 class="footer-heading">Categorías</h4>
+        <a href="catalogo.html?genero=mujer" class="footer-link">Mujer</a>
+        <a href="catalogo.html?genero=hombre" class="footer-link">Hombre</a>
+        <a href="catalogo.html?categoria=accesorios" class="footer-link">Accesorios</a>
       </div>
       <div>
-        <h4 style="font-family:'Bebas Neue',sans-serif; font-size:1rem; color:#E7D8CA; margin-bottom:8px;">Contacto</h4>
-        <p style="font-size:0.8rem; color:#AC9185; margin:0;">📧 hola@grwu.cl</p>
-        <p style="font-size:0.8rem; color:#AC9185; margin:0;">📱 +56 9 1234 5678</p>
-        <div style="display:flex; gap:12px; margin-top:8px;">
-          <a href="#" style="color:#AC9185; text-decoration:none; font-size:1.2rem;">📷</a>
-          <a href="#" style="color:#AC9185; text-decoration:none; font-size:1.2rem;">📘</a>
-          <a href="#" style="color:#AC9185; text-decoration:none; font-size:1.2rem;">🐦</a>
+        <h4 class="footer-heading">Contacto</h4>
+        <p class="footer-text">📧 hola@grwu.cl</p>
+        <p class="footer-text">📱 +56 9 1234 5678</p>
+        <div class="footer-social">
+          <a href="#" class="footer-social-icon">📷</a>
+          <a href="#" class="footer-social-icon">📘</a>
+          <a href="#" class="footer-social-icon">🐦</a>
         </div>
       </div>
     </div>
-    <div style="border-top:1px solid #AC9185; margin-top:24px; padding-top:16px; text-align:center; font-size:0.7rem; color:#AC9185;">
+    <div class="footer-bottom">
       © 2026 GRWU - Get Ready With Us. Todos los derechos reservados.
     </div>
   </footer>
