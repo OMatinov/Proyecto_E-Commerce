@@ -6,7 +6,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="stylesheet" href="styles.css" />
 </head>
-<script src="cart.js"></script>
 <body>
   <main>
     <div class="promo-bar">
@@ -16,19 +15,33 @@
       <header>
         <div class="brand">
           <div class="brand-logo">
-            <img src="img/LogoTiendasUrbano.jpeg" alt="">
+            <img src="img/LogoTiendasUrbano.jpeg" alt="Logo Tiendas Urbano">
           </div>
           <div class="brand-text">
             <h1>Tiendas Urbano</h1>
             <p>CATÁLOGO</p>
           </div>
         </div>
-        <div class="login-link">
-          <a href="index.html">Volver al inicio</a>
-          <a href="checkout.html"> Carrito (<span id="cart-count">0</span>)</a>
-        </div>
+        <!-- Menú de navegación unificado -->
+        <nav class="main-nav">
+          <a href="index.html">Inicio</a>
+          <a href="catalogo.html" class="active">Catálogo</a>
+          <a href="nosotros.html">Nosotros</a>
+          <a href="blogs.html">Blogs</a>
+          <a href="contacto.html">Contacto</a>
+          <a href="inicio-sesion.html">Iniciar sesión</a>
+          <a href="checkout.html">Carrito (<span id="cart-count">0</span>)</a>
+        </nav>
       </header>
 
+      <!-- Filtros de Género -->
+      <div class="gender-filters">
+        <button class="filter-gender active" data-gender="todos">Todos</button>
+        <button class="filter-gender" data-gender="mujer">Mujer</button>
+        <button class="filter-gender" data-gender="hombre">Hombre</button>
+      </div>
+
+      <!-- Filtros de Categoría -->
       <section class="catalog-toolbar section">
         <div class="catalog-filters">
           <button class="filter-button active" data-category="todos">Todos</button>
@@ -47,884 +60,10 @@
         </div>
       </section>
 
-      <!-- GRID DE PRODUCTOS -->
+      <!-- Grid de Productos Dinámico -->
       <section class="section">
-        <div class="product-grid">
-          <!-- ABRIGOS -->
-          <a href="producto.html?id=abrigo1" class="product-card-link">
-            <article class="product-card cat-abrigos">
-              <div class="product-card-image">
-                <img src="img/abrigo1.png" alt="Abrigo Classic Camel">
-              </div>
-              <div class="product-body">
-                <p class="product-category">Abrigos</p>
-                <h4 class="product-name">Abrigo Classic Camel</h4>
-                <p class="product-price">$18.990</p>
-              </div>
-            </article>
-          </a>
-          <a href="producto.html?id=abrigo2" class="product-card-link">
-            <article class="product-card cat-abrigos">
-              <div class="product-card-image">
-                <img src="img/abrigo2.png" alt="Blazer Coat City Café">
-              </div>
-              <div class="product-body">
-                <p class="product-category">Abrigos</p>
-                <h4 class="product-name">Blazer Coat City Café</h4>
-                <p class="product-price">$16.990</p>
-              </div>
-            </article>
-          </a>
-          <a href="producto.html?id=abrigo3" class="product-card-link">
-            <article class="product-card cat-abrigos">
-              <div class="product-card-image">
-                <img src="img/abrigo3.png" alt="Cardigan Urbano Arena">
-              </div>
-              <div class="product-body">
-                <p class="product-category">Abrigos</p>
-                <h4 class="product-name">Cardigan Urbano Arena</h4>
-                <p class="product-price">$14.990</p>
-              </div>
-            </article>
-          </a>
-
-          <!-- ACCESORIOS -->
-          <a href="producto.html?id=accesorio1" class="product-card-link">
-            <article class="product-card cat-accesorios">
-              <div class="product-card-image">
-                <img src="img/accesorio1.png" alt="Pinza Azul Pastel">
-              </div>
-              <div class="product-body">
-                <p class="product-category">Accesorios</p>
-                <h4 class="product-name">Pinza Azul Pastel</h4>
-                <p class="product-price">$2.990</p>
-              </div>
-            </article>
-          </a>
-          <a href="producto.html?id=accesorio2" class="product-card-link">
-            <article class="product-card cat-accesorios">
-              <div class="product-card-image">
-                <img src="img/accesorio2.png" alt="Pinza Black Matte">
-              </div>
-              <div class="product-body">
-                <p class="product-category">Accesorios</p>
-                <h4 class="product-name">Pinza Black Matte</h4>
-                <p class="product-price">$2.990</p>
-              </div>
-            </article>
-          </a>
-          <a href="producto.html?id=accesorio3" class="product-card-link">
-            <article class="product-card cat-accesorios">
-              <div class="product-card-image">
-                <img src="img/accesorio3.png" alt="Pinza Carey Clásica">
-              </div>
-              <div class="product-body">
-                <p class="product-category">Accesorios</p>
-                <h4 class="product-name">Pinza Carey Clásica</h4>
-                <p class="product-price">$2.990</p>
-              </div>
-            </article>
-          </a>
-          <a href="producto.html?id=accesorio4" class="product-card-link">
-            <article class="product-card cat-accesorios">
-              <div class="product-card-image">
-                <img src="img/accesorio4.png" alt="Collar Charm Multicolor">
-              </div>
-              <div class="product-body">
-                <p class="product-category">Accesorios</p>
-                <h4 class="product-name">Collar Charm Multicolor</h4>
-                <p class="product-price">$8.990</p>
-              </div>
-            </article>
-          </a>
-          <a href="producto.html?id=accesorio5" class="product-card-link">
-            <article class="product-card cat-accesorios">
-              <div class="product-card-image">
-                <img src="img/accesorio5.png" alt="Collar Medallas Astro">
-              </div>
-              <div class="product-body">
-                <p class="product-category">Accesorios</p>
-                <h4 class="product-name">Collar Medallas Astro</h4>
-                <p class="product-price">$6.990</p>
-              </div>
-            </article>
-          </a>
-          <a href="producto.html?id=accesorio6" class="product-card-link">
-            <article class="product-card cat-accesorios">
-              <div class="product-card-image">
-                <img src="img/accesorio6.png" alt="Bolso Macramé Arena">
-              </div>
-              <div class="product-body">
-                <p class="product-category">Accesorios</p>
-                <h4 class="product-name">Bolso Macramé Arena</h4>
-                <p class="product-price">$12.990</p>
-              </div>
-            </article>
-          </a>
-          <a href="producto.html?id=accesorio7" class="product-card-link">
-            <article class="product-card cat-accesorios">
-              <div class="product-card-image">
-                <img src="img/accesorio7.png" alt="Bolso Cuerda Black Gold">
-              </div>
-              <div class="product-body">
-                <p class="product-category">Accesorios</p>
-                <h4 class="product-name">Bolso Cuerda Black Gold</h4>
-                <p class="product-price">$13.990</p>
-              </div>
-            </article>
-          </a>
-          <a href="producto.html?id=accesorio8" class="product-card-link">
-            <article class="product-card cat-accesorios">
-              <div class="product-card-image">
-                <img src="img/accesorio8.png" alt="Bandolera Minimal Black">
-              </div>
-              <div class="product-body">
-                <p class="product-category">Accesorios</p>
-                <h4 class="product-name">Bandolera Minimal Black</h4>
-                <p class="product-price">$11.990</p>
-              </div>
-            </article>
-          </a>
-          <a href="producto.html?id=accesorio9" class="product-card-link">
-            <article class="product-card cat-accesorios">
-              <div class="product-card-image">
-                <img src="img/accesorio9.png" alt="Tote Básico Black">
-              </div>
-              <div class="product-body">
-                <p class="product-category">Accesorios</p>
-                <h4 class="product-name">Tote Básico Black</h4>
-                <p class="product-price">$15.990</p>
-              </div>
-            </article>
-          </a>
-          <a href="producto.html?id=accesorio10" class="product-card-link">
-            <article class="product-card cat-accesorios">
-              <div class="product-card-image">
-                <img src="img/accesorio10.png" alt="Tote Urban Caramel">
-              </div>
-              <div class="product-body">
-                <p class="product-category">Accesorios</p>
-                <h4 class="product-name">Tote Urban Caramel</h4>
-                <p class="product-price">$16.990</p>
-              </div>
-            </article>
-          </a>
-          <a href="producto.html?id=accesorio11" class="product-card-link">
-            <article class="product-card cat-accesorios">
-              <div class="product-card-image">
-                <img src="img/accesorio11.png" alt="Mochila Urban Waterproof">
-              </div>
-              <div class="product-body">
-                <p class="product-category">Accesorios</p>
-                <h4 class="product-name">Mochila Urban Waterproof</h4>
-                <p class="product-price">$18.990</p>
-              </div>
-            </article>
-          </a>
-          <a href="producto.html?id=accesorio12" class="product-card-link">
-            <article class="product-card cat-accesorios">
-              <div class="product-card-image">
-                <img src="img/accesorio12.png" alt="Cinturón Western Black">
-              </div>
-              <div class="product-body">
-                <p class="product-category">Accesorios</p>
-                <h4 class="product-name">Cinturón Western Black</h4>
-                <p class="product-price">$9.990</p>
-              </div>
-            </article>
-          </a>
-          <a href="producto.html?id=accesorio13" class="product-card-link">
-            <article class="product-card cat-accesorios">
-              <div class="product-card-image">
-                <img src="img/accesorio13.png" alt="Cinturón Aro Silver">
-              </div>
-              <div class="product-body">
-                <p class="product-category">Accesorios</p>
-                <h4 class="product-name">Cinturón Aro Silver</h4>
-                <p class="product-price">$8.990</p>
-              </div>
-            </article>
-          </a>
-          <a href="producto.html?id=accesorio14" class="product-card-link">
-            <article class="product-card cat-accesorios">
-              <div class="product-card-image">
-                <img src="img/accesorio14.png" alt="Gorra Dancing Queen">
-              </div>
-              <div class="product-body">
-                <p class="product-category">Accesorios</p>
-                <h4 class="product-name">Gorra Dancing Queen</h4>
-                <p class="product-price">$13.990</p>
-              </div>
-            </article>
-          </a>
-
-          <!-- CALZADO -->
-          <a href="producto.html?id=calzado1" class="product-card-link">
-            <article class="product-card cat-calzado">
-              <div class="product-card-image">
-                <img src="img/calzado1.png" alt="Zapatillas Classic White">
-              </div>
-              <div class="product-body">
-                <p class="product-category">Calzado</p>
-                <h4 class="product-name">Zapatillas Classic White</h4>
-                <p class="product-price">$34.990</p>
-              </div>
-            </article>
-          </a>
-          <a href="producto.html?id=calzado2" class="product-card-link">
-            <article class="product-card cat-calzado">
-              <div class="product-card-image">
-                <img src="img/calzado2.png" alt="Zapatillas Old School Black">
-              </div>
-              <div class="product-body">
-                <p class="product-category">Calzado</p>
-                <h4 class="product-name">Zapatillas Old School Black</h4>
-                <p class="product-price">$32.990</p>
-              </div>
-            </article>
-          </a>
-          <a href="producto.html?id=calzado3" class="product-card-link">
-            <article class="product-card cat-calzado">
-              <div class="product-card-image">
-                <img src="img/calzado3.png" alt="Zapatillas Retro Stripe">
-              </div>
-              <div class="product-body">
-                <p class="product-category">Calzado</p>
-                <h4 class="product-name">Zapatillas Retro Stripe</h4>
-                <p class="product-price">$33.990</p>
-              </div>
-            </article>
-          </a>
-          <a href="producto.html?id=calzado4" class="product-card-link">
-            <article class="product-card cat-calzado">
-              <div class="product-card-image">
-                <img src="img/calzado4.png" alt="Botas Chunky Black">
-              </div>
-              <div class="product-body">
-                <p class="product-category">Calzado</p>
-                <h4 class="product-name">Botas Chunky Black</h4>
-                <p class="product-price">$39.990</p>
-              </div>
-            </article>
-          </a>
-          <a href="producto.html?id=calzado5" class="product-card-link">
-            <article class="product-card cat-calzado">
-              <div class="product-card-image">
-                <img src="img/calzado5.png" alt="Oxford Chunky Black">
-              </div>
-              <div class="product-body">
-                <p class="product-category">Calzado</p>
-                <h4 class="product-name">Oxford Chunky Black</h4>
-                <p class="product-price">$36.990</p>
-              </div>
-            </article>
-          </a>
-
-          <!-- CHAQUETAS -->
-          <a href="producto.html?id=chaqueta1" class="product-card-link">
-            <article class="product-card cat-chaquetas">
-              <div class="product-card-image">
-                <img src="img/chaqueta1.png" alt="Chaqueta Acolchada Grafito">
-              </div>
-              <div class="product-body">
-                <p class="product-category">Chaquetas</p>
-                <h4 class="product-name">Chaqueta Acolchada Grafito</h4>
-                <p class="product-price">$26.990</p>
-              </div>
-            </article>
-          </a>
-          <a href="producto.html?id=chaqueta2" class="product-card-link">
-            <article class="product-card cat-chaquetas">
-              <div class="product-card-image">
-                <img src="img/chaqueta2.png" alt="Chaqueta Biker Black">
-              </div>
-              <div class="product-body">
-                <p class="product-category">Chaquetas</p>
-                <h4 class="product-name">Chaqueta Biker Black</h4>
-                <p class="product-price">$31.990</p>
-              </div>
-            </article>
-          </a>
-          <a href="producto.html?id=chaqueta3" class="product-card-link">
-            <article class="product-card cat-chaquetas">
-              <div class="product-card-image">
-                <img src="img/chaqueta3.png" alt="Chaqueta Oversize Olive">
-              </div>
-              <div class="product-body">
-                <p class="product-category">Chaquetas</p>
-                <h4 class="product-name">Chaqueta Oversize Olive</h4>
-                <p class="product-price">$25.990</p>
-              </div>
-            </article>
-          </a>
-          <a href="producto.html?id=chaqueta4" class="product-card-link">
-            <article class="product-card cat-chaquetas">
-              <div class="product-card-image">
-                <img src="img/chaqueta4.png" alt="Chaqueta Oversize Borgoña">
-              </div>
-              <div class="product-body">
-                <p class="product-category">Chaquetas</p>
-                <h4 class="product-name">Chaqueta Oversize Borgoña</h4>
-                <p class="product-price">$25.990</p>
-              </div>
-            </article>
-          </a>
-          <a href="producto.html?id=chaqueta5" class="product-card-link">
-            <article class="product-card cat-chaquetas">
-              <div class="product-card-image">
-                <img src="img/chaqueta5.png" alt="Chaleco Puffer Black">
-              </div>
-              <div class="product-body">
-                <p class="product-category">Chaquetas</p>
-                <h4 class="product-name">Chaleco Puffer Black</h4>
-                <p class="product-price">$21.990</p>
-              </div>
-            </article>
-          </a>
-          <a href="producto.html?id=chaqueta6" class="product-card-link">
-            <article class="product-card cat-chaquetas">
-              <div class="product-card-image">
-                <img src="img/chaqueta6.png" alt="Chaqueta Biker Black II">
-              </div>
-              <div class="product-body">
-                <p class="product-category">Chaquetas</p>
-                <h4 class="product-name">Chaqueta Biker Black II</h4>
-                <p class="product-price">$31.990</p>
-              </div>
-            </article>
-          </a>
-
-          <!-- CONJUNTOS -->
-          <a href="producto.html?id=conjunto1" class="product-card-link">
-            <article class="product-card cat-conjuntos">
-              <div class="product-card-image">
-                <img src="img/conjunto1.png" alt="Set Chochet Cream">
-              </div>
-              <div class="product-body">
-                <p class="product-category">Conjuntos</p>
-                <h4 class="product-name">Set Chochet Cream</h4>
-                <p class="product-price">$26.990</p>
-              </div>
-            </article>
-          </a>
-          <a href="producto.html?id=conjunto2" class="product-card-link">
-            <article class="product-card cat-conjuntos">
-              <div class="product-card-image">
-                <img src="img/conjunto2.png" alt="Set Chochet Black">
-              </div>
-              <div class="product-body">
-                <p class="product-category">Conjuntos</p>
-                <h4 class="product-name">Set Chochet Black</h4>
-                <p class="product-price">$26.990</p>
-              </div>
-            </article>
-          </a>
-          <a href="producto.html?id=conjunto3" class="product-card-link">
-            <article class="product-card cat-conjuntos">
-              <div class="product-card-image">
-                <img src="img/conjunto3.png" alt="Set Beach Layer">
-              </div>
-              <div class="product-body">
-                <p class="product-category">Conjuntos</p>
-                <h4 class="product-name">Set Beach Layer</h4>
-                <p class="product-price">$31.990</p>
-              </div>
-            </article>
-          </a>
-          <a href="producto.html?id=conjunto4" class="product-card-link">
-            <article class="product-card cat-conjuntos">
-              <div class="product-card-image">
-                <img src="img/conjunto4.png" alt="Set Knit Wide Leg">
-              </div>
-              <div class="product-body">
-                <p class="product-category">Conjuntos</p>
-                <h4 class="product-name">Set Knit Wide Leg</h4>
-                <p class="product-price">$28.990</p>
-              </div>
-            </article>
-          </a>
-
-          <!-- FALDAS -->
-          <a href="producto.html?id=falda1" class="product-card-link">
-            <article class="product-card cat-faldas">
-              <div class="product-card-image">
-                <img src="img/falda1.png" alt="Mini Falda Denim Indigo">
-              </div>
-              <div class="product-body">
-                <p class="product-category">Faldas</p>
-                <h4 class="product-name">Mini Falda Denim Indigo</h4>
-                <p class="product-price">$11.990</p>
-              </div>
-            </article>
-          </a>
-          <a href="producto.html?id=falda2" class="product-card-link">
-            <article class="product-card cat-faldas">
-              <div class="product-card-image">
-                <img src="img/falda2.png" alt="Falda Knit Black">
-              </div>
-              <div class="product-body">
-                <p class="product-category">Faldas</p>
-                <h4 class="product-name">Falda Knit Black</h4>
-                <p class="product-price">$9.990</p>
-              </div>
-            </article>
-          </a>
-          <a href="producto.html?id=falda3" class="product-card-link">
-            <article class="product-card cat-faldas">
-              <div class="product-card-image">
-                <img src="img/falda3.png" alt="Mini Falda Animal Print">
-              </div>
-              <div class="product-body">
-                <p class="product-category">Faldas</p>
-                <h4 class="product-name">Mini Falda Animal Print</h4>
-                <p class="product-price">$12.990</p>
-              </div>
-            </article>
-          </a>
-          <a href="producto.html?id=falda4" class="product-card-link">
-            <article class="product-card cat-faldas">
-              <div class="product-card-image">
-                <img src="img/falda4.png" alt="Falda Midi Tiered Gris">
-              </div>
-              <div class="product-body">
-                <p class="product-category">Faldas</p>
-                <h4 class="product-name">Falda Midi Tiered Gris</h4>
-                <p class="product-price">$14.990</p>
-              </div>
-            </article>
-          </a>
-          <a href="producto.html?id=falda5" class="product-card-link">
-            <article class="product-card cat-faldas">
-              <div class="product-card-image">
-                <img src="img/falda5.png" alt="Mini Falda Wrap Black">
-              </div>
-              <div class="product-body">
-                <p class="product-category">Faldas</p>
-                <h4 class="product-name">Mini Falda Wrap Black</h4>
-                <p class="product-price">$10.990</p>
-              </div>
-            </article>
-          </a>
-          <a href="producto.html?id=falda6" class="product-card-link">
-            <article class="product-card cat-faldas">
-              <div class="product-card-image">
-                <img src="img/falda6.png" alt="Falda Wrap Olive Midi">
-              </div>
-              <div class="product-body">
-                <p class="product-category">Faldas</p>
-                <h4 class="product-name">Falda Wrap Olive Midi</h4>
-                <p class="product-price">$12.990</p>
-              </div>
-            </article>
-          </a>
-          <a href="producto.html?id=falda7" class="product-card-link">
-            <article class="product-card cat-faldas">
-              <div class="product-card-image">
-                <img src="img/falda7.png" alt="Mini Falda Denim Plisada">
-              </div>
-              <div class="product-body">
-                <p class="product-category">Faldas</p>
-                <h4 class="product-name">Mini Falda Denim Plisada</h4>
-                <p class="product-price">$11.990</p>
-              </div>
-            </article>
-          </a>
-          <a href="producto.html?id=falda8" class="product-card-link">
-            <article class="product-card cat-faldas">
-              <div class="product-card-image">
-                <img src="img/falda8.png" alt="Falda Crochet Cream">
-              </div>
-              <div class="product-body">
-                <p class="product-category">Faldas</p>
-                <h4 class="product-name">Falda Crochet Cream</h4>
-                <p class="product-price">$9.990</p>
-              </div>
-            </article>
-          </a>
-
-          <!-- PANTALONES -->
-          <a href="producto.html?id=pantalon1" class="product-card-link">
-            <article class="product-card cat-pantalones">
-              <div class="product-card-image">
-                <img src="img/pantalon1.png" alt="Pantalón Knit Cream">
-              </div>
-              <div class="product-body">
-                <p class="product-category">Pantalones</p>
-                <h4 class="product-name">Pantalón Knit Cream</h4>
-                <p class="product-price">$16.990</p>
-              </div>
-            </article>
-          </a>
-          <a href="producto.html?id=pantalon2" class="product-card-link">
-            <article class="product-card cat-pantalones">
-              <div class="product-card-image">
-                <img src="img/pantalon2.png" alt="Jeans Wide Choco">
-              </div>
-              <div class="product-body">
-                <p class="product-category">Pantalones</p>
-                <h4 class="product-name">Jeans Wide Choco</h4>
-                <p class="product-price">$19.990</p>
-              </div>
-            </article>
-          </a>
-          <a href="producto.html?id=pantalon3" class="product-card-link">
-            <article class="product-card cat-pantalones">
-              <div class="product-card-image">
-                <img src="img/pantalon3.png" alt="Jeans Wide Black">
-              </div>
-              <div class="product-body">
-                <p class="product-category">Pantalones</p>
-                <h4 class="product-name">Jeans Wide Black</h4>
-                <p class="product-price">$21.990</p>
-              </div>
-            </article>
-          </a>
-          <a href="producto.html?id=pantalon4" class="product-card-link">
-            <article class="product-card cat-pantalones">
-              <div class="product-card-image">
-                <img src="img/pantalon4.png" alt="Jeans Sailor Indigo">
-              </div>
-              <div class="product-body">
-                <p class="product-category">Pantalones</p>
-                <h4 class="product-name">Jeans Sailor Indigo</h4>
-                <p class="product-price">$23.990</p>
-              </div>
-            </article>
-          </a>
-          <a href="producto.html?id=pantalon5" class="product-card-link">
-            <article class="product-card cat-pantalones">
-              <div class="product-card-image">
-                <img src="img/pantalon5.png" alt="Jeans Wide Azul Medio">
-              </div>
-              <div class="product-body">
-                <p class="product-category">Pantalones</p>
-                <h4 class="product-name">Jeans Wide Azul Medio</h4>
-                <p class="product-price">$21.990</p>
-              </div>
-            </article>
-          </a>
-
-          <!-- POLERAS -->
-          <a href="producto.html?id=polera1" class="product-card-link">
-            <article class="product-card cat-poleras">
-              <div class="product-card-image">
-                <img src="img/polera1.png" alt="Top Rib Azul">
-              </div>
-              <div class="product-body">
-                <p class="product-category">Poleras</p>
-                <h4 class="product-name">Top Rib Azul</h4>
-                <p class="product-price">$5.990</p>
-              </div>
-            </article>
-          </a>
-          <a href="producto.html?id=polera2" class="product-card-link">
-            <article class="product-card cat-poleras">
-              <div class="product-card-image">
-                <img src="img/polera2.png" alt="Top Rib Verde">
-              </div>
-              <div class="product-body">
-                <p class="product-category">Poleras</p>
-                <h4 class="product-name">Top Rib Verde</h4>
-                <p class="product-price">$5.990</p>
-              </div>
-            </article>
-          </a>
-          <a href="producto.html?id=polera3" class="product-card-link">
-            <article class="product-card cat-poleras">
-              <div class="product-card-image">
-                <img src="img/polera3.png" alt="Top Rib Grafito">
-              </div>
-              <div class="product-body">
-                <p class="product-category">Poleras</p>
-                <h4 class="product-name">Top Rib Grafito</h4>
-                <p class="product-price">$5.990</p>
-              </div>
-            </article>
-          </a>
-          <a href="producto.html?id=polera4" class="product-card-link">
-            <article class="product-card cat-poleras">
-              <div class="product-card-image">
-                <img src="img/polera4.png" alt="Polera Basic Off White">
-              </div>
-              <div class="product-body">
-                <p class="product-category">Poleras</p>
-                <h4 class="product-name">Polera Basic Off White</h4>
-                <p class="product-price">$4.490</p>
-              </div>
-            </article>
-          </a>
-          <a href="producto.html?id=polera5" class="product-card-link">
-            <article class="product-card cat-poleras">
-              <div class="product-card-image">
-                <img src="img/polera5.png" alt="Top Crochet Cream">
-              </div>
-              <div class="product-body">
-                <p class="product-category">Poleras</p>
-                <h4 class="product-name">Top Crochet Cream</h4>
-                <p class="product-price">$9.990</p>
-              </div>
-            </article>
-          </a>
-          <a href="producto.html?id=polera6" class="product-card-link">
-            <article class="product-card cat-poleras">
-              <div class="product-card-image">
-                <img src="img/polera6.png" alt="Top Crochet Black">
-              </div>
-              <div class="product-body">
-                <p class="product-category">Poleras</p>
-                <h4 class="product-name">Top Crochet Black</h4>
-                <p class="product-price">$9.990</p>
-              </div>
-            </article>
-          </a>
-          <a href="producto.html?id=polera7" class="product-card-link">
-            <article class="product-card cat-poleras">
-              <div class="product-card-image">
-                <img src="img/polera7.png" alt="Top Halter Black">
-              </div>
-              <div class="product-body">
-                <p class="product-category">Poleras</p>
-                <h4 class="product-name">Top Halter Black</h4>
-                <p class="product-price">$7.490</p>
-              </div>
-            </article>
-          </a>
-
-          <!-- POLERONES -->
-          <a href="producto.html?id=poleron1" class="product-card-link">
-            <article class="product-card cat-polerones">
-              <div class="product-card-image">
-                <img src="img/poleron1.png" alt="Polerón NWRK Navy">
-              </div>
-              <div class="product-body">
-                <p class="product-category">Polerones</p>
-                <h4 class="product-name">Polerón NWRK Navy</h4>
-                <p class="product-price">$19.990</p>
-              </div>
-            </article>
-          </a>
-          <a href="producto.html?id=poleron2" class="product-card-link">
-            <article class="product-card cat-polerones">
-              <div class="product-card-image">
-                <img src="img/poleron2.png" alt="Polerón Knoxville Grey">
-              </div>
-              <div class="product-body">
-                <p class="product-category">Polerones</p>
-                <h4 class="product-name">Polerón Knoxville Grey</h4>
-                <p class="product-price">$18.990</p>
-              </div>
-            </article>
-          </a>
-          <a href="producto.html?id=poleron3" class="product-card-link">
-            <article class="product-card cat-polerones">
-              <div class="product-card-image">
-                <img src="img/poleron3.png" alt="Polerón Hoodie Brooklyn Black">
-              </div>
-              <div class="product-body">
-                <p class="product-category">Polerones</p>
-                <h4 class="product-name">Polerón Hoodie Brooklyn Black</h4>
-                <p class="product-price">$21.990</p>
-              </div>
-            </article>
-          </a>
-          <a href="producto.html?id=poleron4" class="product-card-link">
-            <article class="product-card cat-polerones">
-              <div class="product-card-image">
-                <img src="img/poleron4.png" alt="Polerón Hoodie Angel Grey">
-              </div>
-              <div class="product-body">
-                <p class="product-category">Polerones</p>
-                <h4 class="product-name">Polerón Hoodie Angel Grey</h4>
-                <p class="product-price">$20.990</p>
-              </div>
-            </article>
-          </a>
-
-          <!-- SHORTS -->
-          <a href="producto.html?id=short1" class="product-card-link">
-            <article class="product-card cat-shorts">
-              <div class="product-card-image">
-                <img src="img/short1.png" alt="Short Denim Black Chain">
-              </div>
-              <div class="product-body">
-                <p class="product-category">Shorts</p>
-                <h4 class="product-name">Short Denim Black Chain</h4>
-                <p class="product-price">$10.990</p>
-              </div>
-            </article>
-          </a>
-          <a href="producto.html?id=short2" class="product-card-link">
-            <article class="product-card cat-shorts">
-              <div class="product-card-image">
-                <img src="img/short2.png" alt="Short Denim Doblado Azul">
-              </div>
-              <div class="product-body">
-                <p class="product-category">Shorts</p>
-                <h4 class="product-name">Short Denim Doblado Azul</h4>
-                <p class="product-price">$9.990</p>
-              </div>
-            </article>
-          </a>
-          <a href="producto.html?id=short3" class="product-card-link">
-            <article class="product-card cat-shorts">
-              <div class="product-card-image">
-                <img src="img/short3.png" alt="Short Denim Light">
-              </div>
-              <div class="product-body">
-                <p class="product-category">Shorts</p>
-                <h4 class="product-name">Short Denim Light</h4>
-                <p class="product-price">$9.990</p>
-              </div>
-            </article>
-          </a>
-          <a href="producto.html?id=short4" class="product-card-link">
-            <article class="product-card cat-shorts">
-              <div class="product-card-image">
-                <img src="img/short4.png" alt="Short Denim Medio">
-              </div>
-              <div class="product-body">
-                <p class="product-category">Shorts</p>
-                <h4 class="product-name">Short Denim Medio</h4>
-                <p class="product-price">$9.990</p>
-              </div>
-            </article>
-          </a>
-          <a href="producto.html?id=short5" class="product-card-link">
-            <article class="product-card cat-shorts">
-              <div class="product-card-image">
-                <img src="img/short5.png" alt="Short Tailored Black">
-              </div>
-              <div class="product-body">
-                <p class="product-category">Shorts</p>
-                <h4 class="product-name">Short Tailored Black</h4>
-                <p class="product-price">$12.990</p>
-              </div>
-            </article>
-          </a>
-          <a href="producto.html?id=short6" class="product-card-link">
-            <article class="product-card cat-shorts">
-              <div class="product-card-image">
-                <img src="img/short6.png" alt="Short Tailored Sand">
-              </div>
-              <div class="product-body">
-                <p class="product-category">Shorts</p>
-                <h4 class="product-name">Short Tailored Sand</h4>
-                <p class="product-price">$12.990</p>
-              </div>
-            </article>
-          </a>
-
-          <!-- SUÉTERES -->
-          <a href="producto.html?id=sueter1" class="product-card-link">
-            <article class="product-card cat-sueters">
-              <div class="product-card-image">
-                <img src="img/sueter1.png" alt="Suéter Crochet Cream">
-              </div>
-              <div class="product-body">
-                <p class="product-category">Suéters</p>
-                <h4 class="product-name">Suéter Crochet Cream</h4>
-                <p class="product-price">$16.990</p>
-              </div>
-            </article>
-          </a>
-          <a href="producto.html?id=sueter2" class="product-card-link">
-            <article class="product-card cat-sueters">
-              <div class="product-card-image">
-                <img src="img/sueter2.png" alt="Chaleco Largo Beach Cream">
-              </div>
-              <div class="product-body">
-                <p class="product-category">Suéters</p>
-                <h4 class="product-name">Chaleco Largo Beach Cream</h4>
-                <p class="product-price">$18.990</p>
-              </div>
-            </article>
-          </a>
-
-          <!-- VESTIDOS -->
-          <a href="producto.html?id=vestido1" class="product-card-link">
-            <article class="product-card cat-vestidos">
-              <div class="product-card-image">
-                <img src="img/vestido1.png" alt="Vestido Bubble Black">
-              </div>
-              <div class="product-body">
-                <p class="product-category">Vestidos</p>
-                <h4 class="product-name">Vestido Bubble Black</h4>
-                <p class="product-price">$21.990</p>
-              </div>
-            </article>
-          </a>
-          <a href="producto.html?id=vestido2" class="product-card-link">
-            <article class="product-card cat-vestidos">
-              <div class="product-card-image">
-                <img src="img/vestido2.png" alt="Vestido Dark Borgoña Split">
-              </div>
-              <div class="product-body">
-                <p class="product-category">Vestidos</p>
-                <h4 class="product-name">Vestido Dark Borgoña Split</h4>
-                <p class="product-price">$24.990</p>
-              </div>
-            </article>
-          </a>
-          <a href="producto.html?id=vestido3" class="product-card-link">
-            <article class="product-card cat-vestidos">
-              <div class="product-card-image">
-                <img src="img/vestido3.png" alt="Vestido Skater Borgoña">
-              </div>
-              <div class="product-body">
-                <p class="product-category">Vestidos</p>
-                <h4 class="product-name">Vestido Skater Borgoña</h4>
-                <p class="product-price">$19.990</p>
-              </div>
-            </article>
-          </a>
-          <a href="producto.html?id=vestido4" class="product-card-link">
-            <article class="product-card cat-vestidos">
-              <div class="product-card-image">
-                <img src="img/vestido4.png" alt="Vestido Corduroy Button Black">
-              </div>
-              <div class="product-body">
-                <p class="product-category">Vestidos</p>
-                <h4 class="product-name">Vestido Corduroy Button Black</h4>
-                <p class="product-price">$9.990</p>
-              </div>
-            </article>
-          </a>
-          <a href="producto.html?id=vestido5" class="product-card-link">
-            <article class="product-card cat-vestidos">
-              <div class="product-card-image">
-                <img src="img/vestido5.png" alt="Vestido Strapless Choco">
-              </div>
-              <div class="product-body">
-                <p class="product-category">Vestidos</p>
-                <h4 class="product-name">Vestido Strapless Choco</h4>
-                <p class="product-price">$9.990</p>
-              </div>
-            </article>
-          </a>
-          <a href="producto.html?id=vestido6" class="product-card-link">
-            <article class="product-card cat-vestidos">
-              <div class="product-card-image">
-                <img src="img/vestido6.png" alt="Vestido Midi Olive Split">
-              </div>
-              <div class="product-body">
-                <p class="product-category">Vestidos</p>
-                <h4 class="product-name">Vestido Midi Olive Split</h4>
-                <p class="product-price">$9.990</p>
-              </div>
-            </article>
-          </a>
-          <a href="producto.html?id=vestido7" class="product-card-link">
-            <article class="product-card cat-vestidos">
-              <div class="product-card-image">
-                <img src="img/vestido7.png" alt="Vestido Mesh Ombre Grey">
-              </div>
-              <div class="product-body">
-                <p class="product-category">Vestidos</p>
-                <h4 class="product-name">Vestido Mesh Ombre Grey</h4>
-                <p class="product-price">$9.990</p>
-              </div>
-            </article>
-          </a>
+        <div class="product-grid" id="product-grid">
+          <!-- Se llena con JavaScript -->
         </div>
       </section>
     </div>
@@ -942,40 +81,87 @@
     </footer>
   </main>
 
+  <!-- Scripts -->
+  <script src="cart.js"></script>
+  <script src="productos.js"></script>
   <script>
-    // Script de filtrado
-    const filterButtons = document.querySelectorAll('.filter-button');
-    const productCards = document.querySelectorAll('.product-card');
+    // Actualizar contador del carrito
+    document.getElementById("cart-count").textContent =
+      getCart().reduce((total, item) => total + item.qty, 0);
 
-    filterButtons.forEach(btn => {
-      btn.addEventListener('click', () => {
-        filterButtons.forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        const category = btn.getAttribute('data-category');
+    // Lógica de renderizado y filtros
+    (function() {
+      const grid = document.getElementById('product-grid');
+      const filterButtons = document.querySelectorAll('.filter-button');
+      const genderButtons = document.querySelectorAll('.filter-gender');
 
-        productCards.forEach(card => {
-          if (category === 'todos') {
-            card.style.display = 'block';
-          } else {
-            const hasClass = card.classList.contains('cat-' + category);
-            card.style.display = hasClass ? 'block' : 'none';
-          }
+      let categoriaActual = 'todos';
+      let generoActual = 'todos';
+
+      function renderizar() {
+        let filtrados = productos;
+
+        if (categoriaActual !== 'todos') {
+          filtrados = filtrados.filter(p => p.categoria === categoriaActual);
+        }
+        if (generoActual !== 'todos') {
+          filtrados = filtrados.filter(p => p.genero === generoActual);
+        }
+
+        grid.innerHTML = '';
+        if (filtrados.length === 0) {
+          grid.innerHTML = '<p style="grid-column:1/-1; text-align:center; padding:40px; color:#666;">No hay productos que coincidan con los filtros.</p>';
+          return;
+        }
+
+        filtrados.forEach(p => {
+          const enlace = document.createElement('a');
+          enlace.href = `producto.html?id=${p.id}`;
+          enlace.className = 'product-card-link';
+
+          const card = document.createElement('article');
+          card.className = 'product-card';
+
+          card.innerHTML = `
+            <div class="product-card-image">
+              <img src="${p.imagen}" alt="${p.nombre}">
+            </div>
+            <div class="product-body">
+              <p class="product-category">${p.categoria}</p>
+              <h4 class="product-name">${p.nombre}</h4>
+              <p class="product-price">$${p.precio.toLocaleString('es-CL')}</p>
+            </div>
+          `;
+
+          enlace.appendChild(card);
+          grid.appendChild(enlace);
         });
+      }
 
-        // Scroll suave al grid
-        const grid = document.querySelector('.product-grid');
-        if (grid) {
+      // Eventos de categoría
+      filterButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+          filterButtons.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          categoriaActual = btn.dataset.category;
+          renderizar();
           const y = grid.getBoundingClientRect().top + window.scrollY - 160;
           window.scrollTo({ top: y, behavior: 'smooth' });
-        }
+        });
       });
-    });
-  </script>
 
-  <script>
-  document.getElementById("cart-count").textContent =
-    getCart().reduce((total, item) => total + item.qty, 0);
-  </script>
+      // Eventos de género
+      genderButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+          genderButtons.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          generoActual = btn.dataset.gender;
+          renderizar();
+        });
+      });
 
+      renderizar();
+    })();
+  </script>
 </body>
 </html>
