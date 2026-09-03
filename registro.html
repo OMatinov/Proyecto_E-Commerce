@@ -4,14 +4,9 @@
   <meta charset="UTF-8" />
   <title>Tiendas Urbano - Registro</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-<<<<<<< HEAD
   <link rel="stylesheet" href="css/styles.css" />
 </head>
 <script src="js/cart.js"></script>
-=======
-  <link rel="stylesheet" href="styles.css" />
-</head>
->>>>>>> 18c7dcbb959455f4b8625e8d05d220d444fce8ad
 <body>
   <div class="container">
     <header>
@@ -24,7 +19,6 @@
           <p>Registro de nueva usuaria</p>
         </div>
       </div>
-<<<<<<< HEAD
       <nav class="main-nav">
         <a href="index.html">Inicio</a>
         <a href="catalogo.html">Catálogo</a>
@@ -34,11 +28,6 @@
         <a href="inicio-sesion.html">Iniciar sesión</a>
         <a href="checkout.html">Carrito (<span id="cart-count">0</span>)</a>
       </nav>
-=======
-      <div class="login-link">
-        <a href="index.html">Volver al inicio</a>
-      </div>
->>>>>>> 18c7dcbb959455f4b8625e8d05d220d444fce8ad
     </header>
 
     <section class="section">
@@ -107,18 +96,12 @@
     </section>
   </div>
 
-<<<<<<< HEAD
   <script src="js/regiones.js"></script>
   <script src="js/validaciones.js"></script>
   <script>
     document.getElementById("cart-count").textContent =
       getCart().reduce((total, item) => total + item.qty, 0);
 
-=======
-  <script src="regiones.js"></script>
-  <script src="validaciones.js"></script>
-  <script>
->>>>>>> 18c7dcbb959455f4b8625e8d05d220d444fce8ad
     const selectRegion = document.getElementById("regionRegistro");
     const selectComuna = document.getElementById("comunaRegistro");
     conectarRegionComuna(selectRegion, selectComuna);
