@@ -1,12 +1,16 @@
 // Usadas en registro.html, inicio-sesion.html y checkout.html.
 
 // ---------- Validación de RUN chileno ----------
-// Formato esperado: sin puntos ni guion, ej: 19011022K (7 a 9 caracteres)
 function limpiarRun(run) {
-  return run.replace(/[^0-9kK]/g, "").toUpperCase();
+  if (!run) return ""; // Protección contra null/undefined
+  return String(run).replace(/[^0-9kK]/g, "").toUpperCase();
 }
 
 function validarRun(runSucio) {
+  if (!runSucio) {
+    return { valido: false, mensaje: "El RUN es obligatorio." };
+  }
+
   const run = limpiarRun(runSucio);
 
   if (run.length < 7 || run.length > 9) {
@@ -40,23 +44,27 @@ function validarRun(runSucio) {
 }
 
 // ---------- Validación de correo ----------
-// Solo se aceptan correos @duoc.cl, @profesor.duoc.cl y @gmail.com
 function validarCorreo(correo, maxLength = 100) {
-  if (!correo) {
+  if (!correo || typeof correo !== "string") {
     return { valido: false, mensaje: "El correo es obligatorio." };
   }
-  if (correo.length > maxLength) {
+
+  const correoLimpio = correo.trim();
+
+  if (correoLimpio.length > maxLength) {
     return { valido: false, mensaje: `El correo no puede superar los ${maxLength} caracteres.` };
   }
-  const dominiosPermitidos = /@(duoc\.cl|profesor\.duoc\.cl|gmail\.com)$/i;
-  if (!dominiosPermitidos.test(correo)) {
-    return { valido: false, mensaje: "Solo se aceptan correos @duoc.cl, @profesor.duoc.cl o @gmail.com." };
+
+  // Regex ajustada para exigir caracteres válidos ANTES del @
+  const dominiosPermitidos = /^[a-zA-Z0-9._%+-]+@(duoc\.cl|profesor\.duoc\.cl|gmail\.com)$/i;
+  if (!dominiosPermitidos.test(correoLimpio)) {
+    return { valido: false, mensaje: "Solo se aceptan correos válidos de @duoc.cl, @profesor.duoc.cl o @gmail.com." };
   }
+
   return { valido: true, mensaje: "" };
 }
 
 // ---------- Validación de contraseña ----------
-// Regla: 4 a 10 caracteres (según Anexo 4, inicio de sesión)..
 function validarPassword(password, { min = 4, max = 10, exigirComplejidad = false } = {}) {
   if (!password) {
     return { valido: false, mensaje: "La contraseña es obligatoria." };
@@ -76,7 +84,6 @@ function validarPassword(password, { min = 4, max = 10, exigirComplejidad = fals
 }
 
 // ---------- Helpers de UI ----------
-// Muestra/oculta el mensaje de error asociado a un campo.
 function mostrarError(idCampo, mensaje) {
   const input = document.getElementById(idCampo);
   const error = document.getElementById(`error-${idCampo}`);

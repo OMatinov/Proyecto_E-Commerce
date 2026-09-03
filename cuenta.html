@@ -4,9 +4,14 @@
   <meta charset="UTF-8" />
   <title>Tiendas Urbano - Mi cuenta</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+<<<<<<< HEAD
   <link rel="stylesheet" href="css/styles.css" />
 </head>
 <script src="js/cart.js"></script>
+=======
+  <link rel="stylesheet" href="styles.css" />
+</head>
+>>>>>>> 18c7dcbb959455f4b8625e8d05d220d444fce8ad
 <body>
   <div class="container">
     <header>
@@ -19,6 +24,7 @@
           <p>Cuenta de usuaria registrada</p>
         </div>
       </div>
+<<<<<<< HEAD
       <nav class="main-nav">
         <a href="index.html">Inicio</a>
         <a href="catalogo.html">Catálogo</a>
@@ -28,6 +34,11 @@
         <a href="index.html" id="linkCerrarSesion">Cerrar sesión</a>
         <a href="checkout.html">Carrito (<span id="cart-count">0</span>)</a>
       </nav>
+=======
+      <div class="login-link">
+        <a href="index.html" id="linkCerrarSesion">Cerrar sesión</a>
+      </div>
+>>>>>>> 18c7dcbb959455f4b8625e8d05d220d444fce8ad
     </header>
 
     <div class="welcome-banner">
@@ -89,9 +100,12 @@
 
     renderCuenta();
 
+<<<<<<< HEAD
     document.getElementById("cart-count").textContent =
       getCart().reduce((total, item) => total + item.qty, 0);
 
+=======
+>>>>>>> 18c7dcbb959455f4b8625e8d05d220d444fce8ad
     document.getElementById("linkCerrarSesion").addEventListener("click", () => {
       localStorage.removeItem("tiendaUrbanoUsuario");
     });
