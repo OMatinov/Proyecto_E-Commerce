@@ -1,0 +1,139 @@
+/* Reset básico */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Variables globales */
+:root {
+  --color-oscuro: #220707;
+  --color-primario: #531C22;
+  --color-claro: #E7D8CA;
+  --color-gris: #AC9185;
+  --color-blanco: #FFFFFF;
+  --color-error: #B22222;
+
+  --font-titulos: 'Bebas Neue', sans-serif;
+  --font-cuerpo: 'Poppins', sans-serif;
+
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-full: 999px;
+
+  --shadow-card: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+/* Estilos base del body */
+body {
+  font-family: var(--font-cuerpo);
+  background-color: var(--color-claro);
+  color: var(--color-oscuro);
+  line-height: 1.6;
+}
+
+/* Contenedor general */
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* Botones generales */
+.btn {
+  display: inline-block;
+  padding: 10px 20px;
+  border-radius: var(--radius-full);
+  font-family: var(--font-cuerpo);
+  font-size: 0.9rem;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.btn-primary {
+  background-color: var(--color-primario);
+  color: var(--color-claro);
+  border: none;
+}
+
+.btn-primary:hover {
+  background-color: #6e2730;
+}
+
+/* Imágenes responsivas */
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Menú de navegación principal */
+.main-nav {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.main-nav a {
+  text-decoration: none;
+  color: var(--color-oscuro);
+  font-size: 0.85rem;
+  padding: 6px 10px;
+  border-radius: 999px;
+  transition: background 0.2s;
+}
+.main-nav a:hover {
+  background: rgba(155, 27, 85, 0.1);
+}
+.main-nav a.active {
+  background: var(--color-primario);
+  color: #fff;
+}
+
+/* Filtros de género */
+.gender-filters {
+  display: flex;
+  gap: 8px;
+  margin: 12px 0 8px 0;
+  justify-content: center;
+}
+.filter-gender {
+  padding: 6px 20px;
+  border-radius: 999px;
+  border: 1px solid rgba(0,0,0,0.2);
+  background: #fff;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.filter-gender:hover {
+  background: #f0f0f0;
+}
+.filter-gender.active {
+  background: #000;
+  color: #fff;
+  border-color: #000;
+}
+
+/* Ajuste responsive para el header en pantallas chicas */
+@media (max-width: 700px) {
+  header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+  .main-nav {
+    justify-content: center;
+  }
+  .main-nav a {
+    font-size: 0.75rem;
+    padding: 4px 8px;
+  }
+  .gender-filters {
+    flex-wrap: wrap;
+  }
+  .catalog-filters {
+    justify-content: center;
+  }
+}

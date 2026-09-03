@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GRWU - Admin Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/styles.css" />
+  <link rel="stylesheet" href="../css/admin.css" />
+</head>
+<body>
+
+  <div class="admin-layout">
+    
+    <!-- Barra lateral -->
+    <aside class="admin-sidebar">
+      <div class="sidebar-brand">
+        <img src="../img/LogoTiendasUrbano.jpeg" alt="GRWU" class="sidebar-logo" />
+        <div>
+          <h1 class="sidebar-title">GRWU</h1>
+          <p class="sidebar-subtitle">PANEL ADMIN</p>
+        </div>
+      </div>
+      <nav class="sidebar-nav">
+        <a href="admin-index.html" class="sidebar-link sidebar-link-active">📊 Dashboard</a>
+        <a href="admin-productos.html" class="sidebar-link">👕 Productos</a>
+        <a href="admin-usuarios.html" class="sidebar-link">👤 Usuarios</a>
+        <a href="admin-blogs.html" class="sidebar-link">📝 Blogs</a>
+        <a href="admin-contacto.html" class="sidebar-link">💬 Contactos</a>
+      </nav>
+      <div class="sidebar-footer">
+        <a href="../index.html" class="sidebar-footer-link">← Volver a la tienda</a>
+        <a href="../inicio-sesion.html" class="sidebar-footer-link">🚪 Cerrar sesión</a>
+      </div>
+    </aside>
+
+    <!-- Contenido principal -->
+    <main class="admin-main">
+
+      <div class="admin-header">
+        <div>
+          <h1 class="admin-title">Dashboard</h1>
+          <p class="admin-subtitle">Bienvenida, Katerine 👋</p>
+        </div>
+        <div class="admin-date">🕐 Hoy: 30 de agosto de 2026</div>
+      </div>
+
+      <!-- Estadisticas -->
+      <div class="stats-grid">
+        <div class="stat-card">
+          <p class="stat-label">Productos</p>
+          <p class="stat-value">24</p>
+          <p class="stat-detail">+3 esta semana</p>
+        </div>
+        <div class="stat-card">
+          <p class="stat-label">Usuarios</p>
+          <p class="stat-value">156</p>
+          <p class="stat-detail">+12 este mes</p>
+        </div>
+        <div class="stat-card">
+          <p class="stat-label">Blogs</p>
+          <p class="stat-value">8</p>
+          <p class="stat-detail">2 borradores</p>
+        </div>
+        <div class="stat-card">
+          <p class="stat-label">Mensajes</p>
+          <p class="stat-value">5</p>
+          <p class="stat-detail">2 sin leer</p>
+        </div>
+      </div>
+
+      <!-- Actividades -->
+      <div class="activity-grid">
+        <div class="card-info">
+          <h3 class="card-title">🔄 Actividad reciente</h3>
+          <div class="activity-item">
+            <p class="activity-text"><strong>Nuevo producto</strong> - Polera Oversize Negra</p>
+            <p class="activity-meta">Hace 2 horas • por Matías</p>
+          </div>
+          <div class="activity-item">
+            <p class="activity-text"><strong>Nuevo usuario</strong> - Camila Olmedo</p>
+            <p class="activity-meta">Hace 5 horas • por César</p>
+          </div>
+          <div class="activity-item">
+            <p class="activity-text"><strong>Nuevo mensaje</strong> - Consulta sobre pedido</p>
+            <p class="activity-meta">Hace 1 día • desde contacto</p>
+          </div>
+        </div>
+
+        <div class="card-info">
+          <h3 class="card-title">⚡ Acciones rápidas</h3>
+          <div class="quick-actions">
+            <a href="admin-productos.html?action=nuevo" class="quick-action-btn">➕ Agregar producto</a>
+            <a href="admin-usuarios.html?action=nuevo" class="quick-action-btn quick-action-btn-dark">👤 Crear usuario</a>
+            <a href="admin-blogs.html?action=nuevo" class="quick-action-btn quick-action-btn-dark">✍️ Nuevo blog</a>
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+</body>
+</html>

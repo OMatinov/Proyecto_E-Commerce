@@ -1,0 +1,328 @@
+
+
+:root {
+  --color-oscuro: #220707;
+  --color-primario: #531C22;
+  --color-claro: #E7D8CA;
+  --color-gris: #AC9185;
+  --color-blanco: #FFFFFF;
+  
+  --font-titulos: 'Bebas Neue', sans-serif;
+  --font-cuerpo: 'Poppins', sans-serif;
+  
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-full: 999px;
+  
+  --shadow-card: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+/* Header */
+.header-nosotros {
+  background: var(--color-oscuro);
+  color: var(--color-claro);
+  padding: 16px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  border-bottom: 2px solid var(--color-primario);
+}
+
+.header-nosotros-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.header-nosotros-logo {
+  height: 48px;
+  width: auto;
+}
+
+.header-nosotros-title {
+  font-family: var(--font-titulos);
+  font-size: 1.8rem;
+  color: var(--color-claro);
+  margin: 0;
+  line-height: 1;
+}
+
+.header-nosotros-subtitle {
+  font-size: 0.7rem;
+  color: var(--color-gris);
+  margin: 0;
+  letter-spacing: 2px;
+}
+
+.header-nosotros-nav {
+  display: flex;
+  gap: 24px;
+  font-family: var(--font-cuerpo);
+  font-size: 0.85rem;
+}
+
+.nav-nosotros-link {
+  color: var(--color-gris);
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.nav-nosotros-link:hover {
+  color: var(--color-claro);
+}
+
+.nav-nosotros-active {
+  color: var(--color-claro);
+  border-bottom: 2px solid var(--color-primario);
+  padding-bottom: 4px;
+}
+
+.header-nosotros-actions {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+/* Main */
+.main-nosotros {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 40px 24px;
+  background: var(--color-claro);
+  min-height: 70vh;
+}
+
+/* Encabezado */
+.nosotros-header {
+  text-align: center;
+  margin-bottom: 48px;
+}
+
+.nosotros-eyebrow {
+  color: var(--color-gris);
+  font-family: var(--font-cuerpo);
+  font-size: 0.8rem;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+}
+
+.nosotros-title {
+  font-family: var(--font-titulos);
+  font-size: 3rem;
+  color: var(--color-oscuro);
+  margin: 8px 0 16px;
+}
+
+.nosotros-description {
+  font-family: var(--font-cuerpo);
+  color: var(--color-oscuro);
+  max-width: 700px;
+  margin: 0 auto;
+  line-height: 1.7;
+  font-size: 1rem;
+}
+
+/* Misión y Visión */
+.mission-vision-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+  margin-bottom: 48px;
+}
+
+@media (max-width: 768px) {
+  .mission-vision-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.mission-card,
+.vision-card {
+  background: var(--color-blanco);
+  border-radius: var(--radius-lg);
+  padding: 32px;
+  border: 1px solid var(--color-gris);
+  box-shadow: var(--shadow-card);
+}
+
+.card-icon {
+  font-size: 2.5rem;
+  margin-bottom: 8px;
+}
+
+.card-title {
+  font-family: var(--font-titulos);
+  font-size: 1.8rem;
+  color: var(--color-oscuro);
+  margin: 0;
+}
+
+.card-text {
+  font-family: var(--font-cuerpo);
+  color: var(--color-oscuro);
+  line-height: 1.6;
+  font-size: 0.9rem;
+  margin-top: 8px;
+}
+
+/* Equipo */
+.team-section {
+  margin-bottom: 48px;
+}
+
+.team-title {
+  font-family: var(--font-titulos);
+  font-size: 2rem;
+  color: var(--color-oscuro);
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 24px;
+}
+
+.team-card {
+  background: var(--color-blanco);
+  border-radius: var(--radius-lg);
+  padding: 20px;
+  text-align: center;
+  border: 1px solid var(--color-gris);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.team-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+}
+
+.team-avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  margin: 0 auto 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-claro);
+  font-size: 2rem;
+  font-family: var(--font-titulos);
+}
+
+.team-avatar-gris {
+  background: var(--color-gris);
+}
+
+.team-avatar-primario {
+  background: var(--color-primario);
+}
+
+.team-avatar-oscuro {
+  background: var(--color-oscuro);
+}
+
+.team-name {
+  font-family: var(--font-titulos);
+  font-size: 1.2rem;
+  color: var(--color-oscuro);
+  margin: 0;
+}
+
+.team-role {
+  font-family: var(--font-cuerpo);
+  font-size: 0.8rem;
+  color: var(--color-gris);
+  margin: 0;
+}
+
+/* Footer */
+.footer-nosotros {
+  background: var(--color-oscuro);
+  color: var(--color-claro);
+  padding: 32px 24px;
+  font-family: var(--font-cuerpo);
+}
+
+.footer-nosotros-grid {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 32px;
+}
+
+.footer-nosotros-brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.footer-nosotros-logo {
+  height: 32px;
+}
+
+.footer-nosotros-name {
+  font-family: var(--font-titulos);
+  font-size: 1.4rem;
+  color: var(--color-claro);
+}
+
+.footer-nosotros-text {
+  font-size: 0.8rem;
+  color: var(--color-gris);
+  line-height: 1.6;
+  margin: 0 0 4px;
+}
+
+.footer-nosotros-heading {
+  font-family: var(--font-titulos);
+  font-size: 1rem;
+  color: var(--color-claro);
+  margin-bottom: 8px;
+}
+
+.footer-nosotros-link {
+  display: block;
+  color: var(--color-gris);
+  text-decoration: none;
+  font-size: 0.8rem;
+  margin-bottom: 4px;
+  transition: color 0.3s;
+}
+
+.footer-nosotros-link:hover {
+  color: var(--color-claro);
+}
+
+.footer-nosotros-social {
+  display: flex;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.footer-nosotros-social-icon {
+  color: var(--color-gris);
+  text-decoration: none;
+  font-size: 1.2rem;
+  transition: color 0.3s;
+}
+
+.footer-nosotros-social-icon:hover {
+  color: var(--color-claro);
+}
+
+.footer-nosotros-bottom {
+  border-top: 1px solid var(--color-gris);
+  margin-top: 24px;
+  padding-top: 16px;
+  text-align: center;
+  font-size: 0.7rem;
+  color: var(--color-gris);
+}

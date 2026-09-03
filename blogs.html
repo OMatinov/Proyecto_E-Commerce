@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GRWU - Blogs</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet" href="css/blogs.css" />
+</head>
+<body>
+
+  <!-- Encabezado -->
+  <header class="header-blogs">
+    <div class="header-brand">
+      <img src="img/LogoTiendasUrbano.jpeg" alt="GRWU" class="header-logo" />
+      <div>
+        <h1 class="header-title">GRWU</h1>
+        <p class="header-subtitle">GET READY WITH US</p>
+      </div>
+    </div>
+    <nav class="header-nav">
+      <a href="index.html" class="nav-link">Home</a>
+      <a href="catalogo.html" class="nav-link">Productos</a>
+      <a href="nosotros.html" class="nav-link">Nosotros</a>
+      <a href="blogs.html" class="nav-link nav-link-active">Blogs</a>
+      <a href="contacto.html" class="nav-link">Contacto</a>
+    </nav>
+    <div class="header-actions">
+      <a href="inicio-sesion.html" class="action-link">Iniciar sesión</a>
+      <a href="registro.html" class="action-button">Registrarse</a>
+    </div>
+  </header>
+
+  <!-- Contenido principal -->
+  <main class="main-blogs">
+
+    <section class="page-header">
+      <span class="page-eyebrow">Inspírate</span>
+      <h2 class="page-title">Nuestro Blog</h2>
+      <p class="page-description">
+        Tendencias, consejos de estilo y todo lo que necesitas para <strong>Get Ready With Us</strong>.
+      </p>
+    </section>
+
+    <!-- Filtros -->
+    <div class="filters-blog">
+      <button class="filter-btn filter-btn-active">Todos</button>
+      <button class="filter-btn">Tendencias</button>
+      <button class="filter-btn">Estilo</button>
+      <button class="filter-btn">Moda Unisex</button>
+      <button class="filter-btn">Sostenibilidad</button>
+    </div>
+
+    <!-- Grid -->
+    <div class="blogs-grid">
+      <!-- Blog 1 -->
+      <article class="blog-card">
+        <div class="blog-image blog-image-1">📸</div>
+        <div class="blog-body">
+          <div class="blog-meta">
+            <span class="blog-category">Tendencias • 15 ago 2026</span>
+            <span class="blog-status badge-primario">Publicado</span>
+          </div>
+          <h3 class="blog-title">5 Tendencias que Dominarán el Otoño 2026</h3>
+          <p class="blog-excerpt">
+            Descubre los colores, texturas y siluetas que marcarán la temporada...
+          </p>
+          <a href="blogs-detalles.html?id=1" class="blog-link">Leer más →</a>
+        </div>
+      </article>
+
+      <!-- Blog 2 -->
+      <article class="blog-card">
+        <div class="blog-image blog-image-2">👔</div>
+        <div class="blog-body">
+          <div class="blog-meta">
+            <span class="blog-category">Estilo • 10 ago 2026</span>
+            <span class="blog-status badge-gris">Borrador</span>
+          </div>
+          <h3 class="blog-title">Cómo Armar un Look Unisex en 5 Pasos</h3>
+          <p class="blog-excerpt">
+            Prendas clave que funcionan para cualquier género y silueta...
+          </p>
+          <a href="blogs-detalles.html?id=2" class="blog-link">Leer más →</a>
+        </div>
+      </article>
+
+      <!-- Blog 3 -->
+      <article class="blog-card">
+        <div class="blog-image blog-image-3">♻️</div>
+        <div class="blog-body">
+          <div class="blog-meta">
+            <span class="blog-category">Sostenibilidad • 5 ago 2026</span>
+            <span class="blog-status badge-primario">Publicado</span>
+          </div>
+          <h3 class="blog-title">Moda Sostenible: Nuestro Compromiso</h3>
+          <p class="blog-excerpt">
+            Conoce nuestras prácticas de producción y materiales responsables...
+          </p>
+          <a href="blogs-detalles.html?id=3" class="blog-link">Leer más →</a>
+        </div>
+      </article>
+
+    </div>
+
+  </main>
+
+  <!-- Pie de página -->
+  <footer class="footer-blogs">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand">
+          <img src="img/LogoTiendasUrbano.jpeg" alt="GRWU" class="footer-logo" />
+          <span class="footer-brand-name">GRWU</span>
+        </div>
+        <p class="footer-text">Get Ready With Us. Moda unisex para expresar tu estilo sin límites.</p>
+      </div>
+      <div>
+        <h4 class="footer-heading">Links Rápidos</h4>
+        <a href="#" class="footer-link">Cómo comprar</a>
+        <a href="#" class="footer-link">Devoluciones</a>
+        <a href="#" class="footer-link">Tiempos de despacho</a>
+      </div>
+      <div>
+        <h4 class="footer-heading">Categorías</h4>
+        <a href="catalogo.html?genero=mujer" class="footer-link">Mujer</a>
+        <a href="catalogo.html?genero=hombre" class="footer-link">Hombre</a>
+        <a href="catalogo.html?categoria=accesorios" class="footer-link">Accesorios</a>
+      </div>
+      <div>
+        <h4 class="footer-heading">Contacto</h4>
+        <p class="footer-text">📧 hola@grwu.cl</p>
+        <p class="footer-text">📱 +56 9 1234 5678</p>
+        <div class="footer-social">
+          <a href="#" class="footer-social-icon">📷</a>
+          <a href="#" class="footer-social-icon">📘</a>
+          <a href="#" class="footer-social-icon">🐦</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      © 2026 GRWU - Get Ready With Us. Todos los derechos reservados.
+    </div>
+  </footer>
+
+  <script src="js/blogs.js"></script>
+  
+</body>
+</html>
