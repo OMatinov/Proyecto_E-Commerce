@@ -1,25 +1,4 @@
 
-:root {
-  --color-fondo: #F7F7F7;
-  --color-fondo-claro: #EAF2FF;
-  --color-primario: #4B1D5A;
-  --color-secundario: #244FA4;
-  --color-acento: #02756D;
-  --color-texto: #333333;
-  --color-texto-suave: #666666;
-  --color-blanco: #FFFFFF;
-  
-  --font-titulos: 'Bebas Neue', sans-serif;
-  --font-cuerpo: 'Poppins', sans-serif;
-  
-  --radius-sm: 8px;
-  --radius-md: 12px;
-  --radius-lg: 16px;
-  --radius-full: 999px;
-  
-  --shadow-card: 0 4px 12px rgba(0, 0, 0, 0.05);
-}
-
 /* Header */
 .header-nosotros {
   background: var(--color-oscuro);

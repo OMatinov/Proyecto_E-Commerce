@@ -1,15 +1,4 @@
 
-:root {
-  --color-fondo: #F7F7F7;
-  --color-fondo-claro: #EAF2FF;
-  --color-primario: #4B1D5A;
-  --color-secundario: #244FA4;
-  --color-acento: #02756D;
-  --color-texto: #333333;
-  --color-texto-suave: #666666;
-  --color-blanco: #FFFFFF;
-}
-
 /* CONTENEDOR PRINCIPAL */
 .catalogo-contenedor {
   background: var(--color-fondo);

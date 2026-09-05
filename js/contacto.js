@@ -23,7 +23,7 @@ function validarNombreContacto() {
   if (!valor) {
     mensaje = 'El nombre es obligatorio.';
   } else if (valor.length > 100) {
-    mensaje = 'El nombre no puede superar los 100 caracteres.';
+    mensaje = 'El nombre no puede superar los 500 caracteres.';
   }
   mostrarError('nombreContacto', mensaje);
   return !mensaje;
@@ -36,11 +36,11 @@ function validarCorreoContacto() {
   if (!valor) {
     mensaje = 'El correo es obligatorio.';
   } else if (valor.length > 100) {
-    mensaje = 'El correo no puede superar los 100 caracteres.';
+    mensaje = 'El correo no puede superar los 500 caracteres.';
   } else {
-    const dominiosPermitidos = /@(duoc\.cl|profesorduoc\.cl|gmail\.com)$/i;
+    const dominiosPermitidos = /@(duoc\.cl|profesor.duoc\.cl|gmail\.com)$/i;
     if (!dominiosPermitidos.test(valor)) {
-        mensaje = 'Solo se aceptan correos @duoc.cl, @profesorduoc.cl o @gmail.com.';
+        mensaje = 'Solo se aceptan correos @duoc.cl, @profesor.duoc.cl o @gmail.com.';
     }
   }
   mostrarError('correoContacto', mensaje);
@@ -53,8 +53,8 @@ function validarComentarioContacto() {
   let mensaje = '';
   if (!valor) {
     mensaje = 'El comentario es obligatorio.';
-  } else if (valor.length > 1000) {
-    mensaje = 'El comentario no puede superar los 1000 caracteres.';
+  } else if (valor.length > 500) {
+    mensaje = 'El comentario no puede superar los 500 caracteres.';
   }
   mostrarError('comentarioContacto', mensaje);
   return !mensaje;

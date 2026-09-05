@@ -7,31 +7,45 @@
 
 /* Variables globales */
 :root {
+  /* Colores principales */
   --color-fondo: #F7F7F7;
   --color-fondo-claro: #EAF2FF;
   --color-primario: #4B1D5A;
   --color-secundario: #244FA4;
   --color-acento: #02756D;
+  
+  /* Colores neutros */
+  --color-oscuro: #1A1A1A;
+  --color-claro: #FFFFFF;
+  --color-gris: #9CA3AF;
+  --color-borde: #E5E7EB;
+  --color-fondo-tarjeta: #FFFFFF;
+  
+  /* Colores de texto */
   --color-texto: #333333;
   --color-texto-suave: #666666;
   --color-blanco: #FFFFFF;
-
+  
+  /* Colores de estado */
+  --color-error: #B22222;
+  
+  /* Tipografía */
   --font-titulos: 'Bebas Neue', sans-serif;
   --font-cuerpo: 'Poppins', sans-serif;
-
+  
+  /* Bordes y sombras */
   --radius-sm: 8px;
   --radius-md: 12px;
   --radius-lg: 16px;
   --radius-full: 999px;
-
   --shadow-card: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
 
 /* Estilos base del body */
 body {
   font-family: var(--font-cuerpo);
-  background-color: var(--color-claro);
-  color: var(--color-oscuro);
+  background-color: var(--color-fondo);
+  color: var(--color-texto);
   line-height: 1.6;
 }
 
@@ -61,11 +75,11 @@ body {
 }
 
 .btn-primary:hover {
-  background-color: --color-fondo-claro;
+  background-color: #6e2730;
 }
 
 /* Imágenes responsivas */
 img {
   max-width: 100%;
   height: auto;
-} 
+}
