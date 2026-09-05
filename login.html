@@ -4,8 +4,9 @@
   <meta charset="UTF-8" />
   <title>GRWU - Iniciar sesión</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="css/styles.css" />
 </head>
+<script src="js/cart.js"></script>
 <body>
   <div class="container">
     <header>
@@ -18,9 +19,15 @@
           <p>Iniciar sesión</p>
         </div>
       </div>
-      <div class="login-link">
-        <a href="index.html">Volver al inicio</a>
-      </div>
+      <nav class="main-nav">
+        <a href="index.html">Inicio</a>
+        <a href="catalogo.html">Catálogo</a>
+        <a href="nosotros.html">Nosotros</a>
+        <a href="blogs.html">Blogs</a>
+        <a href="contacto.html">Contacto</a>
+        <a href="inicio-sesion.html" class="active">Iniciar sesión</a>
+        <a href="checkout.html">Carrito (<span id="cart-count">0</span>)</a>
+      </nav>
     </header>
 
     <section class="section login-section">
@@ -52,8 +59,11 @@
     </section>
   </div>
 
-  <script src="validaciones.js"></script>
+  <script src="js/validaciones.js"></script>
   <script>
+    document.getElementById("cart-count").textContent =
+      getCart().reduce((total, item) => total + item.qty, 0);
+
     function validarCampoCorreoLogin() {
       const valor = document.getElementById("correoLogin").value.trim();
       const resultado = validarCorreo(valor);

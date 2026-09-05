@@ -4,47 +4,51 @@
   <meta charset="UTF-8" />
   <title>GRWU - Detalle de producto</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="css/styles.css" />
 </head>
 <body>
   <div class="container">
     <header>
       <div class="brand">
         <div class="brand-logo">
-          <img src="img/LogoGRWU.jpeg" alt="">
+          <img src="img/logoGRWU.png" alt="">
         </div>
         <div class="brand-text">
           <h1>GRWU</h1>
           <p>Detalle de producto</p>
         </div>
       </div>
-      <div class="login-link">
-        <a href="catalogo.html">Volver al catálogo</a>
-        <a href="checkout.html"> Carrito (<span id="cart-count">0</span>)</a>
-      </div>
+      <nav class="main-nav">
+        <a href="index.html">Inicio</a>
+        <a href="catalogo.html">Catálogo</a>
+        <a href="nosotros.html">Nosotros</a>
+        <a href="blogs.html">Blogs</a>
+        <a href="contacto.html">Contacto</a>
+        <a href="inicio-sesion.html">Iniciar sesión</a>
+        <a href="checkout.html">Carrito (<span id="cart-count">0</span>)</a>
+      </nav>
     </header>
 
     <section class="product-detail">
       <div class="product-gallery">
         <div class="product-main-image">
-          <img id="carousel-img" src="img/" alt="">
+          <img id="carousel-img" src="" alt="">
           <button id="prev-btn" class="carousel-nav prev">‹</button>
           <button id="next-btn" class="carousel-nav next">›</button>
-          <div id="carousel-indicator" class="carousel-indicator">1 / 4</div>
+          <div id="carousel-indicator" class="carousel-indicator">1 / 1</div>
         </div>
       </div>
 
       <div class="product-info">
-      <div class="product-section">
-        <h3>Disponibilidad</h3>
-        <p style="color:var(--color-primario); font-weight:600;">✓ En stock - Despacho en 24-48 hrs</p>
-      </div>  
+        <div class="product-section">
+          <h3>Disponibilidad</h3>
+          <p style="color:var(--color-primario); font-weight:600;">✓ En stock - Despacho en 24-48 hrs</p>
+        </div>
         <p class="product-category" id="p-category"></p>
         <h2 class="product-title" id="p-title"></h2>
         <p class="product-price product-price-lg" id="p-price"></p>
-
         <p class="product-description" id="p-description"></p>
-   
+
         <div class="product-section">
           <h3>Tallas disponibles</h3>
           <div class="size-options">
@@ -53,9 +57,7 @@
             <button class="size-chip">L</button>
             <button class="size-chip size-chip-disabled">XL</button>
           </div>
-          <p class="stock-note">
-            Stock por talla de referencia, puede variar según el producto.
-          </p>
+          <p class="stock-note">Stock por talla de referencia, puede variar según el producto.</p>
         </div>
 
         <div class="product-actions">

@@ -4,8 +4,9 @@
   <meta charset="UTF-8" />
   <title>GRWU - Registro</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="css/styles.css" />
 </head>
+<script src="js/cart.js"></script>
 <body>
   <div class="container">
     <header>
@@ -90,9 +91,12 @@
     </section>
   </div>
 
-  <script src="regiones.js"></script>
-  <script src="validaciones.js"></script>
+  <script src="js/regiones.js"></script>
+  <script src="js/validaciones.js"></script>
   <script>
+    document.getElementById("cart-count").textContent =
+      getCart().reduce((total, item) => total + item.qty, 0);
+
     const selectRegion = document.getElementById("regionRegistro");
     const selectComuna = document.getElementById("comunaRegistro");
     conectarRegionComuna(selectRegion, selectComuna);

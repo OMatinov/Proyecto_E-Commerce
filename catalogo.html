@@ -23,12 +23,26 @@
             <p>CATÁLOGO</p>
           </div>
         </div>
-        <div class="login-link">
-          <a href="index.html">Volver al inicio</a>
-          <a href="checkout.html"> Carrito (<span id="cart-count">0</span>)</a>
-        </div>
+        <!-- Menú de navegación unificado -->
+        <nav class="main-nav">
+          <a href="index.html">Inicio</a>
+          <a href="catalogo.html" class="active">Catálogo</a>
+          <a href="nosotros.html">Nosotros</a>
+          <a href="blogs.html">Blogs</a>
+          <a href="contacto.html">Contacto</a>
+          <a href="inicio-sesion.html">Iniciar sesión</a>
+          <a href="checkout.html">Carrito (<span id="cart-count">0</span>)</a>
+        </nav>
       </header>
 
+      <!-- Filtros de Género -->
+      <div class="gender-filters">
+        <button class="filter-gender active" data-gender="todos">Todos</button>
+        <button class="filter-gender" data-gender="mujer">Mujer</button>
+        <button class="filter-gender" data-gender="hombre">Hombre</button>
+      </div>
+
+      <!-- Filtros de Categoría -->
       <section class="catalog-toolbar section">
         <div class="catalog-filters">
           <button class="filter-button active" data-category="todos">Todos</button>
@@ -51,10 +65,9 @@
         </div>
       </section>
 
-      <!-- GRID DE PRODUCTOS -->
+      <!-- Grid de Productos Dinámico -->
       <section class="section">
         <div class="product-grid" id="product-grid">
-
         </div>
       </section>
     </div>
