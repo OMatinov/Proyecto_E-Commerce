@@ -23,15 +23,16 @@
         </div>
       </div>
       <nav class="sidebar-nav">
-        <a href="index.html" class="sidebar-link">📊 Dashboard</a>
-        <a href="productos.html" class="sidebar-link">👕 Productos</a>
-        <a href="usuarios.html" class="sidebar-link">👤 Usuarios</a>
-        <a href="blogs.html" class="sidebar-link">📝 Blogs</a>
-        <a href="contactos.html" class="sidebar-link sidebar-link-active">💬 Contactos</a>
+        <a href="admin-index.html" class="sidebar-link">📊 Dashboard</a>
+        <a href="admin-productos.html" class="sidebar-link">👕 Productos</a>
+        <a href="admin-usuarios.html" id="linkSidebarUsuarios" class="sidebar-link">👤 Usuarios</a>
+        <a href="admin-blogs.html" class="sidebar-link">📝 Blogs</a>
+        <a href="admin-contacto.html" class="sidebar-link sidebar-link-active">💬 Contactos</a>
       </nav>
       <div class="sidebar-footer">
         <a href="../index.html" class="sidebar-footer-link">← Volver a la tienda</a>
         <a href="../login.html" class="sidebar-footer-link">🚪 Cerrar sesión</a>
+        <div id="selectorRolContenedor" class="selector-rol-contenedor"></div>
       </div>
     </aside>
 
@@ -73,7 +74,7 @@
             </div>
             <span class="contact-date">📅 30 ago 2026, 14:30</span>
           </div>
-          <p class="contact-meta">📧 maria@email.com • 📱 +56912345678</p>
+          <p class="contact-meta">📧 ma.gonzalez@duocuc.cl • 📱 +56912345678</p>
           <p class="contact-subject"><strong>Asunto:</strong> Consulta sobre pedido</p>
           <p class="contact-message">Hola, quería saber cuándo llegará mi pedido #1234. Gracias!</p>
           <div class="blog-actions">
@@ -91,7 +92,7 @@
             </div>
             <span class="contact-date">📅 28 ago 2026, 10:15</span>
           </div>
-          <p class="contact-meta">📧 carlos@email.com • 📱 +56998765432</p>
+          <p class="contact-meta">📧 c.rojas@profesorduoc.com • 📱 +56998765432</p>
           <p class="contact-subject"><strong>Asunto:</strong> Devolución</p>
           <p class="contact-message">Quiero devolver un producto que compré, ¿cómo hago el proceso?</p>
           <div class="blog-actions">
@@ -109,7 +110,7 @@
             </div>
             <span class="contact-date">📅 25 ago 2026, 16:45</span>
           </div>
-          <p class="contact-meta">📧 valentina@email.com • 📱 +56911223344</p>
+          <p class="contact-meta">📧 valentina@gmail.com • 📱 +56911223344</p>
           <p class="contact-subject"><strong>Asunto:</strong> Sugerencia de producto</p>
           <p class="contact-message">Me encantaría que agregaran más colores en la colección de polerones unisex.</p>
           <div class="blog-actions">
@@ -129,6 +130,6 @@
   </div>
 
   <script src="../js/admin-contacto.js"></script>
-
+  <script src="../js/admin/admin-rol.js"></script>
 </body>
 </html>

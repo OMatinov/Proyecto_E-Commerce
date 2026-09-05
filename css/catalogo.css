@@ -1,0 +1,171 @@
+
+:root {
+  --color-fondo: #F7F7F7;
+  --color-fondo-tarjeta: #FFFFFF;
+  --color-borde: #E0E0E0;
+  --color-primario: #7B2D8E;       /* Morado */
+  --color-secundario: #2A48F4;     /* Azul */
+  --color-acento: #02C9A8;         /* Verde */
+  --color-texto: #333333;
+  --color-texto-suave: #666666;
+  --color-sombra: rgba(0, 0, 0, 0.08);
+}
+
+/* CONTENEDOR PRINCIPAL */
+.catalogo-contenedor {
+  background: var(--color-fondo);
+  min-height: 70vh;
+  padding: 20px 0;
+}
+
+/* ===== BARRA DE HERRAMIENTAS (filtros) ===== */
+.catalog-toolbar {
+  max-width: 1100px;
+  margin: 0 auto 24px;
+  padding: 0 24px;
+}
+
+.catalog-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+}
+
+.filter-button {
+  background: var(--color-fondo-tarjeta);
+  border: 1px solid var(--color-borde);
+  border-radius: 999px;
+  padding: 8px 18px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.85rem;
+  color: var(--color-texto);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.filter-button:hover {
+  border-color: var(--color-primario);
+  color: var(--color-primario);
+}
+
+.filter-button.active {
+  background: var(--color-primario);
+  border-color: var(--color-primario);
+  color: #FFFFFF;
+}
+
+/* ===== GRID DE PRODUCTOS ===== */
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+  grid-auto-rows: 1fr;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 24px 24px;
+}
+
+.product-card-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+
+.product-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;             
+}
+
+.product-card-image {
+  width: 100%;
+  height: 360px;           
+  background: #F0F0F0;
+  overflow: hidden;
+}
+
+.product-card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;       
+  display: block;
+}
+
+.product-card:hover .product-card-image img {
+  transform: scale(1.05);
+}
+
+.product-body {
+  padding: 12px;
+  flex-grow: 1; 
+}
+
+.product-category {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  color: var(--color-texto-suave);
+  margin-bottom: 4px;
+  letter-spacing: 0.5px;
+}
+
+.product-name {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.2rem;
+  margin: 0 0 8px;
+  color: var(--color-texto);
+  min-height: 2.5em;        
+  overflow: hidden;
+}
+
+
+.product-price {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--color-primario);
+}
+
+/* ===== GÉNERO: BOTONES EXTRA (si los agregas) ===== */
+.gender-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+  margin-top: 12px;
+}
+
+.gender-button {
+  background: transparent;
+  border: 1px solid var(--color-borde);
+  border-radius: 999px;
+  padding: 6px 16px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.8rem;
+  color: var(--color-texto-suave);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.gender-button:hover {
+  border-color: var(--color-secundario);
+  color: var(--color-secundario);
+}
+
+.gender-button.active {
+  background: var(--color-secundario);
+  border-color: var(--color-secundario);
+  color: #FFFFFF;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  .product-grid {
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 12px;
+    padding: 0 16px 16px;
+  }
+
+  .product-card-image {
+    height: 160px;
+  }
+}

@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GRWU - Admin Usuarios</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/styles.css" />
+  <link rel="stylesheet" href="../css/admin.css" />
+</head>
+<body>
+
+  <div class="admin-layout">
+
+    <!-- Barra lateral -->
+    <aside class="admin-sidebar">
+      <div class="sidebar-brand">
+        <img src="../img/LogoTiendasUrbano.jpeg" alt="GRWU" class="sidebar-logo" />
+        <div>
+          <h1 class="sidebar-title">GRWU</h1>
+          <p class="sidebar-subtitle">PANEL ADMIN</p>
+        </div>
+      </div>
+      <nav class="sidebar-nav">
+        <a href="admin-index.html" class="sidebar-link">📊 Dashboard</a>
+        <a href="admin-productos.html" class="sidebar-link">👕 Productos</a>
+        <a href="admin-usuarios.html" id="linkSidebarUsuarios" class="sidebar-link sidebar-link-active">👤 Usuarios</a>
+        <a href="admin-blogs.html" class="sidebar-link">📝 Blogs</a>
+        <a href="admin-contacto.html" class="sidebar-link">💬 Contactos</a>
+      </nav>
+      <div class="sidebar-footer">
+        <a href="../index.html" class="sidebar-footer-link">← Volver a la tienda</a>
+        <a href="../inicio-sesion.html" class="sidebar-footer-link">🚪 Cerrar sesión</a>
+        <div id="selectorRolContenedor" class="selector-rol-contenedor"></div>
+      </div>
+    </aside>
+
+    <!-- Contenido principal -->
+    <main class="admin-main">
+
+      <div class="admin-header">
+        <div>
+          <h1 class="admin-title">Usuarios</h1>
+          <p class="admin-subtitle">Gestiona las cuentas y roles del sistema GRWU</p>
+        </div>
+        <button onclick="abrirModalUsuario()" class="btn-primary">👤 Nuevo usuario</button>
+      </div>
+
+      <!-- Filtros -->
+      <div class="filters-row">
+        <input id="buscarUsuario" type="text" class="filter-input" placeholder="🔍 Buscar por nombre, RUN o correo..." />
+        <select id="filtroTipoUsuario" class="filter-select">
+          <option value="todos">Todos los roles</option>
+          <option value="Administrador">Administrador</option>
+          <option value="Vendedor">Vendedor</option>
+          <option value="Cliente">Cliente</option>
+        </select>
+      </div>
+
+      <!-- Tabla de usuarios -->
+      <div class="admin-table-wrapper">
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th>Usuario</th>
+              <th>RUN</th>
+              <th>Correo</th>
+              <th>Rol</th>
+              <th>Comuna</th>
+              <th style="text-align:center;">Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="tablaUsuariosBody"></tbody>
+        </table>
+      </div>
+
+      <div class="pagination">
+        <span id="paginacionInfoUsuarios"></span>
+        <div class="pagination-buttons" id="paginacionBotonesUsuarios"></div>
+      </div>
+
+    </main>
+  </div>
+
+  <!-- Modal crear/editar usuario -->
+  <div id="modalUsuario" class="modal-overlay">
+    <div class="modal-content">
+      <button onclick="cerrarModalUsuario()" class="modal-close">✕</button>
+
+      <h2 class="modal-title" id="tituloModalUsuario">Nuevo usuario</h2>
+
+      <form id="formUsuario" class="modal-form" novalidate>
+        <input type="hidden" id="runOriginalEditando" value="" />
+
+        <div class="form-field">
+          <label for="runUsuario">RUN *</label>
+          <input id="runUsuario" type="text" maxlength="9" placeholder="19011022K" />
+          <p class="form-hint">Sin puntos ni guion, entre 7 y 9 caracteres.</p>
+          <p class="form-error" id="error-runUsuario"></p>
+        </div>
+
+        <div class="form-row-2">
+          <div class="form-field">
+            <label for="nombreUsuario">Nombre *</label>
+            <input id="nombreUsuario" type="text" maxlength="50" placeholder="Nombre" />
+            <p class="form-error" id="error-nombreUsuario"></p>
+          </div>
+          <div class="form-field">
+            <label for="apellidosUsuario">Apellidos *</label>
+            <input id="apellidosUsuario" type="text" maxlength="100" placeholder="Apellidos" />
+            <p class="form-error" id="error-apellidosUsuario"></p>
+          </div>
+        </div>
+
+        <div class="form-row-2">
+          <div class="form-field">
+            <label for="correoUsuario">Correo *</label>
+            <input id="correoUsuario" type="email" maxlength="100" placeholder="tu@correo.com" />
+            <p class="form-error" id="error-correoUsuario"></p>
+          </div>
+          <div class="form-field">
+            <label for="fechaNacimientoUsuario">Fecha de nacimiento (opcional)</label>
+            <input id="fechaNacimientoUsuario" type="date" />
+          </div>
+        </div>
+
+        <div class="form-field">
+          <label for="tipoUsuarioSelect">Tipo de usuario *</label>
+          <select id="tipoUsuarioSelect">
+            <option value="">-- Seleccione --</option>
+            <option value="Administrador">Administrador</option>
+            <option value="Vendedor">Vendedor</option>
+            <option value="Cliente">Cliente</option>
+          </select>
+          <p class="form-error" id="error-tipoUsuarioSelect"></p>
+        </div>
+
+        <div class="form-row-2">
+          <div class="form-field">
+            <label for="regionUsuario">Región *</label>
+            <select id="regionUsuario"></select>
+            <p class="form-error" id="error-regionUsuario"></p>
+          </div>
+          <div class="form-field">
+            <label for="comunaUsuario">Comuna *</label>
+            <select id="comunaUsuario"></select>
+            <p class="form-error" id="error-comunaUsuario"></p>
+          </div>
+        </div>
+
+        <div class="form-field">
+          <label for="direccionUsuario">Dirección *</label>
+          <input id="direccionUsuario" type="text" maxlength="300" placeholder="Calle, número, depto (si aplica)" />
+          <p class="form-error" id="error-direccionUsuario"></p>
+        </div>
+
+        <div class="form-field">
+          <label for="telefonoUsuario">Teléfono (opcional)</label>
+          <input id="telefonoUsuario" type="tel" placeholder="+56 9 1234 5678" />
+        </div>
+
+        <div class="modal-actions">
+          <button type="submit" class="btn-primary">Guardar usuario</button>
+          <button type="button" onclick="cerrarModalUsuario()" class="btn-secondary">Cancelar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="../js/productos.js"></script>
+  <script src="../js/usuarios.js"></script>
+  <script src="../js/regiones.js"></script>
+  <script src="../js/validaciones.js"></script>
+  <script src="../js/admin/admin-datos.js"></script>
+  <script src="../js/admin/admin-rol.js"></script>
+  <script src="../js/admin/admin-usuarios.js"></script>
+</body>
+</html>

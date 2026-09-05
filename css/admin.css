@@ -306,6 +306,8 @@
   height: 40px;
   background: var(--color-gris);
   border-radius: var(--radius-sm);
+  object-fit: cover;
+  flex-shrink: 0;
 }
 
 .table-product-name {
@@ -759,6 +761,76 @@
 .form-field textarea {
   resize: vertical;
   min-height: 80px;
+}
+
+.input-invalido {
+  border-color: var(--color-error) !important;
+}
+
+.form-error {
+  color: var(--color-error);
+  font-size: 0.8rem;
+  margin-top: 4px;
+  display: none;
+  font-family: var(--font-cuerpo);
+}
+
+.form-row-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.form-hint {
+  font-size: 0.75rem;
+  color: var(--color-gris);
+  margin-top: 4px;
+  font-family: var(--font-cuerpo);
+}
+
+/* Selector de rol simulado (mientras no hay login con sesión real) */
+.selector-rol-contenedor {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid var(--color-gris);
+}
+
+.selector-rol-label {
+  display: block;
+  font-size: 0.7rem;
+  color: var(--color-gris);
+  margin-bottom: 6px;
+  font-family: var(--font-cuerpo);
+  letter-spacing: 0.5px;
+}
+
+.selector-rol-select {
+  width: 100%;
+  padding: 6px 10px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-gris);
+  background: var(--color-claro);
+  color: var(--color-oscuro);
+  font-family: var(--font-cuerpo);
+  font-size: 0.8rem;
+}
+
+.acceso-restringido {
+  text-align: center;
+  padding: 60px 24px;
+}
+
+.acceso-restringido p:first-child {
+  font-family: var(--font-titulos);
+  font-size: 1.6rem;
+  color: var(--color-error);
+  margin-bottom: 8px;
+}
+
+@media (max-width: 560px) {
+  .form-row-2 {
+    grid-template-columns: 1fr;
+  }
 }
 
 .admin-note {

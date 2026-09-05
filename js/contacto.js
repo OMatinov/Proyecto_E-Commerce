@@ -38,9 +38,9 @@ function validarCorreoContacto() {
   } else if (valor.length > 100) {
     mensaje = 'El correo no puede superar los 100 caracteres.';
   } else {
-    const dominiosPermitidos = /@(duoc\.cl|hotmail\.com|gmail\.com)$/i;
+    const dominiosPermitidos = /@(duoc\.cl|profesorduoc\.cl|gmail\.com)$/i;
     if (!dominiosPermitidos.test(valor)) {
-      mensaje = 'Solo se aceptan correos @duoc.cl, @hotmail.com o @gmail.com.';
+        mensaje = 'Solo se aceptan correos @duoc.cl, @profesorduoc.cl o @gmail.com.';
     }
   }
   mostrarError('correoContacto', mensaje);

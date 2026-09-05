@@ -8,8 +8,7 @@ function filtrarBlogs(categoria) {
   // 1. Quitar la clase 'active' de todos los botones y ponerla en el correcto
   botones.forEach(function(boton) {
     boton.classList.remove('filter-btn-active');
-    if (boton.textContent.trim().toLowerCase() === categoria.toLowerCase() || 
-        (categoria === 'Todos' && boton.textContent.trim() === 'Todos')) {
+    if (boton.textContent.trim().toLowerCase() === categoria.toLowerCase()) {
       boton.classList.add('filter-btn-active');
     }
   });
@@ -18,7 +17,7 @@ function filtrarBlogs(categoria) {
   tarjetas.forEach(function(tarjeta) {
     const categoriaTarjeta = tarjeta.querySelector('.blog-category').textContent.toLowerCase();
     
-    if (categoria === 'todos' || categoriaTarjeta.includes(categoria.toLowerCase())) {
+    if (categoria.toLowerCase() === 'todos' || categoriaTarjeta.includes(categoria.toLowerCase())) {
       tarjeta.style.display = 'block';
     } else {
       tarjeta.style.display = 'none';
