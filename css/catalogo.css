@@ -1,14 +1,13 @@
 
 :root {
   --color-fondo: #F7F7F7;
-  --color-fondo-tarjeta: #FFFFFF;
-  --color-borde: #E0E0E0;
-  --color-primario: #7B2D8E;       /* Morado */
-  --color-secundario: #2A48F4;     /* Azul */
-  --color-acento: #02C9A8;         /* Verde */
+  --color-fondo-claro: #EAF2FF;
+  --color-primario: #4B1D5A;
+  --color-secundario: #244FA4;
+  --color-acento: #02756D;
   --color-texto: #333333;
   --color-texto-suave: #666666;
-  --color-sombra: rgba(0, 0, 0, 0.08);
+  --color-blanco: #FFFFFF;
 }
 
 /* CONTENEDOR PRINCIPAL */
