@@ -1,19 +1,3 @@
-// rol-admin.js - Simulación del rol activo en el panel admin
-// Autor: Katerine
-//
-// El login real (registro/inicio de sesión) todavía no crea una sesión con
-// rol asociado, así que mientras tanto simulamos el rol activo guardándolo
-// en localStorage. Esto permite mostrar en la presentación cómo cambia el
-// panel según el rol, tal como pide el enunciado:
-//   - Administrador: acceso total.
-//   - Vendedor: solo puede ver productos y ordenes (no gestionar usuarios,
-//     no crear/editar/eliminar).
-//   - Cliente: no entra al panel admin (queda fuera de este archivo).
-//
-// Cuando el login real esté integrado, basta con reemplazar
-// obtenerRolActivo() para que lea la sesión real en vez de localStorage;
-// el resto del panel no debería cambiar.
-
 const CLAVE_ROL_ACTIVO = "grwu_rolActivo";
 
 function obtenerRolActivo() {

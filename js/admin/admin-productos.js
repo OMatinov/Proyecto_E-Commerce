@@ -1,4 +1,3 @@
-
 const PRODUCTOS_POR_PAGINA = 10;
 
 let estadoProductos = {
@@ -54,7 +53,7 @@ function renderizarTablaProductos() {
       return (
         "<tr>" +
         '<td><div class="table-product">' +
-        '<img class="table-product-img" src="../' + (p.imagen || "img/LogoTiendasUrbano.jpeg") + '" alt="' + p.nombre + '">' +
+        '<img class="table-product-img" src="../' + (p.imagen || "img/logoGRWU.png") + '" alt="' + p.nombre + '">' +
         '<span class="table-product-name">' + p.nombre + "</span>" +
         "</div></td>" +
         "<td>" + p.categoria + "</td>" +
@@ -105,7 +104,6 @@ function renderizarTablaProductos() {
     });
   });
 
-  // vuelve a aplicar las restricciones de rol sobre los botones recién creados
   aplicarRestriccionesDeRol();
 }
 
@@ -272,7 +270,7 @@ document.addEventListener("DOMContentLoaded", function () {
       precio: Number(document.getElementById("precioProducto").value),
       stock: Number(document.getElementById("stockProducto").value),
       stockCritico: stockCriticoValor === "" ? null : Number(stockCriticoValor),
-      imagen: document.getElementById("imagenProducto").value.trim() || "img/LogoTiendasUrbano.jpeg",
+      imagen: document.getElementById("imagenProducto").value.trim() || "img/logoGRWU.png",
       descripcion: document.getElementById("descripcionProducto").value.trim()
     };
 
