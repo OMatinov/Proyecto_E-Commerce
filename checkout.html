@@ -170,6 +170,8 @@
   <script src="js/cart.js"></script>
   <script src="js/regiones.js"></script>
   <script src="js/validaciones.js"></script>
+  <script src="js/usuarios.js"></script>
+  <script src="js/usuario-sesion.js"></script>
   <script src="js/header.js"></script>
   <script>
     function renderCheckout() {
@@ -347,6 +349,12 @@
         const usuarioActualizado = JSON.parse(localStorage.getItem("tiendaUrbanoUsuario"));
         usuarioActualizado.direccion = document.getElementById("direccion").value.trim();
         localStorage.setItem("tiendaUrbanoUsuario", JSON.stringify(usuarioActualizado));
+
+        // También reflejamos la dirección nueva en el registro del admin.
+        sincronizarUsuarioAdmin({
+          run: usuarioActualizado.run,
+          direccion: usuarioActualizado.direccion
+        });
       }
 
       // Guardamos un resumen de la compra para mostrarlo en la pantalla de éxito

@@ -110,6 +110,8 @@
   <script src="js/cart.js"></script>
   <script src="js/regiones.js"></script>
   <script src="js/validaciones.js"></script>
+  <script src="js/usuarios.js"></script>
+  <script src="js/usuario-sesion.js"></script>
   <script src="js/header.js"></script>
   <script>
     const selectRegion = document.getElementById("regionRegistro");
@@ -207,6 +209,20 @@
         tipoUsuario: "Cliente"
       };
       localStorage.setItem("tiendaUrbanoUsuario", JSON.stringify(usuario));
+
+      // Reflejamos esta cuenta nueva en el arreglo que usa el panel admin
+      // de Katerine, para que aparezca en su tabla de usuarios.
+      const { nombre: nombreAdmin, apellidos: apellidosAdmin } = separarNombreApellidos(usuario.nombre);
+      sincronizarUsuarioAdmin({
+        run: usuario.run,
+        nombre: nombreAdmin,
+        apellidos: apellidosAdmin,
+        correo: usuario.correo,
+        tipoUsuario: usuario.tipoUsuario,
+        region: usuario.region,
+        comuna: usuario.comuna,
+        telefono: usuario.telefono
+      });
 
       // Al registrarse, queda automáticamente con sesión activa
       localStorage.setItem("tiendaUrbanoSesionActiva", "1");
