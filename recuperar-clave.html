@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Recuperar contraseña | Get Ready With Us</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <div class="container">
+    <header class="site-header">
+      <div class="site-header-brand">
+        <img src="img/logoGRWU.png" alt="Logo GRWU" class="site-logo" />
+        <div>
+          <h1 class="site-title">GRWU</h1>
+          <p class="site-subtitle">GET READY WITH US</p>
+        </div>
+      </div>
+      <nav class="site-nav">
+        <a href="index.html" class="nav-link">Inicio</a>
+        <a href="catalogo.html" class="nav-link">Catálogo</a>
+        <a href="nosotros.html" class="nav-link">Nosotros</a>
+        <a href="blogs.html" class="nav-link">Blogs</a>
+        <a href="contacto.html" class="nav-link">Contacto</a>
+      </nav>
+      <div class="site-header-actions">
+        <a href="login.html" class="action-link">Iniciar sesión</a>
+        <a href="checkout.html" class="action-cart">🛒 Carrito (<span id="cart-count">0</span>)</a>
+      </div>
+    </header>
+
+    <section class="section login-section">
+      <div class="login-box">
+        <h3>Recuperar contraseña</h3>
+
+        <!-- PASO 1: Verificar identidad -->
+        <div id="pasoVerificar">
+          <p class="summary-note" style="margin-bottom:16px;">
+            Ingresa tu correo y tu RUN para confirmar que la cuenta es tuya. Como esta tienda guarda
+            los datos en este navegador, solo podrás recuperar la cuenta registrada aquí mismo.
+          </p>
+          <form id="formVerificar" novalidate>
+            <div class="form-field">
+              <label for="correoRecuperar">Correo electrónico</label>
+              <input id="correoRecuperar" name="correoRecuperar" type="email" required placeholder="tu@correo.com">
+              <p class="form-error" id="error-correoRecuperar"></p>
+            </div>
+            <div class="form-field">
+              <label for="runRecuperar">RUN</label>
+              <input id="runRecuperar" name="runRecuperar" type="text" required placeholder="19011022K" maxlength="9">
+              <p class="form-error" id="error-runRecuperar"></p>
+            </div>
+            <p class="form-error" id="error-verificacion" style="text-align:center;"></p>
+            <div class="form-actions">
+              <button type="submit" class="btn-primary">Verificar identidad</button>
+            </div>
+          </form>
+        </div>
+
+        <!-- PASO 2: Definir nueva contraseña (oculto hasta verificar identidad) -->
+        <div id="pasoNuevaClave" style="display:none;">
+          <p class="summary-note" style="margin-bottom:16px;" id="mensajeIdentidadVerificada"></p>
+          <form id="formNuevaClave" novalidate>
+            <div class="form-field">
+              <label for="claveNueva">Nueva contraseña</label>
+              <input id="claveNueva" name="claveNueva" type="password" required placeholder="••••••••">
+              <p style="font-size:0.75rem; color:#666; margin-top:4px;">
+                Entre 4 y 10 caracteres, con al menos 1 mayúscula y 1 número.
+              </p>
+              <p class="form-error" id="error-claveNueva"></p>
+            </div>
+            <div class="form-field">
+              <label for="claveNueva2">Confirmar nueva contraseña</label>
+              <input id="claveNueva2" name="claveNueva2" type="password" required placeholder="••••••••">
+              <p class="form-error" id="error-claveNueva2"></p>
+            </div>
+            <div class="form-actions">
+              <button type="submit" class="btn-primary">Guardar nueva contraseña</button>
+            </div>
+          </form>
+        </div>
+
+        <!-- PASO 3: Confirmación final (oculto hasta guardar la nueva clave) -->
+        <div id="pasoExito" style="display:none; text-align:center;">
+          <div class="success-icon" style="margin:0 auto 16px;">✓</div>
+          <p class="success-main">Tu contraseña fue actualizada correctamente.</p>
+          <div class="form-actions">
+            <a class="btn-primary" href="login.html">Iniciar sesión</a>
+          </div>
+        </div>
+
+        <p class="login-extra">
+          ¿Recordaste tu contraseña? <a href="login.html">Inicia sesión aquí</a>.
+        </p>
+      </div>
+    </section>
+  </div>
+
+  <footer>
+    <div class="footer-content">
+      <div>© 2026 GRWU - Get Ready With Us. Todos los derechos reservados.</div>
+      <div class="footer-links">
+        <a href="#">Cómo comprar</a>
+        <a href="#">Cambios y devoluciones</a>
+        <a href="#">Tiempos y costos de despacho</a>
+        <a href="#">Medios de pago</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/cart.js"></script>
+  <script src="js/validaciones.js"></script>
+  <script src="js/header.js"></script>
+  <script>
+    const pasoVerificar = document.getElementById("pasoVerificar");
+    const pasoNuevaClave = document.getElementById("pasoNuevaClave");
+    const pasoExito = document.getElementById("pasoExito");
+
+    // ---------- Paso 1: Verificar identidad (correo + RUN) ----------
+    function validarCampoCorreoRecuperar() {
+      const valor = document.getElementById("correoRecuperar").value.trim();
+      const resultado = validarCorreo(valor);
+      mostrarError("correoRecuperar", resultado.valido ? "" : resultado.mensaje);
+      return resultado.valido;
+    }
+
+    function validarCampoRunRecuperar() {
+      const valor = document.getElementById("runRecuperar").value;
+      const resultado = validarRun(valor);
+      mostrarError("runRecuperar", resultado.valido ? "" : resultado.mensaje);
+      return resultado.valido;
+    }
+
+    document.getElementById("correoRecuperar").addEventListener("blur", validarCampoCorreoRecuperar);
+    document.getElementById("runRecuperar").addEventListener("blur", validarCampoRunRecuperar);
+
+    document.getElementById("formVerificar").addEventListener("submit", (evento) => {
+      evento.preventDefault();
+
+      const errorVerificacion = document.getElementById("error-verificacion");
+      errorVerificacion.textContent = "";
+      errorVerificacion.style.display = "none";
+
+      const camposValidos = [
+        validarCampoCorreoRecuperar(),
+        validarCampoRunRecuperar()
+      ].every(Boolean);
+
+      if (!camposValidos) return;
+
+      const datosGuardados = localStorage.getItem("tiendaUrbanoUsuario");
+      if (!datosGuardados) {
+        errorVerificacion.textContent = "No existe ninguna cuenta registrada en este navegador. Regístrate primero.";
+        errorVerificacion.style.display = "block";
+        return;
+      }
+
+      const usuario = JSON.parse(datosGuardados);
+      const correoIngresado = document.getElementById("correoRecuperar").value.trim();
+      const runIngresado = limpiarRun(document.getElementById("runRecuperar").value);
+
+      if (correoIngresado.toLowerCase() !== usuario.correo.toLowerCase() || runIngresado !== usuario.run) {
+        errorVerificacion.textContent = "El correo y el RUN no coinciden con la cuenta registrada en este navegador.";
+        errorVerificacion.style.display = "block";
+        return;
+      }
+
+      // Identidad verificada: mostramos el paso 2
+      document.getElementById("mensajeIdentidadVerificada").textContent =
+        `Identidad verificada, ${usuario.nombre}. Define tu nueva contraseña.`;
+      pasoVerificar.style.display = "none";
+      pasoNuevaClave.style.display = "block";
+    });
+
+    // ---------- Paso 2: Definir nueva contraseña ----------
+    function validarCampoClaveNueva() {
+      const valor = document.getElementById("claveNueva").value;
+      const resultado = validarPassword(valor, { min: 4, max: 10, exigirComplejidad: true });
+      mostrarError("claveNueva", resultado.valido ? "" : resultado.mensaje);
+      return resultado.valido;
+    }
+
+    function validarCampoClaveNueva2() {
+      const clave = document.getElementById("claveNueva").value;
+      const clave2 = document.getElementById("claveNueva2").value;
+      const mensaje = clave !== clave2 ? "Las contraseñas no coinciden." : "";
+      mostrarError("claveNueva2", mensaje);
+      return !mensaje;
+    }
+
+    document.getElementById("claveNueva").addEventListener("blur", validarCampoClaveNueva);
+    document.getElementById("claveNueva2").addEventListener("blur", validarCampoClaveNueva2);
+
+    document.getElementById("formNuevaClave").addEventListener("submit", (evento) => {
+      evento.preventDefault();
+
+      const camposValidos = [
+        validarCampoClaveNueva(),
+        validarCampoClaveNueva2()
+      ].every(Boolean);
+
+      if (!camposValidos) return;
+
+      // Actualizamos la contraseña en la cuenta ya guardada (no se toca el resto de los datos)
+      const usuario = JSON.parse(localStorage.getItem("tiendaUrbanoUsuario"));
+      usuario.clave = document.getElementById("claveNueva").value;
+      localStorage.setItem("tiendaUrbanoUsuario", JSON.stringify(usuario));
+
+      // Por seguridad, cerramos cualquier sesión activa para que deba iniciar sesión con la clave nueva
+      localStorage.removeItem("tiendaUrbanoSesionActiva");
+
+      pasoNuevaClave.style.display = "none";
+      pasoExito.style.display = "block";
+    });
+  </script>
+</body>
+</html>

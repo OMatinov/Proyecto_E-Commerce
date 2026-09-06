@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Catálogo | Get Ready With Us</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet" href="css/catalogo.css" />
+</head>
+<body>
+  <main>
+    <div class="promo-bar">
+      ENVÍO GRATIS A TODO CHILE DESDE $44.990
+    </div>
+
+    <header class="site-header">
+      <div class="site-header-brand">
+        <img src="img/logoGRWU.png" alt="Logo GRWU" class="site-logo" />
+        <div>
+          <h1 class="site-title">GRWU</h1>
+          <p class="site-subtitle">GET READY WITH US</p>
+        </div>
+      </div>
+      <nav class="site-nav">
+        <a href="index.html" class="nav-link">Inicio</a>
+        <a href="catalogo.html" class="nav-link">Catálogo</a>
+        <a href="nosotros.html" class="nav-link">Nosotros</a>
+        <a href="blogs.html" class="nav-link">Blogs</a>
+        <a href="contacto.html" class="nav-link">Contacto</a>
+      </nav>
+      <div class="site-header-actions">
+        <a href="login.html" id="linkSesion" class="action-link">Iniciar sesión</a>
+        <a href="registro.html" class="action-button">Registrarse</a>
+        <a href="checkout.html" class="action-cart">🛒 Carrito (<span id="cart-count">0</span>)</a>
+      </div>
+    </header>
+
+    <div class="container">
+      <!-- Filtros de Género -->
+      <div class="gender-filters">
+        <button class="filter-gender active" data-gender="todos">Todos</button>
+        <button class="filter-gender" data-gender="mujer">Mujer</button>
+        <button class="filter-gender" data-gender="hombre">Hombre</button>
+      </div>
+
+      <!-- Filtros de Categoría -->
+      <section class="catalog-toolbar section">
+        <div class="catalog-filters">
+          <button class="filter-button active" data-category="todos">Todos</button>
+          <button class="filter-button" data-category="abrigos">Abrigos</button>
+          <button class="filter-button" data-category="accesorios">Accesorios</button>
+          <button class="filter-button" data-category="calzado">Calzado</button>
+          <button class="filter-button" data-category="chaquetas">Chaquetas</button>
+          <button class="filter-button" data-category="conjuntos">Conjuntos</button>
+          <button class="filter-button" data-category="faldas">Faldas</button>
+          <button class="filter-button" data-category="pantalones">Pantalones</button>
+          <button class="filter-button" data-category="poleras">Poleras</button>
+          <button class="filter-button" data-category="polerones">Polerones</button>
+          <button class="filter-button" data-category="shorts">Shorts</button>
+          <button class="filter-button" data-category="vestidos">Vestidos</button>
+        </div>
+        <div class="gender-filters">
+          <button class="gender-button active" data-gender="todos">Todos</button>
+          <button class="gender-button" data-gender="mujer">Mujer</button>
+          <button class="gender-button" data-gender="hombre">Hombre</button>
+        </div>
+      </section>
+
+      <!-- Grid de Productos Dinámico -->
+      <section class="section">
+        <div class="product-grid" id="product-grid">
+        </div>
+      </section>
+    </div>
+
+    <footer>
+      <div class="footer-content">
+        <span>© 2026 GRWU - Get Ready With Us. Todos los derechos reservados.</span>
+        <div class="footer-links">
+          <a href="#">Cómo comprar</a>
+          <a href="#">Cambios y devoluciones</a>
+          <a href="#">Tiempos y costos de despacho</a>
+          <a href="#">Medios de pago</a>
+        </div>
+      </div>
+    </footer>
+  </main>
+
+  <script src="js/productos-data.js"></script>
+  <script src="js/catalogo.js"></script>
+  <script src="js/cart.js"></script>
+  <script src="js/header.js"></script>
+</body>
+</html>

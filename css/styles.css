@@ -1,0 +1,691 @@
+/* Reset básico */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Variables globales */
+:root {
+  /* Colores principales */
+  --color-fondo: #F7F7F7;
+  --color-fondo-claro: #EAF2FF;
+  --color-primario: #4B1D5A;
+  --color-secundario: #244FA4;
+  --color-acento: #02756D;
+
+  /* Colores neutros */
+  --color-oscuro: #1A1A1A;
+  --color-claro: #FFFFFF;
+  --color-gris: #9CA3AF;
+  --color-borde: #E5E7EB;
+  --color-fondo-tarjeta: #FFFFFF;
+
+  /* Colores de texto */
+  --color-texto: #333333;
+  --color-texto-suave: #666666;
+  --color-blanco: #FFFFFF;
+
+  /* Colores de estado */
+  --color-error: #B22222;
+
+  /* Tipografía */
+  --font-titulos: 'Bebas Neue', sans-serif;
+  --font-cuerpo: 'Poppins', sans-serif;
+
+  /* Bordes y sombras */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-full: 999px;
+  --shadow-card: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+/* Estilos base del body */
+body {
+  font-family: var(--font-cuerpo);
+  background-color: var(--color-fondo);
+  color: var(--color-texto);
+  line-height: 1.6;
+}
+
+/* Contenedor general */
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* Botones generales */
+.btn {
+  display: inline-block;
+  padding: 10px 20px;
+  border-radius: var(--radius-full);
+  font-family: var(--font-cuerpo);
+  font-size: 0.9rem;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.btn-primary {
+  display: inline-block;
+  background-color: var(--color-primario);
+  color: var(--color-claro);
+  border: none;
+  padding: 10px 20px;
+  border-radius: var(--radius-full);
+  font-family: var(--font-cuerpo);
+  font-size: 0.9rem;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.btn-primary:hover {
+  background-color: #351240;
+}
+
+/* Imágenes responsivas */
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* ============================================================
+   HEADER GENERAL DEL SITIO
+   Usado por TODAS las páginas públicas de la tienda (no admin),
+   para que el logo y el menú de navegación sean siempre iguales.
+   ============================================================ */
+.site-header {
+  background: var(--color-oscuro);
+  color: var(--color-claro);
+  padding: 16px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  border-bottom: 2px solid var(--color-primario);
+}
+
+.site-header-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.site-logo {
+  height: 48px;
+  width: auto;
+  object-fit: contain;
+  display: block;
+}
+
+.site-title {
+  font-family: var(--font-titulos);
+  font-size: 1.8rem;
+  color: var(--color-claro);
+  margin: 0;
+  line-height: 1;
+}
+
+.site-subtitle {
+  font-size: 0.7rem;
+  color: var(--color-gris);
+  margin: 0;
+  letter-spacing: 2px;
+}
+
+.site-nav {
+  display: flex;
+  gap: 24px;
+  font-family: var(--font-cuerpo);
+  font-size: 0.85rem;
+  flex-wrap: wrap;
+}
+
+.nav-link {
+  color: var(--color-gris);
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.nav-link:hover {
+  color: var(--color-claro);
+}
+
+.nav-link-active {
+  color: var(--color-claro);
+  border-bottom: 2px solid var(--color-primario);
+  padding-bottom: 4px;
+}
+
+.site-header-actions {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  font-family: var(--font-cuerpo);
+  font-size: 0.85rem;
+  flex-wrap: wrap;
+}
+
+.action-link {
+  color: var(--color-claro);
+  text-decoration: none;
+}
+
+.action-link:hover {
+  text-decoration: underline;
+}
+
+.action-button {
+  background: var(--color-primario);
+  color: var(--color-claro);
+  padding: 8px 18px;
+  border-radius: var(--radius-full);
+  text-decoration: none;
+  transition: background 0.3s;
+  white-space: nowrap;
+}
+
+.action-button:hover {
+  background: #6e2730;
+}
+
+.action-cart {
+  color: var(--color-claro);
+  text-decoration: none;
+  border: 1px solid var(--color-gris);
+  padding: 6px 14px;
+  border-radius: var(--radius-full);
+  transition: border-color 0.3s;
+  white-space: nowrap;
+}
+
+.action-cart:hover {
+  border-color: var(--color-primario);
+}
+
+@media (max-width: 900px) {
+  .site-header {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 16px;
+  }
+
+  .site-nav {
+    justify-content: center;
+    width: 100%;
+  }
+
+  .site-header-actions {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* ============================================================
+   SECCIÓN GENÉRICA
+   Envoltorio con espaciado usado por login, registro, etc.
+   ============================================================ */
+.section {
+  padding: 40px 24px;
+}
+
+/* ============================================================
+   FOOTER GENERAL DEL SITIO
+   ============================================================ */
+footer {
+  background: var(--color-oscuro);
+  color: var(--color-gris);
+  margin-top: 40px;
+}
+
+.footer-content {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 24px 32px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  font-size: 0.8rem;
+}
+
+.footer-links {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.footer-links a {
+  color: var(--color-gris);
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.footer-links a:hover {
+  color: var(--color-claro);
+}
+
+/* ============================================================
+   FORMULARIOS
+   Reglas compartidas por login.html, registro.html y checkout.html.
+   Todas usan la misma estructura: .form-field > label + input + .form-error
+   ============================================================ */
+.form-field {
+  margin-bottom: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form-field label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--color-texto);
+}
+
+.form-field input,
+.form-field select {
+  padding: 10px 14px;
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-cuerpo);
+  font-size: 0.9rem;
+  color: var(--color-texto);
+  background: var(--color-claro);
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.form-field input:focus,
+.form-field select:focus {
+  outline: none;
+  border-color: var(--color-primario);
+  box-shadow: 0 0 0 3px rgba(75, 29, 90, 0.12);
+}
+
+/* validaciones.js agrega esta clase cuando un campo es inválido */
+.form-field input.input-invalido,
+.form-field select.input-invalido {
+  border-color: var(--color-error);
+}
+
+/* validaciones.js hace error.style.display = "block"/"none",
+   por eso partimos ocultos con display:none */
+.form-error {
+  font-size: 0.78rem;
+  color: var(--color-error);
+  display: none;
+}
+
+.form-row {
+  display: flex;
+  gap: 16px;
+}
+
+.form-row .form-field {
+  flex: 1;
+}
+
+.form-actions {
+  margin-top: 8px;
+}
+
+.form-actions .btn-primary {
+  width: 100%;
+  padding: 12px;
+  font-size: 0.95rem;
+}
+
+@media (max-width: 600px) {
+  .form-row {
+    flex-direction: column;
+    gap: 0;
+  }
+}
+
+/* ============================================================
+   LOGIN
+   ============================================================ */
+.login-section {
+  display: flex;
+  justify-content: center;
+}
+
+.login-box {
+  width: 100%;
+  max-width: 420px;
+  background: var(--color-fondo-tarjeta);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  padding: 32px;
+}
+
+.login-box h3 {
+  font-family: var(--font-titulos);
+  font-size: 1.6rem;
+  letter-spacing: 1px;
+  margin-bottom: 20px;
+  color: var(--color-primario);
+}
+
+.login-extra {
+  margin-top: 16px;
+  font-size: 0.85rem;
+  text-align: center;
+}
+
+.login-extra a {
+  color: var(--color-primario);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.login-extra a:hover {
+  text-decoration: underline;
+}
+
+/* ============================================================
+   CHECKOUT
+   Grid de 2 columnas: resumen del pedido (izq) + datos de envío (der)
+   ============================================================ */
+.checkout-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr);
+  gap: 28px;
+  padding: 40px 24px;
+  align-items: start;
+}
+
+.checkout-summary,
+.checkout-form {
+  background: var(--color-fondo-tarjeta);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  padding: 24px;
+}
+
+.checkout-summary h3,
+.checkout-form h3 {
+  font-family: var(--font-titulos);
+  font-size: 1.3rem;
+  letter-spacing: 1px;
+  color: var(--color-primario);
+  margin-bottom: 16px;
+}
+
+/* --- Lista de productos del carrito --- */
+.summary-items {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.summary-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--color-borde);
+}
+
+.summary-image {
+  width: 56px;
+  height: 56px;
+  object-fit: cover;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-borde);
+  flex-shrink: 0;
+}
+
+.summary-item-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.summary-name {
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.summary-detail {
+  font-size: 0.8rem;
+  color: var(--color-texto-suave);
+}
+
+.summary-price {
+  font-weight: 600;
+  color: var(--color-primario);
+  white-space: nowrap;
+}
+
+.btn-eliminar {
+  background: none;
+  border: none;
+  color: var(--color-error);
+  font-size: 1rem;
+  cursor: pointer;
+  padding: 4px 8px;
+  transition: transform 0.2s;
+}
+
+.btn-eliminar:hover {
+  transform: scale(1.15);
+}
+
+/* --- Subtotal / envío / total --- */
+.summary-totals {
+  border-top: 2px solid var(--color-oscuro);
+  padding-top: 12px;
+}
+
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.9rem;
+  margin-bottom: 6px;
+}
+
+.summary-row-total {
+  font-weight: 700;
+  font-size: 1.05rem;
+  color: var(--color-primario);
+  margin-top: 8px;
+}
+
+.summary-note {
+  font-size: 0.78rem;
+  color: var(--color-texto-suave);
+  margin-top: 12px;
+}
+
+/* --- Tipo de despacho y método de pago dentro del form --- */
+.checkout-section {
+  margin: 20px 0;
+  padding-top: 16px;
+  border-top: 1px solid var(--color-borde);
+}
+
+.checkout-section h4 {
+  font-size: 0.95rem;
+  margin-bottom: 10px;
+  color: var(--color-texto);
+}
+
+.shipping-options {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.shipping-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 12px 14px;
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: border-color 0.3s, background 0.3s;
+}
+
+/* Resalta la tarjeta cuyo radio está marcado (soportado en navegadores modernos) */
+.shipping-card:has(input:checked) {
+  border-color: var(--color-primario);
+  background: var(--color-fondo-claro);
+}
+
+.shipping-card input {
+  margin-top: 4px;
+}
+
+.shipping-title {
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.shipping-desc {
+  font-size: 0.8rem;
+  color: var(--color-texto-suave);
+}
+
+.shipping-price {
+  margin-left: auto;
+  font-weight: 600;
+  color: var(--color-primario);
+  white-space: nowrap;
+}
+
+.payment-note {
+  font-size: 0.82rem;
+  color: var(--color-texto-suave);
+  margin-bottom: 4px;
+}
+
+/* --- Botones finales y texto legal --- */
+.checkout-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 20px;
+  flex-wrap: wrap;
+}
+
+.btn-secondary {
+  background: transparent;
+  color: var(--color-texto);
+  border: 1px solid var(--color-borde);
+  padding: 10px 20px;
+  border-radius: var(--radius-full);
+  font-family: var(--font-cuerpo);
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.btn-secondary:hover {
+  background: var(--color-fondo);
+}
+
+.checkout-legal {
+  font-size: 0.75rem;
+  color: var(--color-texto-suave);
+  margin-top: 12px;
+}
+
+@media (max-width: 900px) {
+  .checkout-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ============================================================
+   PANTALLA DE COMPRA EXITOSA (compra-exitosa.html)
+   ============================================================ */
+.success-card {
+  max-width: 520px;
+  margin: 56px auto;
+  background: var(--color-fondo-tarjeta);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  padding: 44px 32px;
+  text-align: center;
+}
+
+.success-icon {
+  width: 72px;
+  height: 72px;
+  margin: 0 auto 20px;
+  border-radius: 50%;
+  background: var(--color-acento);
+  color: var(--color-claro);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  font-weight: 700;
+  animation: success-pop 0.4s ease;
+}
+
+@keyframes success-pop {
+  0% { transform: scale(0.3); opacity: 0; }
+  70% { transform: scale(1.1); opacity: 1; }
+  100% { transform: scale(1); }
+}
+
+.success-card h2 {
+  font-family: var(--font-titulos);
+  font-size: 1.8rem;
+  letter-spacing: 1px;
+  color: var(--color-primario);
+  margin-bottom: 10px;
+}
+
+.success-main {
+  font-size: 1rem;
+  color: var(--color-texto);
+  margin-bottom: 20px;
+}
+
+.success-details {
+  background: var(--color-fondo-claro);
+  border-radius: var(--radius-md);
+  padding: 16px 20px;
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+.success-details .summary-row:last-child {
+  margin-bottom: 0;
+}
+
+.success-note {
+  font-size: 0.85rem;
+  color: var(--color-texto-suave);
+  margin-bottom: 28px;
+}
+
+.success-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 600px) {
+  .success-card {
+    margin: 32px 16px;
+    padding: 32px 20px;
+  }
+}

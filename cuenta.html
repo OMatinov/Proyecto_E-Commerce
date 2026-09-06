@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Mi cuenta | Get Ready With Us</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <div class="container">
+    <header class="site-header">
+      <div class="site-header-brand">
+        <img src="img/logoGRWU.png" alt="Logo GRWU" class="site-logo" />
+        <div>
+          <h1 class="site-title">GRWU</h1>
+          <p class="site-subtitle">GET READY WITH US</p>
+        </div>
+      </div>
+      <nav class="site-nav">
+        <a href="index.html" class="nav-link">Inicio</a>
+        <a href="catalogo.html" class="nav-link">Catálogo</a>
+        <a href="nosotros.html" class="nav-link">Nosotros</a>
+        <a href="blogs.html" class="nav-link">Blogs</a>
+        <a href="contacto.html" class="nav-link">Contacto</a>
+      </nav>
+      <div class="site-header-actions">
+        <a href="login.html" id="linkSesion" class="action-link">Iniciar sesión</a>
+        <a href="checkout.html" class="action-cart">🛒 Carrito (<span id="cart-count">0</span>)</a>
+      </div>
+    </header>
+
+    <section class="section">
+
+      <h3 id="tituloBienvenida">Bienvenida</h3>
+      <ul style="margin-top:10px; font-size:0.9rem;" id="datosUsuario">
+
+      </ul>
+      <div style="margin-top:14px; display:flex; gap:10px; flex-wrap:wrap;">
+        <a class="btn-primary" href="catalogo.html">Ir al catálogo</a>
+      </div>
+    </section>
+  </div>
+
+  <footer>
+    <div class="footer-content">
+      <div>© 2026 GRWU - Get Ready With Us. Todos los derechos reservados.</div>
+      <div class="footer-links">
+        <a href="#">Cómo comprar</a>
+        <a href="#">Cambios y devoluciones</a>
+        <a href="#">Tiempos y costos de despacho</a>
+        <a href="#">Medios de pago</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/cart.js"></script>
+  <script src="js/header.js"></script>
+  <script>
+    function renderCuenta() {
+      const datos = localStorage.getItem("tiendaUrbanoUsuario");
+      const sesionActiva = localStorage.getItem("tiendaUrbanoSesionActiva") === "1";
+      const titulo = document.getElementById("tituloBienvenida");
+      const lista = document.getElementById("datosUsuario");
+
+      if (!datos) {
+        // Nadie se ha registrado todavía en este navegador
+        titulo.textContent = "No hay una cuenta registrada";
+        lista.innerHTML = `
+          <li>Aún no tienes datos guardados.</li>
+          <li><a href="registro.html">Regístrate aquí</a> para crear tu cuenta.</li>
+        `;
+        return;
+      }
+
+      if (!sesionActiva) {
+        // La cuenta existe, pero cerraste sesión: pedimos volver a iniciar sesión
+        titulo.textContent = "Debes iniciar sesión";
+        lista.innerHTML = `
+          <li>Ya tienes una cuenta registrada en este navegador, pero no has iniciado sesión.</li>
+          <li><a href="login.html">Inicia sesión aquí</a> para ver tus datos.</li>
+        `;
+        return;
+      }
+
+      const usuario = JSON.parse(datos);
+
+      titulo.textContent = `Bienvenida, ${usuario.nombre}`;
+      lista.innerHTML = `
+        <li><strong>RUN:</strong> ${usuario.run}</li>
+        <li><strong>Correo registrado:</strong> ${usuario.correo}</li>
+        <li><strong>Teléfono:</strong> ${usuario.telefono || "No indicado"}</li>
+        <li><strong>Región:</strong> ${usuario.region}</li>
+        <li><strong>Comuna:</strong> ${usuario.comuna}</li>
+        <li><strong>Tipo de usuario:</strong> ${usuario.tipoUsuario}</li>
+      `;
+    }
+
+    renderCuenta();
+  </script>
+</body>
+</html>
