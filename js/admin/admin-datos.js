@@ -1,24 +1,18 @@
-// datos-admin.js - Persistencia compartida del panel admin (productos y usuarios)
-// Autor: Katerine
-//
-// Como todavía no hay backend, el admin trabaja sobre localStorage:
-// la primera vez que se visita el panel, se "siembra" con los arreglos
-// base de productos.js y usuarios.js; desde ahí, crear/editar/eliminar
-// se guarda en localStorage y sobrevive a recargar la página.
-//
-// Se carga en admin-index.html, admin-productos.html y admin-usuarios.html,
-// después de productos.js y usuarios.js.
-
 const CLAVE_PRODUCTOS_ADMIN = "grwu_productosAdmin";
 const CLAVE_USUARIOS_ADMIN = "grwu_usuariosAdmin";
 
-// ---------- Productos ----------
+//  Productos 
 
 function cargarProductosAdmin() {
   const guardado = localStorage.getItem(CLAVE_PRODUCTOS_ADMIN);
   if (guardado) return JSON.parse(guardado);
-  localStorage.setItem(CLAVE_PRODUCTOS_ADMIN, JSON.stringify(productos));
-  return productos.slice();
+
+  const productosConInventario = PRODUCTOS.map(function (p) {
+    return Object.assign({ codigo: p.id.toUpperCase(), stock: 10, stockCritico: 3 }, p);
+  });
+
+  localStorage.setItem(CLAVE_PRODUCTOS_ADMIN, JSON.stringify(productosConInventario));
+  return productosConInventario;
 }
 
 function guardarProductosAdmin(lista) {
@@ -45,7 +39,7 @@ function eliminarProducto(id) {
   guardarProductosAdmin(lista);
 }
 
-// ---------- Usuarios ----------
+// Usuarios 
 
 function cargarUsuariosAdmin() {
   const guardado = localStorage.getItem(CLAVE_USUARIOS_ADMIN);
