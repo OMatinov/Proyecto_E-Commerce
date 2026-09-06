@@ -6,39 +6,34 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="stylesheet" href="css/styles.css" />
 </head>
-<script src="js/cart.js"></script>
 <body>
   <div class="container">
-    <header>
-      <div class="brand">
-        <div class="brand-logo">
-          <img src="img/logoGRWU.png" alt="Logo GRWU">
-        </div>
-        <div class="brand-text">
-          <h1>GRWU</h1>
-          <p>Cuenta de usuaria registrada</p>
+    <header class="site-header">
+      <div class="site-header-brand">
+        <img src="img/logoGRWU.png" alt="Logo GRWU" class="site-logo" />
+        <div>
+          <h1 class="site-title">GRWU</h1>
+          <p class="site-subtitle">GET READY WITH US</p>
         </div>
       </div>
-      <nav class="main-nav">
-        <a href="index.html">Inicio</a>
-        <a href="catalogo.html">Catálogo</a>
-        <a href="nosotros.html">Nosotros</a>
-        <a href="blogs.html">Blogs</a>
-        <a href="contacto.html">Contacto</a>
-        <a href="index.html" id="linkCerrarSesion">Cerrar sesión</a>
-        <a href="checkout.html">Carrito (<span id="cart-count">0</span>)</a>
+      <nav class="site-nav">
+        <a href="index.html" class="nav-link">Inicio</a>
+        <a href="catalogo.html" class="nav-link">Catálogo</a>
+        <a href="nosotros.html" class="nav-link">Nosotros</a>
+        <a href="blogs.html" class="nav-link">Blogs</a>
+        <a href="contacto.html" class="nav-link">Contacto</a>
       </nav>
+      <div class="site-header-actions">
+        <a href="login.html" id="linkSesion" class="action-link">Iniciar sesión</a>
+        <a href="checkout.html" class="action-cart">🛒 Carrito (<span id="cart-count">0</span>)</a>
+      </div>
     </header>
-
-    <div class="welcome-banner">
-      <img src="img/" alt="">
-    </div>
 
     <section class="section">
 
       <h3 id="tituloBienvenida">Bienvenida</h3>
       <ul style="margin-top:10px; font-size:0.9rem;" id="datosUsuario">
-        
+
       </ul>
       <div style="margin-top:14px; display:flex; gap:10px; flex-wrap:wrap;">
         <a class="btn-primary" href="catalogo.html">Ir al catálogo</a>
@@ -58,6 +53,8 @@
     </div>
   </footer>
 
+  <script src="js/cart.js"></script>
+  <script src="js/header.js"></script>
   <script>
     function renderCuenta() {
       const datos = localStorage.getItem("tiendaUrbanoUsuario");
@@ -88,13 +85,6 @@
     }
 
     renderCuenta();
-
-    document.getElementById("cart-count").textContent =
-      getCart().reduce((total, item) => total + item.qty, 0);
-
-    document.getElementById("linkCerrarSesion").addEventListener("click", () => {
-      localStorage.removeItem("tiendaUrbanoUsuario");
-    });
   </script>
 </body>
 </html>

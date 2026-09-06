@@ -12,24 +12,25 @@
 <body>
 
   <!-- Encabezado -->
-  <header class="header-blogs">
-    <div class="header-brand">
-      <img src="img/logoTiendasUrbano.jpeg" alt="GRWU" class="header-logo" />
+  <header class="site-header">
+    <div class="site-header-brand">
+      <img src="img/logoGRWU.png" alt="Logo GRWU" class="site-logo" />
       <div>
-        <h1 class="header-title">GRWU</h1>
-        <p class="header-subtitle">GET READY WITH US</p>
+        <h1 class="site-title">GRWU</h1>
+        <p class="site-subtitle">GET READY WITH US</p>
       </div>
     </div>
-    <nav class="header-nav">
-      <a href="index.html" class="nav-link">Home</a>
-      <a href="catalogo.html" class="nav-link">Productos</a>
+    <nav class="site-nav">
+      <a href="index.html" class="nav-link">Inicio</a>
+      <a href="catalogo.html" class="nav-link">Catálogo</a>
       <a href="nosotros.html" class="nav-link">Nosotros</a>
-      <a href="blogs.html" class="nav-link nav-link-active">Blogs</a>
+      <a href="blogs.html" class="nav-link">Blogs</a>
       <a href="contacto.html" class="nav-link">Contacto</a>
     </nav>
-    <div class="header-actions">
-      <a href="inicio-sesion.html" class="action-link">Iniciar sesión</a>
+    <div class="site-header-actions">
+      <a href="login.html" id="linkSesion" class="action-link">Iniciar sesión</a>
       <a href="registro.html" class="action-button">Registrarse</a>
+      <a href="checkout.html" class="action-cart">🛒 Carrito (<span id="cart-count">0</span>)</a>
     </div>
   </header>
 
@@ -52,7 +53,7 @@
     <h1 class="blog-detail-title">5 Tendencias que Dominarán el Otoño 2026</h1>
     <!-- Contenido -->
     <div class="blog-content">
-      
+
       <p><strong>El otoño 2026 trae consigo una revolución de estilo.</strong> Desde colores tierra hasta siluetas oversize, te contamos todo lo que necesitas saber para renovar tu armario esta temporada.</p>
 
       <h2 class="blog-subtitle">1. Tonos Tierra y Terracota</h2>
@@ -76,7 +77,7 @@
       </div>
 
       <p>¿Listo para renovar tu estilo este otoño? Explora nuestro <a href="catalogo.html" class="inline-link">catálogo</a> y encuentra las prendas que te harán brillar.</p>
-    
+
     </div>
 
     <!-- Boton compartir -->
@@ -94,7 +95,7 @@
     <div class="footer-grid">
       <div>
         <div class="footer-brand">
-          <img src="img/LogoTiendasUrbano.jpeg" alt="GRWU" class="footer-logo" />
+          <img src="img/logoGRWU.png" alt="GRWU" class="footer-logo" />
           <span class="footer-brand-name">GRWU</span>
         </div>
         <p class="footer-text">Get Ready With Us. Moda unisex para expresar tu estilo sin límites.</p>
@@ -126,6 +127,9 @@
       © 2026 GRWU - Get Ready With Us. Todos los derechos reservados.
     </div>
   </footer>
+
+  <script src="js/cart.js"></script>
+  <script src="js/header.js"></script>
 
 </body>
 </html>

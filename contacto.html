@@ -12,24 +12,25 @@
 <body>
 
   <!-- Encabezado -->
-  <header class="header-contacto">
-    <div class="header-brand">
-      <img src="img/logoGRWU.png" alt="GRWU" class="header-logo" />
+  <header class="site-header">
+    <div class="site-header-brand">
+      <img src="img/logoGRWU.png" alt="Logo GRWU" class="site-logo" />
       <div>
-        <h1 class="header-title">GRWU</h1>
-        <p class="header-subtitle">GET READY WITH US</p>
+        <h1 class="site-title">GRWU</h1>
+        <p class="site-subtitle">GET READY WITH US</p>
       </div>
     </div>
-    <nav class="header-nav">
-      <a href="index.html" class="nav-link">Home</a>
-      <a href="catalogo.html" class="nav-link">Productos</a>
+    <nav class="site-nav">
+      <a href="index.html" class="nav-link">Inicio</a>
+      <a href="catalogo.html" class="nav-link">Catálogo</a>
       <a href="nosotros.html" class="nav-link">Nosotros</a>
       <a href="blogs.html" class="nav-link">Blogs</a>
-      <a href="contacto.html" class="nav-link nav-link-active">Contacto</a>
+      <a href="contacto.html" class="nav-link">Contacto</a>
     </nav>
-    <div class="header-actions">
-      <a href="inicio-sesion.html" class="action-link">Iniciar sesión</a>
+    <div class="site-header-actions">
+      <a href="login.html" id="linkSesion" class="action-link">Iniciar sesión</a>
       <a href="registro.html" class="action-button">Registrarse</a>
+      <a href="checkout.html" class="action-cart">🛒 Carrito (<span id="cart-count">0</span>)</a>
     </div>
   </header>
 
@@ -65,7 +66,7 @@
 
           <div class="form-field">
             <label for="comentarioContacto">Comentario *</label>
-            <textarea id="comentarioContacto" name="comentarioContacto" rows="5" required maxlength="1000"></textarea>
+            <textarea id="comentarioContacto" name="comentarioContacto" rows="5" required maxlength="500"></textarea>
             <p class="form-error" id="error-comentarioContacto"></p>
           </div>
 
@@ -81,7 +82,7 @@
       <div class="contact-info-column">
         <div class="card-info">
           <h3 class="card-title">Información directa</h3>
-          
+
           <div class="info-list">
             <div class="info-item">
               <span class="info-icon">📧</span>
@@ -158,6 +159,8 @@
     </div>
   </footer>
 
+  <script src="js/cart.js"></script>
+  <script src="js/header.js"></script>
   <script src="js/contacto.js"></script>
 
 </body>

@@ -12,24 +12,25 @@
 <body>
 
   <!-- Encabezado -->
-  <header class="header-nosotros">
-    <div class="header-brand">
-      <img src="img/logoGRWU.png" alt="GRWU" class="header-logo" />
+  <header class="site-header">
+    <div class="site-header-brand">
+      <img src="img/logoGRWU.png" alt="Logo GRWU" class="site-logo" />
       <div>
-        <h1 class="header-title">GRWU</h1>
-        <p class="header-subtitle">GET READY WITH US</p>
+        <h1 class="site-title">GRWU</h1>
+        <p class="site-subtitle">GET READY WITH US</p>
       </div>
     </div>
-    <nav class="header-nav">
-      <a href="index.html" class="nav-link">Home</a>
-      <a href="catalogo.html" class="nav-link">Productos</a>
-      <a href="nosotros.html" class="nav-link nav-link-active">Nosotros</a>
+    <nav class="site-nav">
+      <a href="index.html" class="nav-link">Inicio</a>
+      <a href="catalogo.html" class="nav-link">Catálogo</a>
+      <a href="nosotros.html" class="nav-link">Nosotros</a>
       <a href="blogs.html" class="nav-link">Blogs</a>
       <a href="contacto.html" class="nav-link">Contacto</a>
     </nav>
-    <div class="header-actions">
-      <a href="login.html" class="action-link">Iniciar sesión</a>
+    <div class="site-header-actions">
+      <a href="login.html" id="linkSesion" class="action-link">Iniciar sesión</a>
       <a href="registro.html" class="action-button">Registrarse</a>
+      <a href="checkout.html" class="action-cart">🛒 Carrito (<span id="cart-count">0</span>)</a>
     </div>
   </header>
 
@@ -40,8 +41,8 @@
       <span class="page-eyebrow">Conócenos</span>
       <h2 class="page-title">¿Quiénes somos?</h2>
       <p class="page-description">
-        GRWU nace con la misión de democratizar la moda unisex en Chile. Creamos prendas versátiles, 
-        de calidad y con estilo, para que puedas expresarte sin límites. <strong>Get Ready With Us</strong> 
+        GRWU nace con la misión de democratizar la moda unisex en Chile. Creamos prendas versátiles,
+        de calidad y con estilo, para que puedas expresarte sin límites. <strong>Get Ready With Us</strong>
         es más que una marca, es una comunidad.
       </p>
     </section>
@@ -52,7 +53,7 @@
         <div class="card-icon">🎯</div>
         <h3 class="card-title">Misión</h3>
         <p class="card-text">
-          Ofrecer moda unisex accesible y sostenible, conectando a las personas a través del estilo 
+          Ofrecer moda unisex accesible y sostenible, conectando a las personas a través del estilo
           y la autenticidad, con un servicio rápido y confiable.
         </p>
       </div>
@@ -60,7 +61,7 @@
         <div class="card-icon">👁️</div>
         <h3 class="card-title">Visión</h3>
         <p class="card-text">
-          Ser la marca referente de moda unisex en Latinoamérica, impulsando la diversidad y 
+          Ser la marca referente de moda unisex en Latinoamérica, impulsando la diversidad y
           la inclusión a través de prendas que rompen estereotipos.
         </p>
       </div>
@@ -95,7 +96,7 @@
     <div class="footer-grid">
       <div>
         <div class="footer-brand">
-          <img src="img/LogoTiendasUrbano.jpeg" alt="GRWU" class="footer-logo" />
+          <img src="img/logoGRWU.png" alt="GRWU" class="footer-logo" />
           <span class="footer-brand-name">GRWU</span>
         </div>
         <p class="footer-text">Get Ready With Us. Moda unisex para expresar tu estilo sin límites.</p>
@@ -126,6 +127,9 @@
       © 2026 GRWU - Get Ready With Us. Todos los derechos reservados.
     </div>
   </footer>
+
+  <script src="js/cart.js"></script>
+  <script src="js/header.js"></script>
 
 </body>
 </html>

@@ -13,26 +13,26 @@
   --color-primario: #4B1D5A;
   --color-secundario: #244FA4;
   --color-acento: #02756D;
-  
+
   /* Colores neutros */
   --color-oscuro: #1A1A1A;
   --color-claro: #FFFFFF;
   --color-gris: #9CA3AF;
   --color-borde: #E5E7EB;
   --color-fondo-tarjeta: #FFFFFF;
-  
+
   /* Colores de texto */
   --color-texto: #333333;
   --color-texto-suave: #666666;
   --color-blanco: #FFFFFF;
-  
+
   /* Colores de estado */
   --color-error: #B22222;
-  
+
   /* Tipografía */
   --font-titulos: 'Bebas Neue', sans-serif;
   --font-cuerpo: 'Poppins', sans-serif;
-  
+
   /* Bordes y sombras */
   --radius-sm: 8px;
   --radius-md: 12px;
@@ -82,4 +82,140 @@ body {
 img {
   max-width: 100%;
   height: auto;
+}
+
+/* ============================================================
+   HEADER GENERAL DEL SITIO
+   Usado por TODAS las páginas públicas de la tienda (no admin),
+   para que el logo y el menú de navegación sean siempre iguales.
+   ============================================================ */
+.site-header {
+  background: var(--color-oscuro);
+  color: var(--color-claro);
+  padding: 16px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  border-bottom: 2px solid var(--color-primario);
+}
+
+.site-header-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.site-logo {
+  height: 48px;
+  width: auto;
+  object-fit: contain;
+  display: block;
+}
+
+.site-title {
+  font-family: var(--font-titulos);
+  font-size: 1.8rem;
+  color: var(--color-claro);
+  margin: 0;
+  line-height: 1;
+}
+
+.site-subtitle {
+  font-size: 0.7rem;
+  color: var(--color-gris);
+  margin: 0;
+  letter-spacing: 2px;
+}
+
+.site-nav {
+  display: flex;
+  gap: 24px;
+  font-family: var(--font-cuerpo);
+  font-size: 0.85rem;
+  flex-wrap: wrap;
+}
+
+.nav-link {
+  color: var(--color-gris);
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.nav-link:hover {
+  color: var(--color-claro);
+}
+
+.nav-link-active {
+  color: var(--color-claro);
+  border-bottom: 2px solid var(--color-primario);
+  padding-bottom: 4px;
+}
+
+.site-header-actions {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  font-family: var(--font-cuerpo);
+  font-size: 0.85rem;
+  flex-wrap: wrap;
+}
+
+.action-link {
+  color: var(--color-claro);
+  text-decoration: none;
+}
+
+.action-link:hover {
+  text-decoration: underline;
+}
+
+.action-button {
+  background: var(--color-primario);
+  color: var(--color-claro);
+  padding: 8px 18px;
+  border-radius: var(--radius-full);
+  text-decoration: none;
+  transition: background 0.3s;
+  white-space: nowrap;
+}
+
+.action-button:hover {
+  background: #6e2730;
+}
+
+.action-cart {
+  color: var(--color-claro);
+  text-decoration: none;
+  border: 1px solid var(--color-gris);
+  padding: 6px 14px;
+  border-radius: var(--radius-full);
+  transition: border-color 0.3s;
+  white-space: nowrap;
+}
+
+.action-cart:hover {
+  border-color: var(--color-primario);
+}
+
+@media (max-width: 900px) {
+  .site-header {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 16px;
+  }
+
+  .site-nav {
+    justify-content: center;
+    width: 100%;
+  }
+
+  .site-header-actions {
+    width: 100%;
+    justify-content: center;
+  }
 }

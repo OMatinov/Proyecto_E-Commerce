@@ -8,15 +8,24 @@
 </head>
 <body>
   <div class="container">
-    <header>
-      <div class="brand">
-        <div class="brand-logo">
-          <img src="img/logoGRWU.jpeg" alt="Logo GRWU">
+    <header class="site-header">
+      <div class="site-header-brand">
+        <img src="img/logoGRWU.png" alt="Logo GRWU" class="site-logo" />
+        <div>
+          <h1 class="site-title">GRWU</h1>
+          <p class="site-subtitle">¡Gracias por tu compra!</p>
         </div>
-        <div class="brand-text">
-          <h1>GRWU</h1>
-          <p>¡Gracias por tu compra!</p>
-        </div>
+      </div>
+      <nav class="site-nav">
+        <a href="index.html" class="nav-link">Inicio</a>
+        <a href="catalogo.html" class="nav-link">Catálogo</a>
+        <a href="nosotros.html" class="nav-link">Nosotros</a>
+        <a href="blogs.html" class="nav-link">Blogs</a>
+        <a href="contacto.html" class="nav-link">Contacto</a>
+      </nav>
+      <div class="site-header-actions">
+        <a href="login.html" id="linkSesion" class="action-link">Iniciar sesión</a>
+        <a href="checkout.html" class="action-cart">🛒 Carrito (<span id="cart-count">0</span>)</a>
       </div>
     </header>
 
@@ -45,5 +54,8 @@
       </div>
     </footer>
   </div>
+
+  <script src="js/cart.js"></script>
+  <script src="js/header.js"></script>
 </body>
 </html>

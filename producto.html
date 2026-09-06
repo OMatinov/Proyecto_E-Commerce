@@ -7,28 +7,29 @@
   <link rel="stylesheet" href="css/styles.css" />
 </head>
 <body>
-  <div class="container">
-    <header>
-      <div class="brand">
-        <div class="brand-logo">
-          <img src="img/logoGRWU.png" alt="">
-        </div>
-        <div class="brand-text">
-          <h1>GRWU</h1>
-          <p>Detalle de producto</p>
-        </div>
+  <header class="site-header">
+    <div class="site-header-brand">
+      <img src="img/logoGRWU.png" alt="Logo GRWU" class="site-logo" />
+      <div>
+        <h1 class="site-title">GRWU</h1>
+        <p class="site-subtitle">GET READY WITH US</p>
       </div>
-      <nav class="main-nav">
-        <a href="index.html">Inicio</a>
-        <a href="catalogo.html">Catálogo</a>
-        <a href="nosotros.html">Nosotros</a>
-        <a href="blogs.html">Blogs</a>
-        <a href="contacto.html">Contacto</a>
-        <a href="inicio-sesion.html">Iniciar sesión</a>
-        <a href="checkout.html">Carrito (<span id="cart-count">0</span>)</a>
-      </nav>
-    </header>
+    </div>
+    <nav class="site-nav">
+      <a href="index.html" class="nav-link">Inicio</a>
+      <a href="catalogo.html" class="nav-link">Catálogo</a>
+      <a href="nosotros.html" class="nav-link">Nosotros</a>
+      <a href="blogs.html" class="nav-link">Blogs</a>
+      <a href="contacto.html" class="nav-link">Contacto</a>
+    </nav>
+    <div class="site-header-actions">
+      <a href="login.html" id="linkSesion" class="action-link">Iniciar sesión</a>
+      <a href="registro.html" class="action-button">Registrarse</a>
+      <a href="checkout.html" class="action-cart">🛒 Carrito (<span id="cart-count">0</span>)</a>
+    </div>
+  </header>
 
+  <div class="container">
     <section class="product-detail">
       <div class="product-gallery">
         <div class="product-main-image">
@@ -83,7 +84,10 @@
       </div>
     </div>
   </footer>
+
+  <script src="js/cart.js"></script>
   <script src="js/productos-data.js"></script>
+  <script src="js/header.js"></script>
   <script>
     const params = new URLSearchParams(window.location.search);
     const productId = params.get('id');
@@ -135,7 +139,7 @@
         addToCart({
           id: product.id,
           name: product.nombre,
-          price: product.precio, 
+          price: product.precio,
           qty: 1
         });
         window.location.href = "checkout.html";

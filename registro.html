@@ -2,26 +2,30 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <title>Registate | Get Ready With Us</title>
+  <title>Regístrate | Get Ready With Us</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="stylesheet" href="css/styles.css" />
 </head>
-<script src="js/cart.js"></script>
 <body>
   <div class="container">
-    <header>
-      <div class="brand">
-        <div class="brand-logo">
-          <img src="img/logoGRWU.jpeg" alt="Logo GRWU">
-        </div>
-        <div class="brand-text">
-          <h1>GRWU</h1>
-          <p>Registro de nueva usuaria</p>
+    <header class="site-header">
+      <div class="site-header-brand">
+        <img src="img/logoGRWU.png" alt="Logo GRWU" class="site-logo" />
+        <div>
+          <h1 class="site-title">GRWU</h1>
+          <p class="site-subtitle">GET READY WITH US</p>
         </div>
       </div>
-      <div class="login-link">
-        <a href="index.html">Volver al inicio</a>
-
+      <nav class="site-nav">
+        <a href="index.html" class="nav-link">Inicio</a>
+        <a href="catalogo.html" class="nav-link">Catálogo</a>
+        <a href="nosotros.html" class="nav-link">Nosotros</a>
+        <a href="blogs.html" class="nav-link">Blogs</a>
+        <a href="contacto.html" class="nav-link">Contacto</a>
+      </nav>
+      <div class="site-header-actions">
+        <a href="login.html" id="linkSesion" class="action-link">Iniciar sesión</a>
+        <a href="checkout.html" class="action-cart">🛒 Carrito (<span id="cart-count">0</span>)</a>
       </div>
     </header>
 
@@ -91,12 +95,23 @@
     </section>
   </div>
 
+  <footer>
+    <div class="footer-content">
+      <div>© 2026 GRWU - Get Ready With Us. Todos los derechos reservados.</div>
+      <div class="footer-links">
+        <a href="#">Cómo comprar</a>
+        <a href="#">Cambios y devoluciones</a>
+        <a href="#">Tiempos y costos de despacho</a>
+        <a href="#">Medios de pago</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/cart.js"></script>
   <script src="js/regiones.js"></script>
   <script src="js/validaciones.js"></script>
+  <script src="js/header.js"></script>
   <script>
-    document.getElementById("cart-count").textContent =
-      getCart().reduce((total, item) => total + item.qty, 0);
-
     const selectRegion = document.getElementById("regionRegistro");
     const selectComuna = document.getElementById("comunaRegistro");
     conectarRegionComuna(selectRegion, selectComuna);
