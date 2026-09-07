@@ -1,40 +1,44 @@
-
-// Función para filtrar los blogs según la categoría seleccionada
-function filtrarBlogs(categoria) {
-  // Obtener todos los botones y tarjetas
-  const botones = document.querySelectorAll('.filter-btn');
-  const tarjetas = document.querySelectorAll('.blog-card');
-
-  // 1. Quitar la clase 'active' de todos los botones y ponerla en el correcto
-  botones.forEach(function(boton) {
-    boton.classList.remove('filter-btn-active');
-    if (boton.textContent.trim().toLowerCase() === categoria.toLowerCase()) {
-      boton.classList.add('filter-btn-active');
-    }
-  });
-
-  // 2. Mostrar u ocultar las tarjetas según la categoría
-  tarjetas.forEach(function(tarjeta) {
-    const categoriaTarjeta = tarjeta.querySelector('.blog-category').textContent.toLowerCase();
-    
-    if (categoria.toLowerCase() === 'todos' || categoriaTarjeta.includes(categoria.toLowerCase())) {
-      tarjeta.style.display = 'block';
-    } else {
-      tarjeta.style.display = 'none';
-    }
-  });
-}
-
-// Inicializar eventos cuando el DOM está listo
+// blogs.js - Lógica definitiva corregida
 document.addEventListener('DOMContentLoaded', function() {
-  const botones = document.querySelectorAll('.filter-btn');
+    const botones = document.querySelectorAll('.filter-btn');
+    const tarjetas = document.querySelectorAll('.blog-card');
 
-  // Agregar el evento click a cada botón
-  botones.forEach(function(boton) {
-    boton.addEventListener('click', function() {
-      // Obtener el texto del botón clickeado y llamar a la función
-      const categoria = this.textContent.trim();
-      filtrarBlogs(categoria);
+    function aplicarFiltro(categoria) {
+        // Normalizamos solo para comparar, pero mantenemos la integridad del texto original
+        const catNormalizada = categoria.trim().toLowerCase();
+
+        // 1. Actualizar estado visual de botones
+        botones.forEach(btn => {
+            btn.classList.remove('active');
+            if (btn.textContent.trim().toLowerCase() === catNormalizada) {
+                btn.classList.add('active');
+            }
+        });
+
+        // 2. Filtrar tarjetas
+        tarjetas.forEach(card => {
+            const catTarjeta = card.getAttribute('data-category').trim().toLowerCase();
+            
+            if (catNormalizada === 'todos' || catTarjeta === catNormalizada) {
+                card.style.display = 'block';
+                // Animación suave de entrada
+                card.animate([
+                    { opacity: 0, transform: 'translateY(15px)' },
+                    { opacity: 1, transform: 'translateY(0)' }
+                ], { duration: 400, easing: 'ease-out', fill: 'forwards' });
+            } else {
+                card.style.display = 'none';
+            }
+        });
+    }
+
+    // Asignar eventos
+    botones.forEach(btn => {
+        btn.addEventListener('click', () => {
+            aplicarFiltro(btn.textContent);
+        });
     });
-  });
+
+    // Inicializar mostrando todos al cargar
+    aplicarFiltro('Todos');
 });

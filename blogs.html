@@ -1,117 +1,297 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Blogs | Get Ready With Us</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="css/styles.css" />
-  <link rel="stylesheet" href="css/blogs.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="css/styles.css"/>
+  <link rel="stylesheet" href="css/blogs.css"/>
 </head>
+
 <body>
 
   <!-- Encabezado -->
   <header class="site-header">
     <div class="site-header-brand">
-      <img src="img/logoGRWU.png" alt="Logo GRWU" class="site-logo" />
+      <img src="img/logoGRWU.png" alt="Logo GRWU" class="site-logo"/>
+
       <div>
         <h1 class="site-title">GRWU</h1>
         <p class="site-subtitle">GET READY WITH US</p>
       </div>
     </div>
-    <nav class="site-nav">
+
+    <nav class="site-nav" aria-label="Navegación principal">
       <a href="index.html" class="nav-link">Inicio</a>
       <a href="catalogo.html" class="nav-link">Catálogo</a>
       <a href="nosotros.html" class="nav-link">Nosotros</a>
-      <a href="blogs.html" class="nav-link">Blogs</a>
+      <a href="blogs.html" class="nav-link active">Blogs</a>
       <a href="contacto.html" class="nav-link">Contacto</a>
     </nav>
+
     <div class="site-header-actions">
       <a href="login.html" id="linkSesion" class="action-link">Iniciar sesión</a>
       <a href="registro.html" class="action-button">Registrarse</a>
-      <a href="checkout.html" class="action-cart">🛒 Carrito (<span id="cart-count">0</span>)</a>
+      <a href="checkout.html" class="action-cart">
+        🛒 Carrito (<span id="cart-count">0</span>)
+      </a>
     </div>
   </header>
 
   <!-- Contenido principal -->
   <main class="main-blogs">
 
-    <section class="page-header">
-      <span class="page-eyebrow">Inspírate</span>
-      <h2 class="page-title">Nuestro Blog</h2>
-      <p class="page-description">
-        Tendencias, consejos de estilo y todo lo que necesitas para <strong>Get Ready With Us</strong>.
+    <!-- Encabezado -->
+    <section class="blog-header">
+      <span class="blog-eyebrow">INSPÍRATE</span>
+
+      <h1 class="blog-main-title">Ideas para vestir a tu manera.</h1>
+
+      <p class="blog-description">
+        Tendencias, consejos de estilo y recomendaciones para ayudarte a crear
+        outfits que se sientan como tú.
       </p>
     </section>
-
+    <br>
     <!-- Filtros -->
-    <div class="filters-blog">
-      <button class="filter-btn filter-btn-active">Todos</button>
-      <button class="filter-btn">Tendencias</button>
-      <button class="filter-btn">Estilo</button>
-      <button class="filter-btn">Moda Unisex</button>
-      <button class="filter-btn">Sostenibilidad</button>
-    </div>
+    <section class="filters-blog" aria-label="Filtrar artículos por categoría">
+      <button class="filter-btn active" data-category="todos">Todos</button>
+      <button class="filter-btn" data-category="tendencias">Tendencias</button>
+      <button class="filter-btn" data-category="estilo">Estilo</button>
+      <button class="filter-btn" data-category="sostenibilidad">Sostenibilidad</button>
+      <button class="filter-btn" data-category="guía de compras">Guía de compras</button>
+    </section>
+    <br>
+    <!-- Grid de artículos -->
+    <section class="blogs-grid" aria-label="Artículos del blog">
+      <!-- Artículo 1 -->
+      <article class="blog-card" data-category="tendencias">
+        <div class="blog-image">
+          <img src="img/blogs/blog1.jpg" alt="Outfit urbano de otoño con prendas oversize y tonos tierra">
+          <span class="blog-card-badge">TENDENCIAS</span>
+        </div>
 
-    <!-- Grid -->
-    <div class="blogs-grid">
-      <!-- Blog 1 -->
-      <article class="blog-card">
-        <div class="blog-image blog-image-1">📸</div>
         <div class="blog-body">
           <div class="blog-meta">
-            <span class="blog-category">Tendencias • 15 ago 2026</span>
-            <span class="blog-status badge-primario">Publicado</span>
+            <span class="blog-category">31 AGO 2026</span>
           </div>
-          <h3 class="blog-title">5 Tendencias que Dominarán el Otoño 2026</h3>
+          <h2 class="blog-title">5 tendencias que dominarán el otoño 2026/2027</h2>
           <p class="blog-excerpt">
-            Descubre los colores, texturas y siluetas que marcarán la temporada...
+            Tonos tierra, prendas oversize y capas para crear looks cómodos,
+            urbanos y con actitud.
           </p>
-          <a href="blogs-detalles.html?id=1" class="blog-link">Leer más →</a>
+          <a href="blogs-detalles.html?id=1" class="blog-link">
+            Leer artículo <span aria-hidden="true">→</span>
+          </a>
         </div>
       </article>
 
-      <!-- Blog 2 -->
-      <article class="blog-card">
-        <div class="blog-image blog-image-2">👔</div>
+      <!-- Artículo 2 -->
+      <article class="blog-card" data-category="estilo">
+        <div class="blog-image">
+          <img src="img/blogs/blog2.jpg" alt="Prendas oversize y zapatillas para crear un look urbano unisex">
+          <span class="blog-card-badge">MODA UNISEX</span>
+        </div>
+
         <div class="blog-body">
           <div class="blog-meta">
-            <span class="blog-category">Estilo • 10 ago 2026</span>
-            <span class="blog-status badge-gris">Borrador</span>
+            <span class="blog-category">26 AGO 2026</span>
           </div>
-          <h3 class="blog-title">Cómo Armar un Look Unisex en 5 Pasos</h3>
+          <h2 class="blog-title">Cómo armar un look unisex en 5 pasos</h2>
           <p class="blog-excerpt">
-            Prendas clave que funcionan para cualquier género y silueta...
+            Prendas clave que funcionan con distintos estilos y siluetas para
+            crear un outfit cómodo, personal y fácil de combinar.
           </p>
-          <a href="blogs-detalles.html?id=2" class="blog-link">Leer más →</a>
+          <a href="blogs-detalles.html?id=2" class="blog-link">
+            Leer artículo <span aria-hidden="true">→</span>
+          </a>
         </div>
       </article>
 
-      <!-- Blog 3 -->
-      <article class="blog-card">
-        <div class="blog-image blog-image-3">♻️</div>
+      <!-- Artículo 3 -->
+      <article class="blog-card" data-category="sostenibilidad">
+        <div class="blog-image">
+          <img src="img/blogs/blog3.jpg"alt="Prendas dobladas y accesorios reutilizables sobre un fondo neutro">
+          <span class="blog-card-badge">SOSTENIBILIDAD</span>
+        </div>
+
         <div class="blog-body">
           <div class="blog-meta">
-            <span class="blog-category">Sostenibilidad • 5 ago 2026</span>
-            <span class="blog-status badge-primario">Publicado</span>
+            <span class="blog-category">18 AGO 2026</span>
           </div>
-          <h3 class="blog-title">Moda Sostenible: Nuestro Compromiso</h3>
+          <h2 class="blog-title">Moda sostenible: pequeños cambios, gran impacto</h2>
           <p class="blog-excerpt">
-            Conoce nuestras prácticas de producción y materiales responsables...
+            Pequeñas decisiones, prendas versátiles y cuidado de la ropa para
+            construir una forma de vestir más consciente.
           </p>
-          <a href="blogs-detalles.html?id=3" class="blog-link">Leer más →</a>
+          <a href="blogs-detalles.html?id=3" class="blog-link">
+            Leer artículo <span aria-hidden="true">→</span>
+          </a>
         </div>
       </article>
 
-    </div>
+      <!-- Artículo 4 -->
+      <article class="blog-card" data-category="estilo">
+        <div class="blog-image">
+          <img src="img/blogs/blog4.jpg" alt="Persona eligiendo una chaqueta urbana frente a un espejo">
+          <span class="blog-card-badge">ESTILO</span>
+        </div>
 
+        <div class="blog-body">
+          <div class="blog-meta">
+            <span class="blog-category">14 AGO 2026</span>
+          </div>
+          <h2 class="blog-title">¿Cómo encontrar tu estilo sin seguir todas las tendencias?</h2>
+          <p class="blog-excerpt">
+            Una guía para elegir ropa que te represente, en lugar de comprar
+            solamente lo que está de moda.
+          </p>
+          <a href="blogs-detalles.html?id=4" class="blog-link">
+            Leer artículo <span aria-hidden="true">→</span>
+          </a>
+        </div>
+      </article>
+
+      <!-- Artículo 5 -->
+      <article class="blog-card" data-category="guía de compras">
+        <div class="blog-image">
+          <img src="img/blogs/blog5.jpg" alt="Prendas básicas organizadas para combinar distintos outfits">
+          <span class="blog-card-badge">GUÍA DE COMPRA</span>
+        </div>
+
+        <div class="blog-body">
+          <div class="blog-meta">
+            <span class="blog-category">12 AGO 2026</span>
+          </div>
+          <h2 class="blog-title">Prendas básicas que combinan con todo</h2>
+          <p class="blog-excerpt">
+            Poleras, jeans, polerones y chaquetas que te ayudan a crear muchos
+            outfits con menos prendas.
+          </p>
+          <a href="blogs-detalles.html?id=5" class="blog-link">
+            Leer artículo <span aria-hidden="true">→</span>
+          </a>
+        </div>
+      </article>
+
+      <!-- Artículo 6 -->
+      <article class="blog-card" data-category="tendencias">
+        <div class="blog-image">
+          <img src="img/blogs/blog6.jpg" alt="Persona usando polera, polerón y chaqueta en capas durante otoño">
+          <span class="blog-card-badge">TENDENCIAS</span>
+        </div>
+
+        <div class="blog-body">
+          <div class="blog-meta">
+            <span class="blog-category">10 AGO 2026</span>
+          </div>
+          <h2 class="blog-title">Capas con estilo: guía para vestir en días fríos</h2>
+          <p class="blog-excerpt">
+            Aprende a combinar poleras, polerones y chaquetas sin perder
+            comodidad ni personalidad.
+          </p>
+          <a href="blogs-detalles.html?id=6" class="blog-link">
+            Leer artículo <span aria-hidden="true">→</span>
+          </a>
+        </div>
+      </article>
+
+      <!-- Artículo 7 -->
+      <article class="blog-card" data-category="estilo">
+        <div class="blog-image">
+          <img src="img/blogs/blog7.jpg" alt="Accesorios de estilo urbano como gorro, lentes, cadena y zapatillas">
+          <span class="blog-card-badge">ESTILO</span>
+        </div>
+
+        <div class="blog-body">
+          <div class="blog-meta">
+            <span class="blog-category">7 AGO 2026</span>
+          </div>
+          <h2 class="blog-title">Accesorios que transforman un outfit básico</h2>
+          <p class="blog-excerpt">
+            Gorras, bolsos, cadenas y zapatillas pueden cambiar por completo un
+            look sencillo sin perder comodidad.
+          </p>
+          <a href="blogs-detalles.html?id=7" class="blog-link">
+            Leer artículo <span aria-hidden="true">→</span>
+          </a>
+        </div>
+      </article>
+
+      <!-- Artículo 8 -->
+      <article class="blog-card" data-category="sostenibilidad">
+        <div class="blog-image">
+          <img src="img/blogs/blog8.jpg" alt="Prendas dobladas junto a materiales para cuidar y reparar ropa">
+          <span class="blog-card-badge">SOSTENIBILIDAD</span>
+        </div>
+
+        <div class="blog-body">
+          <div class="blog-meta">
+            <span class="blog-category">4 AGO 2026</span>
+          </div>
+          <h2 class="blog-title">Cuida tu ropa: 6 hábitos para hacer que dure más</h2>
+          <p class="blog-excerpt">
+            Pequeños hábitos de lavado, guardado y reparación que ayudan a
+            extender la vida útil de tus prendas favoritas.
+          </p>
+          <a href="blogs-detalles.html?id=8" class="blog-link">
+            Leer artículo <span aria-hidden="true">→</span>
+          </a>
+        </div>
+      </article>
+
+      <!-- Artículo 9 -->
+      <article class="blog-card" data-category="guía de compras">
+        <div class="blog-image">
+          <img src="img/blogs/blog9.jpg" alt="Cinta métrica sobre prendas para elegir una talla al comprar ropa online">
+          <span class="blog-card-badge">GUÍA DE COMPRAS</span>
+        </div>
+
+        <div class="blog-body">
+          <div class="blog-meta">
+            <span class="blog-category">1 AGO 2026</span>
+          </div>
+          <h2 class="blog-title">
+            Cómo elegir la talla correcta al comprar ropa online
+          </h2>
+          <p class="blog-excerpt">
+            Revisa tus medidas, compara la tabla de tallas y compra con más
+            seguridad sin depender solo de la talla que usas habitualmente.
+          </p>
+          <a href="blogs-detalles.html?id=9" class="blog-link">
+            Leer artículo <span aria-hidden="true">→</span>
+          </a>
+        </div>
+      </article>
+    </section>
+
+    <!-- Mensaje cuando no hay resultados -->
+    <p id="no-results" class="no-results" hidden>
+      Aún no tenemos artículos en esta categoría. Pronto habrá nuevas ideas
+      para inspirarte.
+    </p>
+
+    <!-- Llamado a la acción -->
+    <section class="blogs-cta">
+      <span class="blog-eyebrow">GET READY WITH US</span>
+      <h2 class="blogs-cta-title">Encuentra prendas para hacerlo tuyo.</h2>
+      <p>
+        Explora nuestro catálogo y combina las ideas del blog con tu propio estilo.
+      </p>
+      <br>
+      <a href="catalogo.html" class="action-button">
+        Ver catálogo
+      </a>
+    </section>
   </main>
 
   <!-- Pie de página -->
   <footer>
     <div class="footer-content">
       <div>© 2026 GRWU - Get Ready With Us. Todos los derechos reservados.</div>
+
       <div class="footer-links">
         <a href="#">Cómo comprar</a>
         <a href="#">Cambios y devoluciones</a>

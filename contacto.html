@@ -1,131 +1,239 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Contacto | Get Ready With Us</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="css/styles.css" />
-  <link rel="stylesheet" href="css/contacto.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/contacto.css">
 </head>
+
 <body>
 
   <!-- Encabezado -->
   <header class="site-header">
     <div class="site-header-brand">
-      <img src="img/logoGRWU.png" alt="Logo GRWU" class="site-logo" />
+      <img src="img/logoGRWU.png" alt="Logo GRWU" class="site-logo">
+
       <div>
         <h1 class="site-title">GRWU</h1>
         <p class="site-subtitle">GET READY WITH US</p>
       </div>
     </div>
-    <nav class="site-nav">
+
+    <nav class="site-nav" aria-label="Navegación principal">
       <a href="index.html" class="nav-link">Inicio</a>
       <a href="catalogo.html" class="nav-link">Catálogo</a>
       <a href="nosotros.html" class="nav-link">Nosotros</a>
       <a href="blogs.html" class="nav-link">Blogs</a>
-      <a href="contacto.html" class="nav-link">Contacto</a>
+      <a href="contacto.html" class="nav-link active">Contacto</a>
     </nav>
+
     <div class="site-header-actions">
       <a href="login.html" id="linkSesion" class="action-link">Iniciar sesión</a>
       <a href="registro.html" class="action-button">Registrarse</a>
-      <a href="checkout.html" class="action-cart">🛒 Carrito (<span id="cart-count">0</span>)</a>
+      <a href="checkout.html" class="action-cart">
+        🛒 Carrito (<span id="cart-count">0</span>)
+      </a>
     </div>
   </header>
 
   <!-- Contenido principal -->
   <main class="main-contacto">
+    <!-- Presentación -->
+    <section class="contacto-header">
+      <span class="contacto-eyebrow">HABLEMOS</span>
 
-    <section class="page-header">
-      <span class="page-eyebrow">Hablemos</span>
-      <h2 class="page-title">Contacto</h2>
-      <p class="page-description">
-        ¿Tienes preguntas, sugerencias o necesitas ayuda? Escríbenos y te responderemos a la brevedad.
+      <h2 class="contacto-title">Estamos aquí para ayudarte.</h2>
+
+      <p class="contacto-description">
+        ¿Tienes una consulta sobre un producto, tu compra o GRWU? Déjanos un
+        mensaje y te responderemos lo antes posible.
       </p>
     </section>
 
-    <div class="contact-grid">
-
-      <!-- Formulario -->
-      <div class="card-form">
-        <h3 class="card-title">Formulario de contacto</h3>
-
-        <form id="formContacto" novalidate>
-          <div class="form-field">
-            <label for="nombreContacto">Nombre completo *</label>
-            <input id="nombreContacto" name="nombreContacto" type="text" required maxlength="100" />
-            <p class="form-error" id="error-nombreContacto"></p>
-          </div>
-
-          <div class="form-field">
-            <label for="correoContacto">Correo electrónico *</label>
-            <input id="correoContacto" name="correoContacto" type="email" required maxlength="100" />
-            <p class="form-error" id="error-correoContacto"></p>
-          </div>
-
-          <div class="form-field">
-            <label for="comentarioContacto">Comentario *</label>
-            <textarea id="comentarioContacto" name="comentarioContacto" rows="5" required maxlength="500"></textarea>
-            <p class="form-error" id="error-comentarioContacto"></p>
-          </div>
-
-          <button type="submit" class="btn-primary btn-full">Enviar mensaje</button>
-
-          <p id="mensajeExito" class="success-message" style="display:none;">
-            ✅ ¡Mensaje enviado con éxito! Te responderemos pronto.
+    <!-- Formulario -->
+    <section class="contacto-form-section" aria-labelledby="titulo-formulario">
+      <div class="contacto-form-card">
+        <div class="contacto-form-intro">
+          <span class="contacto-eyebrow">CONTÁCTANOS</span>
+          <h3 id="titulo-formulario">Cuéntanos cómo podemos ayudarte.</h3>
+          <p>
+            Completa el formulario y envíanos tu consulta. Los campos marcados
+            con <span aria-hidden="true">*</span> son obligatorios.
           </p>
+        </div>
+
+        <form id="form-contacto" novalidate>
+          <!-- Nombre -->
+          <div class="form-group">
+            <label for="nombre">
+              Nombre completo <span class="required-mark" aria-hidden="true">*</span>
+            </label>
+
+            <input
+              type="text"
+              id="nombre"
+              name="nombre"
+              maxlength="100"
+              autocomplete="name"
+              aria-describedby="error-nombre">
+            <small id="error-nombre" class="form-error" aria-live="polite"></small>
+          </div>
+
+          <!-- Correo -->
+          <div class="form-group">
+            <label for="correo"> Correo electrónico</label>
+            <input
+              type="email"
+              id="correo"
+              name="correo"
+              maxlength="100"
+              autocomplete="email"
+              aria-describedby="help-correo error-correo">
+            <small id="help-correo" class="form-help">
+              Solo se aceptan correos @duoc.cl, @profesor.duoc.cl o @gmail.com.
+            </small>
+            <small id="error-correo" class="form-error" aria-live="polite"></small>
+          </div>
+
+          <!-- Motivo -->
+          <div class="form-group">
+            <label for="motivo">Motivo de contacto</label>
+            <select id="motivo" name="motivo">
+              <option value="">Selecciona una opción</option>
+              <option value="producto">Consulta por un producto</option>
+              <option value="pedido">Consulta por un pedido</option>
+              <option value="cambios">Cambios y devoluciones</option>
+              <option value="despacho">Despacho</option>
+              <option value="otro">Otro motivo</option>
+            </select>
+          </div>
+          <!-- Comentario -->
+          <div class="form-group">
+            <div class="label-counter-row">
+              <label for="comentario">
+                Mensaje <span class="required-mark" aria-hidden="true">*</span>
+              </label>
+              <span id="contador-comentario" class="character-counter"> 0 / 500</span>
+            </div>
+
+            <textarea
+              id="comentario"
+              name="comentario"
+              rows="6"
+              maxlength="500"
+              placeholder="Escribe aquí tu consulta..."
+              aria-describedby="error-comentario">
+            </textarea>
+            <small id="error-comentario" class="form-error" aria-live="polite"></small>
+          </div>
+          <button type="submit" class="contacto-submit-button">Enviar mensaje</button>
+          <p
+            id="form-success"
+            class="form-success"
+            role="status"
+            aria-live="polite"
+            hidden
+          ></p>
         </form>
       </div>
+    </section>
 
-      <!-- Información de contacto -->
-      <div class="contact-info-column">
-        <div class="card-info">
-          <h3 class="card-title">Información directa</h3>
+    <section class="contacto-info-grid" aria-label="Información de contacto y redes sociales">
+      <!-- Tarjeta de información directa -->
+      <article class="contacto-info-card">
+        <span class="contacto-card-label">INFORMACIÓN DIRECTA</span>
+        <h3>También puedes escribirnos.</h3>
+        <p>
+          Si prefieres contactarnos por otro medio, revisa nuestros canales
+          disponibles. Estamos atentos para orientarte en tus compras.
+        </p>
+        <ul class="contacto-list">
+          <li>
+            <span class="contacto-list-icon">
+              <img src="img/iconos/gmail.png" alt="">
+            </span>
+            <div>
+              <strong>Correo</strong>
+              <a href="mailto:contacto@grwu.cl">tienda.grwu@gmail.com</a>
+            </div>
+          </li>
+          <li>
+            <span class="contacto-list-icon">
+              <img src="img/iconos/horario.png" alt=""
+            </span>
+            <div>
+              <strong>Horario de atención</strong>
+              <span>Lunes a viernes, 09:00 a 18:00 hrs.</span>
+            </div>
+          </li>
+          <li>
+            <span class="contacto-list-icon">
+              <img src="img/iconos/telefono.png" alt="">
+            </span>
+            </span>
+            <div>
+              <strong>Teléfono</strong>
+              <span>+ 569 9673 5648</span>
+            </div>
+          </li>
+        </ul>
+      </article>
 
-          <div class="info-list">
-            <div class="info-item">
-              <span class="info-icon">📧</span>
-              <div>
-                <p class="info-label">Correo</p>
-                <p class="info-value">tienda.grwu@gmail.com</p>
-              </div>
-            </div>
-            <div class="info-item">
-              <span class="info-icon">📱</span>
-              <div>
-                <p class="info-label">Teléfono</p>
-                <p class="info-value">+56 9 4728 9952</p>
-              </div>
-            </div>
-            <div class="info-item">
-              <span class="info-icon">🕐</span>
-              <div>
-                <p class="info-label">Horario</p>
-                <p class="info-value">Lun a Vie: 9:00 - 18:00</p>
-              </div>
-            </div>
-          </div>
+      <!-- Tarjeta de redes sociales -->
+      <article class="contacto-info-card contacto-social-card">
+        <span class="contacto-card-label">SÍGUENOS</span>
+        <h3>Conecta con la comunidad GRWU.</h3>
+        <p>
+          Encuentra inspiración, novedades y nuevas formas de combinar tu
+          estilo en nuestras redes sociales.
+        </p>
+        <div class="social-links">
+          <a class="social-link" href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer">
+            <span class="social-link-icon" >
+              <img src="img/iconos/instagram.png" alt="">
+            </span>
+            <span>
+              <strong>Instagram</strong>
+              <small>@grwu.cl</small>
+            </span>
+            <span class="social-link-arrow" aria-hidden="true">↗</span>
+          </a>
+
+          <a class="social-link" href="https://www.tiktok.com/" target="_blank" rel="noopener noreferrer">
+            <span class="social-link-icon">
+              <img src="img/iconos/tiktok.png" alt="">
+            </span>
+            <span>
+              <strong>TikTok</strong>
+              <small>@grwu.cl</small>
+            </span>
+            <span class="social-link-arrow" aria-hidden="true">↗</span>
+          </a>
+
+          <a class="social-link" href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer">
+            <span class="social-link-icon">
+              <img src="img/iconos/facebook.png" alt="">
+            </span>
+            <span>
+              <strong>Facebook</strong>
+              <small>GRWU Chile</small>
+            </span>
+            <span class="social-link-arrow" aria-hidden="true">↗</span>
+          </a>
         </div>
-
-        <!-- Redes sociales -->
-        <div class="card-social">
-          <h3 class="card-title card-title-light">Síguenos</h3>
-          <p class="card-text-light">Sigue nuestras novedades y tendencias en redes sociales.</p>
-          <div class="social-buttons">
-            <a href="#" class="social-btn">📷 Instagram</a>
-            <a href="#" class="social-btn">📘 Facebook</a>
-            <a href="#" class="social-btn">🐦 Twitter</a>
-          </div>
-        </div>
-      </div>
-    </div>
+      </article>
+    </section>
   </main>
 
   <!-- Pie de página -->
   <footer>
     <div class="footer-content">
       <div>© 2026 GRWU - Get Ready With Us. Todos los derechos reservados.</div>
+
       <div class="footer-links">
         <a href="#">Cómo comprar</a>
         <a href="#">Cambios y devoluciones</a>
