@@ -6,31 +6,32 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="stylesheet" href="css/styles.css" />
   <link rel="stylesheet" href="css/checkout.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet" />
 </head>
 <body>
+  <header class="site-header">
+    <div class="site-header-brand">
+      <img src="img/logoGRWU.png" alt="Logo GRWU" class="site-logo" />
+      <div>
+        <h1 class="site-title">GRWU</h1>
+        <p class="site-subtitle">GET READY WITH US</p>
+      </div>
+    </div>
+    <nav class="site-nav">
+      <a href="index.html" class="nav-link">Inicio</a>
+      <a href="catalogo.html" class="nav-link">Catálogo</a>
+      <a href="nosotros.html" class="nav-link">Nosotros</a>
+      <a href="blogs.html" class="nav-link">Blogs</a>
+      <a href="contacto.html" class="nav-link">Contacto</a>
+    </nav>
+    <div class="site-header-actions">
+      <a href="login.html" id="linkSesion" class="action-link">Iniciar sesión</a>
+      <a href="registro.html" class="action-button">Registrarse</a>
+      <a href="checkout.html" class="action-cart">🛒 Carrito (<span id="cart-count">0</span>)</a>
+    </div>
+  </header>
   <div class="container">
-    <header class="site-header">
-      <div class="site-header-brand">
-        <img src="img/logoGRWU.png" alt="Logo GRWU" class="site-logo" />
-        <div>
-          <h1 class="site-title">GRWU</h1>
-          <p class="site-subtitle">GET READY WITH US</p>
-        </div>
-      </div>
-      <nav class="site-nav">
-        <a href="index.html" class="nav-link">Inicio</a>
-        <a href="catalogo.html" class="nav-link">Catálogo</a>
-        <a href="nosotros.html" class="nav-link">Nosotros</a>
-        <a href="blogs.html" class="nav-link">Blogs</a>
-        <a href="contacto.html" class="nav-link">Contacto</a>
-      </nav>
-      <div class="site-header-actions">
-        <a href="login.html" id="linkSesion" class="action-link">Iniciar sesión</a>
-        <a href="registro.html" class="action-button">Registrarse</a>
-        <a href="checkout.html" class="action-cart">🛒 Carrito (<span id="cart-count">0</span>)</a>
-      </div>
-    </header>
-
     <section class="checkout-grid">
       <div class="checkout-summary">
         <h3>Tu pedido</h3>
