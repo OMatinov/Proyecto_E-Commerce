@@ -18,16 +18,16 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // ---------- Iniciar sesión / Cerrar sesión ----------
   const linkSesion = document.getElementById("linkSesion");
-  const haySesionActiva = localStorage.getItem("tiendaUrbanoSesionActiva") === "1";
+  const haySesionActiva = localStorage.getItem("GRWUSesionActiva") === "1";
 
   if (linkSesion && haySesionActiva) {
     linkSesion.textContent = "Cerrar sesión";
     linkSesion.setAttribute("href", "#");
     linkSesion.addEventListener("click", function (evento) {
       evento.preventDefault();
-      // Solo cerramos la sesión: la cuenta registrada (tiendaUrbanoUsuario) queda guardada
+      // Solo cerramos la sesión: la cuenta registrada (GRWU_Usuario) queda guardada
       // para poder volver a iniciar sesión más tarde.
-      localStorage.removeItem("tiendaUrbanoSesionActiva");
+      localStorage.removeItem("GRWUSesionActiva");
       window.location.href = "index.html";
     });
   }
