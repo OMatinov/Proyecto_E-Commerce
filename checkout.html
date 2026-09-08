@@ -242,7 +242,7 @@
     conectarRegionComuna(selectRegion, selectComuna);
 
     // ---------- Prellenar con los datos de la cuenta, si existen ----------
-    const datosUsuario = localStorage.getItem("tiendaUrbanoUsuario");
+    const datosUsuario = localStorage.getItem("GRWU_Usuario");
     const avisoSesion = document.getElementById("avisoSesion");
 
     if (datosUsuario) {
@@ -347,9 +347,9 @@
 
       // Si hay sesión iniciada, guardamos la dirección para que la próxima compra también venga precargada.
       if (datosUsuario) {
-        const usuarioActualizado = JSON.parse(localStorage.getItem("tiendaUrbanoUsuario"));
+        const usuarioActualizado = JSON.parse(localStorage.getItem("GRWU_Usuario"));
         usuarioActualizado.direccion = document.getElementById("direccion").value.trim();
-        localStorage.setItem("tiendaUrbanoUsuario", JSON.stringify(usuarioActualizado));
+        localStorage.setItem("GRWU_Usuario", JSON.stringify(usuarioActualizado));
 
         // También reflejamos la dirección nueva en el registro del admin.
         sincronizarUsuarioAdmin({
@@ -368,7 +368,7 @@
       const tipoDespachoFinal = document.querySelector('input[name="envio"]:checked').value;
       const { total } = calcularTotal(getCart(), tipoDespachoFinal);
 
-      sessionStorage.setItem("tiendaUrbanoUltimaCompra", JSON.stringify({
+      sessionStorage.setItem("GRWU_UltimaCompra", JSON.stringify({
         numeroOrden: "GRWU-" + Date.now().toString().slice(-8),
         total,
         metodoPago: nombresMetodoPago[metodoPagoSeleccionado],

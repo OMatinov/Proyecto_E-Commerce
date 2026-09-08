@@ -209,7 +209,7 @@
         comuna: selectComuna.value,
         tipoUsuario: "Cliente"
       };
-      localStorage.setItem("tiendaUrbanoUsuario", JSON.stringify(usuario));
+      localStorage.setItem("GRWU_Usuario", JSON.stringify(usuario));
 
       // Reflejamos esta cuenta nueva en el arreglo que usa el panel admin
       // de Katerine, para que aparezca en su tabla de usuarios.
@@ -226,7 +226,7 @@
       });
 
       // Al registrarse, queda automáticamente con sesión activa
-      localStorage.setItem("tiendaUrbanoSesionActiva", "1");
+      localStorage.setItem("GRWUSesionActiva", "1");
 
       window.location.href = "cuenta.html";
     });

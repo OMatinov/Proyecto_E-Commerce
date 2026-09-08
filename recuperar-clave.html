@@ -150,7 +150,7 @@
 
       if (!camposValidos) return;
 
-      const datosGuardados = localStorage.getItem("tiendaUrbanoUsuario");
+      const datosGuardados = localStorage.getItem("GRWU_Usuario");
       if (!datosGuardados) {
         errorVerificacion.textContent = "No existe ninguna cuenta registrada en este navegador. Regístrate primero.";
         errorVerificacion.style.display = "block";
@@ -204,12 +204,12 @@
       if (!camposValidos) return;
 
       // Actualizamos la contraseña en la cuenta ya guardada (no se toca el resto de los datos)
-      const usuario = JSON.parse(localStorage.getItem("tiendaUrbanoUsuario"));
+      const usuario = JSON.parse(localStorage.getItem("GRWU_Usuario"));
       usuario.clave = document.getElementById("claveNueva").value;
-      localStorage.setItem("tiendaUrbanoUsuario", JSON.stringify(usuario));
+      localStorage.setItem("GRWU_Usuario", JSON.stringify(usuario));
 
       // Por seguridad, cerramos cualquier sesión activa para que deba iniciar sesión con la clave nueva
-      localStorage.removeItem("tiendaUrbanoSesionActiva");
+      localStorage.removeItem("GRWUSesionActiva");
 
       pasoNuevaClave.style.display = "none";
       pasoExito.style.display = "block";

@@ -27,6 +27,7 @@
       </nav>
       <div class="site-header-actions">
         <a href="login.html" class="action-link">Iniciar sesión</a>
+        <a href="registro.html" class="action-button">Registrarse</a>
         <a href="checkout.html" class="action-cart">🛒 Carrito (<span id="cart-count">0</span>)</a>
       </div>
     </header>
@@ -107,7 +108,7 @@
 
       if (!camposValidos) return;
 
-      const datosGuardados = localStorage.getItem("tiendaUrbanoUsuario");
+      const datosGuardados = localStorage.getItem("GRWU_Usuario");
       if (!datosGuardados) {
         errorCredenciales.textContent = "No existe ninguna cuenta registrada en este navegador. Regístrate primero.";
         errorCredenciales.style.display = "block";
@@ -125,7 +126,7 @@
       }
 
       // Credenciales correctas: activamos la sesión (la cuenta ya estaba guardada)
-      localStorage.setItem("tiendaUrbanoSesionActiva", "1");
+      localStorage.setItem("GRWUSesionActivaSesionActiva", "1");
       window.location.href = "cuenta.html";
     });
   </script>
