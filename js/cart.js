@@ -1,4 +1,4 @@
-const CART_KEY = "GRWU_CartCart";
+const CART_KEY = "GRWU_Cart";
 
 function getCart() {
   const data = localStorage.getItem(CART_KEY);
