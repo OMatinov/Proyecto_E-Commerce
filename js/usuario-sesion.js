@@ -2,14 +2,14 @@
 // Autor: César
 //
 // registro.html y checkout.html guardan al cliente en localStorage con la
-// clave "tiendaUrbanoUsuario" (un solo objeto: la cuenta activa en este
+// clave "GRWU_Usuario" (un solo objeto: la cuenta activa en este
 // navegador). Ese modelo es distinto y más simple que el que usa el panel
 // de Katerine, que guarda un ARREGLO de usuarios en "grwu_usuariosAdmin"
 // (clave definida también en js/admin/admin-datos.js) con campos extra
 // (apellidos, fechaNacimiento, dirección).
 //
 // Este archivo sincroniza ambos mundos: cada vez que un cliente se registra
-// o actualiza sus datos, además de guardarse en "tiendaUrbanoUsuario",
+// o actualiza sus datos, además de guardarse en "GRWU_Usuario",
 // queda reflejado en "grwu_usuariosAdmin" para que aparezca en la tabla de
 // usuarios del admin.
 //

@@ -78,7 +78,7 @@
   <script src="js/header.js"></script>
   <script>
     // Muestra los datos reales de la última compra confirmada en checkout.html
-    const datosCompra = sessionStorage.getItem("tiendaUrbanoUltimaCompra");
+    const datosCompra = sessionStorage.getItem("GRWU_UltimaCompra");
     if (datosCompra) {
       const compra = JSON.parse(datosCompra);
       document.getElementById("success-orden").textContent = "#" + compra.numeroOrden;
