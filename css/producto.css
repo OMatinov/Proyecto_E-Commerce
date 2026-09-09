@@ -170,6 +170,90 @@
   margin: 0;
 }
 
+/* ===== BOTÓN AGREGAR AL CARRITO ===== */
+.btn-agregar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: var(--color-primario);
+  color: var(--color-claro);
+  border: none;
+  padding: 12px 28px;
+  border-radius: var(--radius-full);
+  font-family: var(--font-cuerpo);
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(75, 29, 90, 0.2);
+  min-width: 200px;
+}
+
+.btn-agregar:hover:not(:disabled) {
+  background: #351240;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(75, 29, 90, 0.35);
+}
+
+.btn-agregar:active:not(:disabled) {
+  transform: translateY(0px);
+  box-shadow: 0 2px 8px rgba(75, 29, 90, 0.2);
+}
+
+.btn-agregar:disabled {
+  background: var(--color-gris);
+  cursor: not-allowed;
+  opacity: 0.6;
+  box-shadow: none;
+  transform: none;
+}
+
+/* Estado de "Agregado" (se aplica temporalmente con JS) */
+.btn-agregar.agregado {
+  background: #22863a;
+  box-shadow: 0 4px 12px rgba(34, 134, 58, 0.3);
+}
+
+/* ===== INFO DE STOCK ===== */
+.stock-info {
+  font-size: 0.85rem;
+  font-weight: 500;
+  padding: 8px 12px;
+  border-radius: var(--radius-sm);
+  margin-top: 8px;
+  display: inline-block;
+}
+
+/* ===== BOTÓN VOLVER ATRÁS ===== */
+.btn-volver {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--color-claro);
+  color: var(--color-oscuro);
+  border: 1px solid var(--color-gris);
+  padding: 10px 20px;
+  border-radius: var(--radius-full);
+  font-family: var(--font-cuerpo);
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;    /* por si se usa como enlace */
+}
+
+.btn-volver:hover {
+  background: var(--color-gris);
+  border-color: var(--color-oscuro);
+  transform: translateX(-4px);  /* pequeño movimiento a la izquierda */
+}
+
+.btn-volver::before {
+  content: "←";            /* flecha izquierda */
+  font-size: 1.2rem;
+  line-height: 1;
+}
+
 /* Responsive */
 @media (max-width: 768px) {
   .product-detail {

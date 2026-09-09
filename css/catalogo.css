@@ -9,8 +9,12 @@
 /* ===== BARRA DE HERRAMIENTAS (filtros) ===== */
 .catalog-toolbar {
   max-width: 1100px;
-  margin: 0 auto 24px;
-  padding: 0 24px;
+  margin: 30px auto 24px;   /* margen superior más grande */
+  padding: 20px 24px;       /* padding interno para respirar */
+  background: var(--color-blanco);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  border: 1px solid var(--color-gris);
 }
 
 .catalog-filters {
@@ -18,6 +22,7 @@
   flex-wrap: wrap;
   gap: 8px;
   justify-content: center;
+  margin-bottom: 12px;     /* separación entre categorías y género */
 }
 
 .filter-button {
@@ -119,7 +124,8 @@
   flex-wrap: wrap;
   gap: 8px;
   justify-content: center;
-  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid var(--color-gris); /* línea divisoria sutil */
 }
 
 .gender-button {
@@ -143,6 +149,49 @@
   background: var(--color-secundario);
   border-color: var(--color-secundario);
   color: #FFFFFF;
+}
+
+/* ===== BADGE DE AGOTADO ===== */
+.badge-sin-stock {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: rgba(178, 34, 34, 0.95);
+  color: white;
+  padding: 6px 14px;
+  border-radius: var(--radius-sm);
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  z-index: 2;
+}
+
+.product-card-sin-stock {
+  opacity: 0.7;
+  filter: grayscale(30%);
+}
+
+.product-card-sin-stock .product-card-image img {
+  transform: none !important;
+}
+
+/* ===== TALLAS CON STOCK BAJO ===== */
+.size-chip-low-stock {
+  border-color: var(--color-acento);
+  color: var(--color-acento);
+  position: relative;
+}
+
+.size-chip-low-stock::after {
+  content: '';
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  width: 8px;
+  height: 8px;
+  background: var(--color-acento);
+  border-radius: 50%;
 }
 
 /* ===== RESPONSIVE ===== */

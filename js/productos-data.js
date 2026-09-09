@@ -1,4 +1,8 @@
 // Base de datos completa de productos para catálogo, ficha de producto y admin
+// Cada producto ahora incluye stock por talla
+
+const STOCK_POR_DEFECTO = 10; // Stock inicial si no se especifica
+
 const PRODUCTOS = [
   // ==================== ABRIGOS ====================
   {
@@ -9,7 +13,8 @@ const PRODUCTOS = [
     precio: 18990,
     imagen: 'img/mujer/abrigo1.png',
     imagenes: ['img/mujer/abrigo1.png'],
-    descripcion: 'Abrigo largo color camel de corte recto y solapas clásicas, ideal para looks urbanos elegantes y para usar sobre vestidos o jeans.'
+    descripcion: 'Abrigo largo color camel de corte recto y solapas clásicas, ideal para looks urbanos elegantes y para usar sobre vestidos o jeans.',
+    stock: { "S": 5, "M": 8, "L": 6, "XL": 3 }
   },
   {
     id: 'abrigo2',
@@ -19,7 +24,8 @@ const PRODUCTOS = [
     precio: 16990,
     imagen: 'img/mujer/abrigo2.png',
     imagenes: ['img/mujer/abrigo2.png', 'img/mujer/abrigo2-1.png', 'img/mujer/abrigo2-2.png', 'img/mujer/abrigo2-3.png'],
-    descripcion: 'Abrigo tipo blazer en tono café, de silueta relajada y botones frontales, perfecto para la oficina o para elevar un outfit casual.'
+    descripcion: 'Abrigo tipo blazer en tono café, de silueta relajada y botones frontales, perfecto para la oficina o para elevar un outfit casual.',
+    stock: { "S": 7, "M": 10, "L": 8, "XL": 5 }
   },
   {
     id: 'abrigo3',
@@ -29,7 +35,8 @@ const PRODUCTOS = [
     precio: 14990,
     imagen: 'img/mujer/abrigo3.png',
     imagenes: ['img/mujer/abrigo3.png', 'img/mujer/abrigo3-1.png', 'img/mujer/abrigo3-2.png', 'img/mujer/abrigo3-3.png'],
-    descripcion: 'Cárdigan corto en tono arena con bolsillos frontales, tejido suave y liviano para usar en capas durante la transición de temporada.'
+    descripcion: 'Cárdigan corto en tono arena con bolsillos frontales, tejido suave y liviano para usar en capas durante la transición de temporada.',
+    stock: { "S": 4, "M": 6, "L": 5, "XL": 2 }
   },
 
   // ==================== ACCESORIOS ====================
@@ -41,7 +48,8 @@ const PRODUCTOS = [
     precio: 2990,
     imagen: 'img/mujer/accesorio1.png',
     imagenes: ['img/mujer/accesorio1.png'],
-    descripcion: 'Pinza para el pelo en tono azul pastel, ideal para recogidos rápidos y para sumar un toque de color suave al look.'
+    descripcion: 'Pinza para el pelo en tono azul pastel, ideal para recogidos rápidos y para sumar un toque de color suave al look.',
+    stock: { "S": 10, "M": 10, "L": 10, "XL": 10 }
   },
   {
     id: 'accesorio2',
@@ -51,7 +59,8 @@ const PRODUCTOS = [
     precio: 2990,
     imagen: 'img/mujer/accesorio2.png',
     imagenes: ['img/mujer/accesorio2.png'],
-    descripcion: 'Pinza negra para el pelo, de acabado mate y agarre firme, perfecta para peinados diarios.'
+    descripcion: 'Pinza negra para el pelo, de acabado mate y agarre firme, perfecta para peinados diarios.',
+    stock: { "S": 10, "M": 10, "L": 10, "XL": 10 }
   },
   {
     id: 'accesorio3',
@@ -61,7 +70,8 @@ const PRODUCTOS = [
     precio: 2990,
     imagen: 'img/mujer/accesorio3.png',
     imagenes: ['img/mujer/accesorio3.png'],
-    descripcion: 'Pinza en acabado carey, resistente y cómoda, pensada para recogidos elegantes y casuales.'
+    descripcion: 'Pinza en acabado carey, resistente y cómoda, pensada para recogidos elegantes y casuales.',
+    stock: { "S": 10, "M": 10, "L": 10, "XL": 10 }
   },
   {
     id: 'accesorio4',
@@ -71,7 +81,8 @@ const PRODUCTOS = [
     precio: 8990,
     imagen: 'img/mujer/accesorio4.png',
     imagenes: ['img/mujer/accesorio4.png'],
-    descripcion: 'Collar dorado de varias capas con charms y piedras de colores, ideal para hacer protagonista cualquier outfit básico.'
+    descripcion: 'Collar dorado de varias capas con charms y piedras de colores, ideal para hacer protagonista cualquier outfit básico.',
+    stock: { "S": 10, "M": 10, "L": 10, "XL": 10 }
   },
   {
     id: 'accesorio5',
@@ -81,7 +92,8 @@ const PRODUCTOS = [
     precio: 6990,
     imagen: 'img/mujer/accesorio5.png',
     imagenes: ['img/mujer/accesorio5.png'],
-    descripcion: 'Collar doble con cordón estampado y medallas doradas tipo sol y luna, perfecto para looks boho urbanos.'
+    descripcion: 'Collar doble con cordón estampado y medallas doradas tipo sol y luna, perfecto para looks boho urbanos.',
+    stock: { "S": 10, "M": 10, "L": 10, "XL": 10 }
   },
   {
     id: 'accesorio6',
@@ -91,7 +103,8 @@ const PRODUCTOS = [
     precio: 12990,
     imagen: 'img/mujer/accesorio6.png',
     imagenes: ['img/mujer/accesorio6.png'],
-    descripcion: 'Bolso tejido tipo macramé en tono arena, liviano y amplio, ideal para verano y fines de semana casuales.'
+    descripcion: 'Bolso tejido tipo macramé en tono arena, liviano y amplio, ideal para verano y fines de semana casuales.',
+    stock: { "S": 10, "M": 10, "L": 10, "XL": 10 }
   },
   {
     id: 'accesorio7',
@@ -101,7 +114,8 @@ const PRODUCTOS = [
     precio: 13990,
     imagen: 'img/mujer/accesorio7.png',
     imagenes: ['img/mujer/accesorio7.png'],
-    descripcion: 'Bolso de cuerda negro con finas líneas doradas, perfecto para la playa o para un look relajado con brillo discreto.'
+    descripcion: 'Bolso de cuerda negro con finas líneas doradas, perfecto para la playa o para un look relajado con brillo discreto.',
+    stock: { "S": 10, "M": 10, "L": 10, "XL": 10 }
   },
   {
     id: 'accesorio8',
@@ -111,7 +125,8 @@ const PRODUCTOS = [
     precio: 11990,
     imagen: 'img/mujer/accesorio8.png',
     imagenes: ['img/mujer/accesorio8.png'],
-    descripcion: 'Carterita bandolera negra de diseño minimal, ideal para salir ligera llevando solo lo esencial.'
+    descripcion: 'Carterita bandolera negra de diseño minimal, ideal para salir ligera llevando solo lo esencial.',
+    stock: { "S": 10, "M": 10, "L": 10, "XL": 10 }
   },
   {
     id: 'accesorio9',
@@ -121,7 +136,8 @@ const PRODUCTOS = [
     precio: 15990,
     imagen: 'img/mujer/accesorio9.png',
     imagenes: ['img/mujer/accesorio9.png'],
-    descripcion: 'Bolso tote negro grande y estructurado, perfecto para el día a día, trabajo o universidad.'
+    descripcion: 'Bolso tote negro grande y estructurado, perfecto para el día a día, trabajo o universidad.',
+    stock: { "S": 10, "M": 10, "L": 10, "XL": 10 }
   },
   {
     id: 'accesorio10',
@@ -131,7 +147,8 @@ const PRODUCTOS = [
     precio: 16990,
     imagen: 'img/mujer/accesorio10.png',
     imagenes: ['img/mujer/accesorio10.png'],
-    descripcion: 'Tote en color caramelo, amplio y versátil, combina bien con jeans, vestidos y looks de oficina.'
+    descripcion: 'Tote en color caramelo, amplio y versátil, combina bien con jeans, vestidos y looks de oficina.',
+    stock: { "S": 10, "M": 10, "L": 10, "XL": 10 }
   },
   {
     id: 'accesorio11',
@@ -141,7 +158,8 @@ const PRODUCTOS = [
     precio: 18990,
     imagen: 'img/mujer/accesorio11.png',
     imagenes: ['img/mujer/accesorio11.png', 'img/accesorio11-1.png'],
-    descripcion: 'Mochila negra de acabado waterproof con bolsillos frontales, ideal para ciudad y días lluviosos.'
+    descripcion: 'Mochila negra de acabado waterproof con bolsillos frontales, ideal para ciudad y días lluviosos.',
+    stock: { "S": 10, "M": 10, "L": 10, "XL": 10 }
   },
   {
     id: 'accesorio12',
@@ -151,7 +169,8 @@ const PRODUCTOS = [
     precio: 9990,
     imagen: 'img/mujer/accesorio12.png',
     imagenes: ['img/mujer/accesorio12.png'],
-    descripcion: 'Cinturón negro con hebilla estilo western grabada, suma un toque boho-rockero a vestidos y jeans.'
+    descripcion: 'Cinturón negro con hebilla estilo western grabada, suma un toque boho-rockero a vestidos y jeans.',
+    stock: { "S": 10, "M": 10, "L": 10, "XL": 10 }
   },
   {
     id: 'accesorio13',
@@ -161,7 +180,8 @@ const PRODUCTOS = [
     precio: 8990,
     imagen: 'img/mujer/accesorio13.png',
     imagenes: ['img/mujer/accesorio13.png'],
-    descripcion: 'Cinturón negro con hebilla circular plateada, perfecto para marcar la cintura en outfits urbanos.'
+    descripcion: 'Cinturón negro con hebilla circular plateada, perfecto para marcar la cintura en outfits urbanos.',
+    stock: { "S": 10, "M": 10, "L": 10, "XL": 10 }
   },
   {
     id: 'accesorio14',
@@ -171,10 +191,11 @@ const PRODUCTOS = [
     precio: 13990,
     imagen: 'img/mujer/accesorio14.png',
     imagenes: ['img/mujer/accesorio14.png'],
-    descripcion: 'Gorra gris desgastada con bordado "DANCING QUEEN", ideal para looks relajados con actitud.'
+    descripcion: 'Gorra gris desgastada con bordado "DANCING QUEEN", ideal para looks relajados con actitud.',
+    stock: { "S": 10, "M": 10, "L": 10, "XL": 10 }
   },
 
-  // CALZADO 
+  // CALZADO
   {
     id: 'calzado1',
     nombre: 'Zapatillas Classic White',
@@ -183,7 +204,8 @@ const PRODUCTOS = [
     precio: 34990,
     imagen: 'img/mujer/calzado1.png',
     imagenes: ['img/mujer/calzado1.png', 'img/mujer/calzado1-1.png', 'img/mujer/calzado1-2.png'],
-    descripcion: 'Zapatillas blancas de plataforma baja y diseño limpio, perfectas para combinar con jeans, vestidos o faldas urbanas.'
+    descripcion: 'Zapatillas blancas de plataforma baja y diseño limpio, perfectas para combinar con jeans, vestidos o faldas urbanas.',
+    stock: { "S": 10, "M": 10, "L": 10, "XL": 10 }
   },
   {
     id: 'calzado2',
@@ -193,7 +215,8 @@ const PRODUCTOS = [
     precio: 32990,
     imagen: 'img/mujer/calzado2.png',
     imagenes: ['img/mujer/calzado2.png', 'img/mujer/calzado2-1.png', 'img/mujer/calzado2-2.png', 'img/mujer/calzado2-3.png'],
-    descripcion: 'Zapatillas negras tipo skate con detalles blancos y suela blanca, un clásico urbano para el uso diario.'
+    descripcion: 'Zapatillas negras tipo skate con detalles blancos y suela blanca, un clásico urbano para el uso diario.',
+    stock: { "S": 10, "M": 10, "L": 10, "XL": 10 }
   },
   {
     id: 'calzado3',
@@ -203,7 +226,8 @@ const PRODUCTOS = [
     precio: 33990,
     imagen: 'img/mujer/calzado3.png',
     imagenes: ['img/mujer/calzado3.png', 'img/mujer/calzado3-1.png', 'img/mujer/calzado3-2.png', 'img/mujer/calzado3-3.png'],
-    descripcion: 'Zapatillas negras con tres franjas blancas y suela color miel, ideales para looks sporty con un aire retro.'
+    descripcion: 'Zapatillas negras con tres franjas blancas y suela color miel, ideales para looks sporty con un aire retro.',
+    stock: { "S": 10, "M": 10, "L": 10, "XL": 10 }
   },
   {
     id: 'calzado4',
@@ -213,7 +237,8 @@ const PRODUCTOS = [
     precio: 39990,
     imagen: 'img/mujer/calzado4.png',
     imagenes: ['img/mujer/calzado4.png', 'img/mujer/calzado4-1.png', 'img/mujer/calzado4-2.png'],
-    descripcion: 'Botas negras de caña alta con suela chunky, perfectas para outfits de invierno con actitud, desde vestidos hasta shorts.'
+    descripcion: 'Botas negras de caña alta con suela chunky, perfectas para outfits de invierno con actitud, desde vestidos hasta shorts.',
+    stock: { "S": 10, "M": 10, "L": 10, "XL": 10 }
   },
   {
     id: 'calzado5',
@@ -223,10 +248,11 @@ const PRODUCTOS = [
     precio: 36990,
     imagen: 'img/mujer/calzado5.png',
     imagenes: ['img/mujer/calzado5.png', 'img/mujer/calzado5-1.png'],
-    descripcion: 'Zapatos tipo oxford negros con suela gruesa y costuras contrastantes, ideales para dar un giro alternativo a looks formales o casuales.'
+    descripcion: 'Zapatos tipo oxford negros con suela gruesa y costuras contrastantes, ideales para dar un giro alternativo a looks formales o casuales.',
+    stock: { "S": 10, "M": 10, "L": 10, "XL": 10 }
   },
 
-  // CHAQUETAS 
+  // CHAQUETAS
   {
     id: 'chaqueta1',
     nombre: 'Chaqueta Acolchada Grafito',
@@ -235,7 +261,8 @@ const PRODUCTOS = [
     precio: 26990,
     imagen: 'img/mujer/chaqueta1.png',
     imagenes: ['img/mujer/chaqueta1.png'],
-    descripcion: 'Chaqueta corta acolchada en gris grafito con cuello alto y ajuste en la basta, ideal para días fríos con estilo urbano.'
+    descripcion: 'Chaqueta corta acolchada en gris grafito con cuello alto y ajuste en la basta, ideal para días fríos con estilo urbano.',
+    stock: { "S": 10, "M": 10, "L": 10, "XL": 10 }
   },
   {
     id: 'chaqueta2',
@@ -245,7 +272,8 @@ const PRODUCTOS = [
     precio: 31990,
     imagen: 'img/mujer/chaqueta2.png',
     imagenes: ['img/mujer/chaqueta2.png', 'img/mujer/chaqueta2-1.png'],
-    descripcion: 'Chaqueta negra tipo biker con cierre frontal y cuello alzado, perfecta para dar actitud a jeans y vestidos.'
+    descripcion: 'Chaqueta negra tipo biker con cierre frontal y cuello alzado, perfecta para dar actitud a jeans y vestidos.',
+    stock: { "S": 10, "M": 10, "L": 10, "XL": 10 }
   },
   {
     id: 'chaqueta3',
@@ -255,7 +283,8 @@ const PRODUCTOS = [
     precio: 25990,
     imagen: 'img/mujer/chaqueta3.png',
     imagenes: ['img/mujer/chaqueta3.png', 'img/mujer/chaqueta3-1.png', 'img/mujer/chaqueta3-2.png'],
-    descripcion: 'Chaqueta oversize en tono verde oliva con caída suelta, pensada para looks relajados en capas.'
+    descripcion: 'Chaqueta oversize en tono verde oliva con caída suelta, pensada para looks relajados en capas.',
+    stock: { "S": 10, "M": 10, "L": 10, "XL": 10 }
   },
   {
     id: 'chaqueta4',
@@ -265,7 +294,8 @@ const PRODUCTOS = [
     precio: 25990,
     imagen: 'img/mujer/chaqueta4.png',
     imagenes: ['img/mujer/chaqueta4.png', 'img/mujer/chaqueta4-1.png', 'img/mujer/chaqueta4-2.png'],
-    descripcion: 'Chaqueta oversize en color borgoña, de textura suave y volumen en la basta, ideal para destacar en outfits neutros.'
+    descripcion: 'Chaqueta oversize en color borgoña, de textura suave y volumen en la basta, ideal para destacar en outfits neutros.',
+    stock: { "S": 10, "M": 10, "L": 10, "XL": 10 }
   },
   {
     id: 'chaqueta5',
@@ -275,7 +305,8 @@ const PRODUCTOS = [
     precio: 21990,
     imagen: 'img/mujer/chaqueta5.png',
     imagenes: ['img/mujer/chaqueta5.png', 'img/mujer/chaqueta5-1.png'],
-    descripcion: 'Chaleco puffer negro con cuello alto y cierre frontal, perfecto para sumar abrigo sin perder movilidad.'
+    descripcion: 'Chaleco puffer negro con cuello alto y cierre frontal, perfecto para sumar abrigo sin perder movilidad.',
+    stock: { "S": 10, "M": 10, "L": 10, "XL": 10 }
   },
   {
     id: 'chaqueta6',
@@ -285,7 +316,8 @@ const PRODUCTOS = [
     precio: 31990,
     imagen: 'img/mujer/chaqueta6.png',
     imagenes: ['img/mujer/chaqueta6.png', 'img/mujer/chaqueta6-1.png'],
-    descripcion: 'Chaqueta tipo biker negra de efecto cuero con solapas y cierres metálicos, un básico clave para looks nocturnos y urbanos.'
+    descripcion: 'Chaqueta tipo biker negra de efecto cuero con solapas y cierres metálicos, un básico clave para looks nocturnos y urbanos.',
+    stock: { "S": 10, "M": 10, "L": 10, "XL": 10 }
   },
 
   // ==================== CONJUNTOS ====================
@@ -297,7 +329,8 @@ const PRODUCTOS = [
     precio: 26990,
     imagen: 'img/mujer/conjunto1.png',
     imagenes: ['img/mujer/conjunto1.png'],
-    descripcion: 'Conjunto de top y falda corta en tejido crochet color crema, ideal para looks veraniegos femeninos y ligeros.'
+    descripcion: 'Conjunto de top y falda corta en tejido crochet color crema, ideal para looks veraniegos femeninos y ligeros.',
+    stock: { "S": 10, "M": 10, "L": 10, "XL": 10 }
   },
   {
     id: 'conjunto2',
@@ -307,7 +340,8 @@ const PRODUCTOS = [
     precio: 26990,
     imagen: 'img/mujer/conjunto2.png',
     imagenes: ['img/mujer/conjunto2.png'],
-    descripcion: 'Conjunto de top y falda corta en crochet negro, perfecto para una versión nocturna del look veraniego clásico.'
+    descripcion: 'Conjunto de top y falda corta en crochet negro, perfecto para una versión nocturna del look veraniego clásico.',
+    stock: { "S": 10, "M": 10, "L": 10, "XL": 10 }
   },
   {
     id: 'conjunto3',
@@ -317,7 +351,8 @@ const PRODUCTOS = [
     precio: 31990,
     imagen: 'img/mujer/conjunto3.png',
     imagenes: ['img/mujer/conjunto3.png'],
-    descripcion: 'Conjunto tejido de pantalón ancho y chaleco largo abierto en tono crudo, perfecto para usar sobre traje de baño o outfits playeros.'
+    descripcion: 'Conjunto tejido de pantalón ancho y chaleco largo abierto en tono crudo, perfecto para usar sobre traje de baño o outfits playeros.',
+    stock: { "S": 10, "M": 10, "L": 10, "XL": 10 }
   },
   {
     id: 'conjunto4',
@@ -327,10 +362,11 @@ const PRODUCTOS = [
     precio: 28990,
     imagen: 'img/mujer/conjunto4.png',
     imagenes: ['img/mujer/conjunto4.png'],
-    descripcion: 'Conjunto de top sin mangas y pantalón ancho de punto calado en color crudo, ideal para looks relajados pero pulidos.'
+    descripcion: 'Conjunto de top sin mangas y pantalón ancho de punto calado en color crudo, ideal para looks relajados pero pulidos.',
+    stock: { "S": 10, "M": 10, "L": 10, "XL": 10 }
   },
 
-  //  FALDAS 
+  //  FALDAS
   {
     id: 'falda1',
     nombre: 'Mini Falda Denim Indigo',
@@ -339,7 +375,8 @@ const PRODUCTOS = [
     precio: 11990,
     imagen: 'img/mujer/falda1.png',
     imagenes: ['img/mujer/falda1.png', 'img/mujer/falda1-1.png'],
-    descripcion: 'Mini falda de mezclilla en tono índigo con botón decorativo, un básico urbano para combinar con poleras y sweaters.'
+    descripcion: 'Mini falda de mezclilla en tono índigo con botón decorativo, un básico urbano para combinar con poleras y sweaters.',
+    stock: { "S": 10, "M": 10, "L": 10, "XL": 10 }
   },
   {
     id: 'falda3',
@@ -349,7 +386,8 @@ const PRODUCTOS = [
     precio: 12990,
     imagen: 'img/mujer/falda3.png',
     imagenes: ['img/mujer/falda3.png', 'img/mujer/falda3-1.png'],
-    descripcion: 'Mini falda con estampado animal print, perfecta para outfits nocturnos o para dar protagonismo a un look básico.'
+    descripcion: 'Mini falda con estampado animal print, perfecta para outfits nocturnos o para dar protagonismo a un look básico.',
+    stock: { "S": 10, "M": 10, "L": 10, "XL": 10 }
   },
   {
     id: 'falda4',
@@ -359,7 +397,8 @@ const PRODUCTOS = [
     precio: 14990,
     imagen: 'img/mujer/falda4.png',
     imagenes: ['img/mujer/falda4.png', 'img/mujer/falda4-1.png'],
-    descripcion: 'Falda midi gris de capas con pretina elástica, fluida y cómoda para uso diario.'
+    descripcion: 'Falda midi gris de capas con pretina elástica, fluida y cómoda para uso diario.',
+    stock: { "S": 10, "M": 10, "L": 10, "XL": 10 }
   },
   {
     id: 'falda5',
@@ -369,10 +408,11 @@ const PRODUCTOS = [
     precio: 10990,
     imagen: 'img/mujer/falda5.png',
     imagenes: ['img/mujer/falda5.png', 'img/mujer/falda5-1.png'],
-    descripcion: 'Mini falda negra tipo pareo con amarra lateral, ideal para combinar con tops ajustados o camisas oversize.'
+    descripcion: 'Mini falda negra tipo pareo con amarra lateral, ideal para combinar con tops ajustados o camisas oversize.',
+    stock: { "S": 10, "M": 10, "L": 10, "XL": 10 }
   },
 
-  // PANTALONES 
+  // PANTALONES
   {
     id: 'pantalon2',
     nombre: 'Jeans Wide Choco',
@@ -381,7 +421,8 @@ const PRODUCTOS = [
     precio: 19990,
     imagen: 'img/mujer/pantalon2.png',
     imagenes: ['img/mujer/pantalon2.png', 'img/mujer/pantalon2-1.png', 'img/mujer/pantalon2-2.png', 'img/mujer/pantalon2-3.png'],
-    descripcion: 'Jeans ancho en color café chocolate con bolsillos delanteros decorativos, perfecto para outfits urbanos en tonos tierra.'
+    descripcion: 'Jeans ancho en color café chocolate con bolsillos delanteros decorativos, perfecto para outfits urbanos en tonos tierra.',
+    stock: { "S": 10, "M": 10, "L": 10, "XL": 10 }
   },
   {
     id: 'pantalon3',
@@ -391,7 +432,8 @@ const PRODUCTOS = [
     precio: 21990,
     imagen: 'img/mujer/pantalon3.png',
     imagenes: ['img/mujer/pantalon3.png', 'img/mujer/pantalon3-1.png', 'img/mujer/pantalon3-2.png', 'img/mujer/pantalon3-3.png'],
-    descripcion: 'Jeans negros de tiro medio y pierna ancha, un básico versátil para combinar con poleras, blusas o chaquetas.'
+    descripcion: 'Jeans negros de tiro medio y pierna ancha, un básico versátil para combinar con poleras, blusas o chaquetas.',
+    stock: { "S": 10, "M": 10, "L": 10, "XL": 10 }
   },
   {
     id: 'pantalon4',
@@ -401,7 +443,8 @@ const PRODUCTOS = [
     precio: 23990,
     imagen: 'img/mujer/pantalon4.png',
     imagenes: ['img/mujer/pantalon4.png', 'img/mujer/pantalon4-1.png', 'img/mujer/pantalon4-2.png', 'img/mujer/pantalon4-3.png'],
-    descripcion: 'Jeans azul índigo de pierna recta ancha con bolsillos frontales tipo sailor, ideales para un look retro pero moderno.'
+    descripcion: 'Jeans azul índigo de pierna recta ancha con bolsillos frontales tipo sailor, ideales para un look retro pero moderno.',
+    stock: { "S": 10, "M": 10, "L": 10, "XL": 10 }
   },
   {
     id: 'pantalon5',
@@ -411,7 +454,8 @@ const PRODUCTOS = [
     precio: 21990,
     imagen: 'img/mujer/pantalon5.png',
     imagenes: ['img/mujer/pantalon5.png', 'img/mujer/pantalon5-1.png'],
-    descripcion: 'Jeans azul medio de tiro medio y pierna ancha, pensados para el uso diario con zapatillas o botines.'
+    descripcion: 'Jeans azul medio de tiro medio y pierna ancha, pensados para el uso diario con zapatillas o botines.',
+    stock: { "S": 10, "M": 10, "L": 10, "XL": 10 }
   },
 
   // ==================== POLERAS ====================
@@ -423,7 +467,8 @@ const PRODUCTOS = [
     precio: 5990,
     imagen: 'img/mujer/polera1.png',
     imagenes: ['img/mujer/polera1.png', 'img/mujer/polera1-1.png'],
-    descripcion: 'Top corto acanalado en tono azul marino, de cuello redondo y corte ajustado, ideal para usar con jeans o faldas tiro alto.'
+    descripcion: 'Top corto acanalado en tono azul marino, de cuello redondo y corte ajustado, ideal para usar con jeans o faldas tiro alto.',
+    stock: { "S": 10, "M": 10, "L": 10, "XL": 10 }
   },
   {
     id: 'polera2',
@@ -433,7 +478,8 @@ const PRODUCTOS = [
     precio: 5990,
     imagen: 'img/mujer/polera2.png',
     imagenes: ['img/mujer/polera2.png', 'img/mujer/polera2-1.png'],
-    descripcion: 'Top sin mangas acanalado en verde suave, perfecto para looks frescos de diario o capas bajo chaquetas.'
+    descripcion: 'Top sin mangas acanalado en verde suave, perfecto para looks frescos de diario o capas bajo chaquetas.',
+    stock: { "S": 10, "M": 10, "L": 10, "XL": 10 }
   },
   {
     id: 'polera3',
@@ -443,7 +489,8 @@ const PRODUCTOS = [
     precio: 5990,
     imagen: 'img/mujer/polera3.png',
     imagenes: ['img/mujer/polera3.png', 'img/mujer/polera3-1.png'],
-    descripcion: 'Top acanalado gris oscuro, de fit ceñido y cuello redondo, un básico versátil para combinar con todo.'
+    descripcion: 'Top acanalado gris oscuro, de fit ceñido y cuello redondo, un básico versátil para combinar con todo.',
+    stock: { "S": 10, "M": 10, "L": 10, "XL": 10 }
   },
   {
     id: 'polera4',
@@ -453,7 +500,8 @@ const PRODUCTOS = [
     precio: 4490,
     imagen: 'img/mujer/polera4.png',
     imagenes: ['img/mujer/polera4.png', 'img/mujer/polera4-1.png'],
-    descripcion: 'Polera de algodón en tono off white, de manga corta y silueta recta, ideal como básico de fondo de clóset.'
+    descripcion: 'Polera de algodón en tono off white, de manga corta y silueta recta, ideal como básico de fondo de clóset.',
+    stock: { "S": 10, "M": 10, "L": 10, "XL": 10 }
   },
   {
     id: 'polera5',
@@ -463,7 +511,8 @@ const PRODUCTOS = [
     precio: 9990,
     imagen: 'img/mujer/polera5.png',
     imagenes: ['img/mujer/polera5.png'],
-    descripcion: 'Top de tirantes en crochet color crema con botones frontales, perfecto para noches de verano o para combinar con denim.'
+    descripcion: 'Top de tirantes en crochet color crema con botones frontales, perfecto para noches de verano o para combinar con denim.',
+    stock: { "S": 10, "M": 10, "L": 10, "XL": 10 }
   },
   {
     id: 'polera6',
@@ -473,7 +522,8 @@ const PRODUCTOS = [
     precio: 9990,
     imagen: 'img/mujer/polera6.png',
     imagenes: ['img/mujer/polera6.png'],
-    descripcion: 'Top de tirantes en crochet negro con botones, ideal para noches de verano o para combinar con denim.'
+    descripcion: 'Top de tirantes en crochet negro con botones, ideal para noches de verano o para combinar con denim.',
+    stock: { "S": 10, "M": 10, "L": 10, "XL": 10 }
   },
   {
     id: 'polera7',
@@ -483,7 +533,8 @@ const PRODUCTOS = [
     precio: 7490,
     imagen: 'img/mujer/polera7.png',
     imagenes: ['img/mujer/polera7.png', 'img/mujer/polera7-2.png'],
-    descripcion: 'Top negro tipo halter acanalado, ceñido y minimalista, perfecto para outfits urbanos con pantalones anchos o faldas.'
+    descripcion: 'Top negro tipo halter acanalado, ceñido y minimalista, perfecto para outfits urbanos con pantalones anchos o faldas.',
+    stock: { "S": 10, "M": 10, "L": 10, "XL": 10 }
   },
 
   // ==================== POLERONES ====================
@@ -495,7 +546,8 @@ const PRODUCTOS = [
     precio: 19990,
     imagen: 'img/mujer/poleron1.png',
     imagenes: ['img/mujer/poleron1.png', 'img/mujer/poleron1-1.png', 'img/mujer/poleron1-2.png'],
-    descripcion: 'Polerón oversize azul marino con estampado frontal "NWRK", de estilo universitario, ideal para looks urbanos y cómodos.'
+    descripcion: 'Polerón oversize azul marino con estampado frontal "NWRK", de estilo universitario, ideal para looks urbanos y cómodos.',
+    stock: { "S": 10, "M": 10, "L": 10, "XL": 10 }
   },
   {
     id: 'poleron2',
@@ -505,7 +557,8 @@ const PRODUCTOS = [
     precio: 18990,
     imagen: 'img/mujer/poleron2.png',
     imagenes: ['img/mujer/poleron2.png', 'img/mujer/poleron2-1.png', 'img/mujer/poleron2-2.png'],
-    descripcion: 'Polerón gris jaspeado con estampado frontal "Knoxville", de corte relajado y cuello redondo, ideal para el día a día.'
+    descripcion: 'Polerón gris jaspeado con estampado frontal "Knoxville", de corte relajado y cuello redondo, ideal para el día a día.',
+    stock: { "S": 10, "M": 10, "L": 10, "XL": 10 }
   },
   {
     id: 'poleron3',
@@ -515,7 +568,8 @@ const PRODUCTOS = [
     precio: 21990,
     imagen: 'img/mujer/poleron3.png',
     imagenes: ['img/mujer/poleron3.png', 'img/mujer/poleron3-1.png'],
-    descripcion: 'Polerón negro con capucha y cierre frontal, estampado "BROOKLYN New York City", perfecto para outfits relajados con jeans o joggers.'
+    descripcion: 'Polerón negro con capucha y cierre frontal, estampado "BROOKLYN New York City", perfecto para outfits relajados con jeans o joggers.',
+    stock: { "S": 10, "M": 10, "L": 10, "XL": 10 }
   },
   {
     id: 'poleron4',
@@ -525,10 +579,11 @@ const PRODUCTOS = [
     precio: 20990,
     imagen: 'img/mujer/poleron4.png',
     imagenes: ['img/mujer/poleron4.png', 'img/mujer/poleron4-1.png'],
-    descripcion: 'Buzo gris con capucha y bolsillo canguro, liso por delante y con diseño de alas y texto en la espalda, ideal para un look básico con detalle especial.'
+    descripcion: 'Buzo gris con capucha y bolsillo canguro, liso por delante y con diseño de alas y texto en la espalda, ideal para un look básico con detalle especial.',
+    stock: { "S": 10, "M": 10, "L": 10, "XL": 10 }
   },
 
-  // SHORTS 
+  // SHORTS
   {
     id: 'short1',
     nombre: 'Short Denim Black Chain',
@@ -537,7 +592,8 @@ const PRODUCTOS = [
     precio: 10990,
     imagen: 'img/mujer/short1.png',
     imagenes: ['img/mujer/short1.png', 'img/mujer/short1-2.png'],
-    descripcion: 'Short de mezclilla negro con cinturón cadena metálica decorativa, ideal para looks nocturnos o urbanos con actitud.'
+    descripcion: 'Short de mezclilla negro con cinturón cadena metálica decorativa, ideal para looks nocturnos o urbanos con actitud.',
+    stock: { "S": 10, "M": 10, "L": 10, "XL": 10 }
   },
   {
     id: 'short2',
@@ -547,7 +603,8 @@ const PRODUCTOS = [
     precio: 9990,
     imagen: 'img/mujer/short2.png',
     imagenes: ['img/mujer/short2.png', 'img/mujer/short2-2.png'],
-    descripcion: 'Short de mezclilla azul con ruedo doblado y tiro alto, perfecto para outfits veraniegos con poleras o tops.'
+    descripcion: 'Short de mezclilla azul con ruedo doblado y tiro alto, perfecto para outfits veraniegos con poleras o tops.',
+    stock: { "S": 10, "M": 10, "L": 10, "XL": 10 }
   },
   {
     id: 'short3',
@@ -557,7 +614,8 @@ const PRODUCTOS = [
     precio: 9990,
     imagen: 'img/mujer/short3.png',
     imagenes: ['img/mujer/short3.png', 'img/mujer/short3-2.png'],
-    descripcion: 'Short de mezclilla azul claro de tiro medio y corte recto, un básico cómodo para el día a día.'
+    descripcion: 'Short de mezclilla azul claro de tiro medio y corte recto, un básico cómodo para el día a día.',
+    stock: { "S": 10, "M": 10, "L": 10, "XL": 10 }
   },
   {
     id: 'short4',
@@ -567,7 +625,8 @@ const PRODUCTOS = [
     precio: 9990,
     imagen: 'img/mujer/short4.png',
     imagenes: ['img/mujer/short4.png', 'img/mujer/short4-2.png'],
-    descripcion: 'Short de mezclilla azul medio con fit relajado, ideal para looks casuales con zapatillas.'
+    descripcion: 'Short de mezclilla azul medio con fit relajado, ideal para looks casuales con zapatillas.',
+    stock: { "S": 10, "M": 10, "L": 10, "XL": 10 }
   },
 
   // VESTIDOS
@@ -579,7 +638,8 @@ const PRODUCTOS = [
     precio: 21990,
     imagen: 'img/mujer/vestido1.png',
     imagenes: ['img/mujer/vestido1.png', 'img/mujer/vestido1-2.png', 'img/mujer/vestido1-3.png'],
-    descripcion: 'Vestido negro sin mangas con parte superior ajustada y falda tipo bubble con volumen, ideal para salidas nocturnas.'
+    descripcion: 'Vestido negro sin mangas con parte superior ajustada y falda tipo bubble con volumen, ideal para salidas nocturnas.',
+    stock: { "S": 10, "M": 10, "L": 10, "XL": 10 }
   },
   {
     id: 'vestido2',
@@ -589,7 +649,8 @@ const PRODUCTOS = [
     precio: 24990,
     imagen: 'img/mujer/vestido2.png',
     imagenes: ['img/mujer/vestido2.png', 'img/mujer/vestido2-1.png'],
-    descripcion: 'Vestido midi borgoña con tirantes finos y abertura lateral alta, perfecto para looks nocturnos con botines o sandalias.'
+    descripcion: 'Vestido midi borgoña con tirantes finos y abertura lateral alta, perfecto para looks nocturnos con botines o sandalias.',
+    stock: { "S": 10, "M": 10, "L": 10, "XL": 10 }
   },
   {
     id: 'vestido4',
@@ -599,7 +660,8 @@ const PRODUCTOS = [
     precio: 9990,
     imagen: 'img/mujer/vestido4.png',
     imagenes: ['img/mujer/vestido4.png', 'img/mujer/vestido4-1.png', 'img/mujer/vestido4-2.png'],
-    descripcion: 'Vestido corto negro de cotelé con botones frontales, perfecto para usar con poleras o suéters debajo.'
+    descripcion: 'Vestido corto negro de cotelé con botones frontales, perfecto para usar con poleras o suéters debajo.',
+    stock: { "S": 10, "M": 10, "L": 10, "XL": 10 }
   },
   {
     id: 'vestido5',
@@ -609,7 +671,8 @@ const PRODUCTOS = [
     precio: 9990,
     imagen: 'img/mujer/vestido5.png',
     imagenes: ['img/mujer/vestido5.png', 'img/mujer/vestido5-1.png'],
-    descripcion: 'Vestido midi strapless color chocolate con frunce lateral y abertura, ideal para eventos o salidas de noche.'
+    descripcion: 'Vestido midi strapless color chocolate con frunce lateral y abertura, ideal para eventos o salidas de noche.',
+    stock: { "S": 10, "M": 10, "L": 10, "XL": 10 }
   },
   {
     id: 'vestido6',
@@ -619,7 +682,8 @@ const PRODUCTOS = [
     precio: 9990,
     imagen: 'img/mujer/vestido6.png',
     imagenes: ['img/mujer/vestido6.png', 'img/mujer/vestido6-1.png'],
-    descripcion: 'Vestido midi ajustado en tono verde oliva con abertura lateral, perfecto para looks urbanos con bototos.'
+    descripcion: 'Vestido midi ajustado en tono verde oliva con abertura lateral, perfecto para looks urbanos con bototos.',
+    stock: { "S": 10, "M": 10, "L": 10, "XL": 10 }
   },
   {
     id: 'vestido7',
@@ -629,11 +693,12 @@ const PRODUCTOS = [
     precio: 9990,
     imagen: 'img/mujer/vestido7.png',
     imagenes: ['img/mujer/vestido7.png', 'img/mujer/vestido7-1.png'],
-    descripcion: 'Vestido midi de tirantes con efecto degradé en tonos grises y falda ligeramente acampanada, ideal para noches especiales.'
+    descripcion: 'Vestido midi de tirantes con efecto degradé en tonos grises y falda ligeramente acampanada, ideal para noches especiales.',
+    stock: { "S": 10, "M": 10, "L": 10, "XL": 10 }
   },
 
   // PRODUCTOS DE HOMBRES
-//  ACCESORIOS 
+//  ACCESORIOS
   {
     id: 'accesorio15',
     nombre: 'Set de Anillos Góticos',
@@ -642,7 +707,8 @@ const PRODUCTOS = [
     precio: 14990,
     imagen: 'img/hombre/anillo1.jpeg',
     imagenes: ['img/hombre/anillo1.jpeg', 'img/hombre/anillo1.1.jpeg', 'img/hombre/anillo1.2.jpeg', 'img/hombre/anillo1.3.jpeg'],
-    descripcion: 'Set de 6 anillos de plata con diseño gótico, incluye calaveras, cruces y estrellas.'
+    descripcion: 'Set de 6 anillos de plata con diseño gótico, incluye calaveras, cruces y estrellas.',
+    stock: { "S": 10, "M": 10, "L": 10, "XL": 10 }
   },
   {
     id: 'cadena_estrellas',
@@ -652,7 +718,8 @@ const PRODUCTOS = [
     precio: 12990,
     imagen: 'img/hombre/cadena1.jpeg',
     imagenes: ['img/hombre/cadena1.jpeg', 'img/hombre/cadena1.1.jpeg', 'img/hombre/cadena1.2.jpeg', 'img/hombre/cadena2.jpeg'],
-    descripcion: 'Cadena de plata de tres capas con dijes de estrellas, estilo urbano y llamativo.'
+    descripcion: 'Cadena de plata de tres capas con dijes de estrellas, estilo urbano y llamativo.',
+    stock: { "S": 10, "M": 10, "L": 10, "XL": 10 }
   },
   {
     id: 'accesorio16',
@@ -662,7 +729,8 @@ const PRODUCTOS = [
     precio: 8990,
     imagen: 'img/hombre/cinturon1.jpeg',
     imagenes: ['img/hombre/cinturon1.jpeg', 'img/hombre/cinturon1.1.jpeg'],
-    descripcion: 'Cinturón de cuero negro con hebilla plateada de diseño geométrico.'
+    descripcion: 'Cinturón de cuero negro con hebilla plateada de diseño geométrico.',
+    stock: { "S": 10, "M": 10, "L": 10, "XL": 10 }
   },
   {
     id: 'accesorio17',
@@ -672,7 +740,8 @@ const PRODUCTOS = [
     precio: 11990,
     imagen: 'img/hombre/collar1.jpeg',
     imagenes: ['img/hombre/collar1.jpeg', 'img/hombre/collar1.1.jpeg', 'img/hombre/collar1.2.jpeg'],
-    descripcion: 'Collar de plata con colgante de cruz gótica detallada, estilo alternativo.'
+    descripcion: 'Collar de plata con colgante de cruz gótica detallada, estilo alternativo.',
+    stock: { "S": 10, "M": 10, "L": 10, "XL": 10 }
   },
   {
     id: 'accesorio18',
@@ -682,7 +751,8 @@ const PRODUCTOS = [
     precio: 9990,
     imagen: 'img/hombre/gorro1.jpeg',
     imagenes: ['img/hombre/gorro1.jpeg', 'img/hombre/gorro1.2.jpeg'],
-    descripcion: 'Gorro tejido negro con estampado de estrellas y letras en gris.'
+    descripcion: 'Gorro tejido negro con estampado de estrellas y letras en gris.',
+    stock: { "S": 10, "M": 10, "L": 10, "XL": 10 }
   },
   {
     id: 'accesorio19',
@@ -692,7 +762,8 @@ const PRODUCTOS = [
     precio: 12990,
     imagen: 'img/hombre/gorro2.jpeg',
     imagenes: ['img/hombre/gorro2.jpeg'],
-    descripcion: 'Gorra gris de estilo desgastado con logo tenue en el frente.'
+    descripcion: 'Gorra gris de estilo desgastado con logo tenue en el frente.',
+    stock: { "S": 10, "M": 10, "L": 10, "XL": 10 }
   },
   {
     id: 'accesorio20',
@@ -702,7 +773,8 @@ const PRODUCTOS = [
     precio: 15990,
     imagen: 'img/hombre/gorro3.jpeg',
     imagenes: ['img/hombre/gorro3.jpeg'],
-    descripcion: 'Gorra negra con logo de New York en blanco y detalles laterales.'
+    descripcion: 'Gorra negra con logo de New York en blanco y detalles laterales.',
+    stock: { "S": 10, "M": 10, "L": 10, "XL": 10 }
   },
   {
     id: 'accesorio21',
@@ -712,7 +784,8 @@ const PRODUCTOS = [
     precio: 14990,
     imagen: 'img/hombre/gorro4.jpeg',
     imagenes: ['img/hombre/gorro4.jpeg'],
-    descripcion: 'Gorra marrón con logo bordado en tonos tierra.'
+    descripcion: 'Gorra marrón con logo bordado en tonos tierra.',
+    stock: { "S": 10, "M": 10, "L": 10, "XL": 10 }
   },
   {
     id: 'accesorio22',
@@ -722,10 +795,11 @@ const PRODUCTOS = [
     precio: 10990,
     imagen: 'img/hombre/lentes1.jpeg',
     imagenes: ['img/hombre/lentes1.jpeg', 'img/hombre/lentes1.1.jpeg'],
-    descripcion: 'Lentes de sol rectangulares negros, estilo minimalista.'
+    descripcion: 'Lentes de sol rectangulares negros, estilo minimalista.',
+    stock: { "S": 10, "M": 10, "L": 10, "XL": 10 }
   },
 
-    // CONJUNTOS 
+    // CONJUNTOS
   {
     id: 'conjunto5',
     nombre: 'Set Polera y Short PAUTROS',
@@ -734,10 +808,11 @@ const PRODUCTOS = [
     precio: 24990,
     imagen: 'img/hombre/conjunto1.jpeg',
     imagenes: ['img/hombre/conjunto1.jpeg', 'img/hombre/conjunto1.1.jpeg'],
-    descripcion: 'Conjunto de polera y short negro con estampado gótico "PAUTROS".'
+    descripcion: 'Conjunto de polera y short negro con estampado gótico "PAUTROS".',
+    stock: { "S": 10, "M": 10, "L": 10, "XL": 10 }
   },
 
-    // CHAQUETAS 
+    // CHAQUETAS
   {
     id: 'chaqueta7',
     nombre: 'Chaqueta Chicago',
@@ -746,7 +821,8 @@ const PRODUCTOS = [
     precio: 29990,
     imagen: 'img/hombre/chaqueta1.jpeg',
     imagenes: ['img/hombre/chaqueta1.jpeg', 'img/hombre/chaqueta1.1.jpeg', 'img/hombre/chaqueta1.2.jpeg'],
-    descripcion: 'Chaqueta de cuero sintético negro con estampado "Chicago" en el pecho.'
+    descripcion: 'Chaqueta de cuero sintético negro con estampado "Chicago" en el pecho.',
+    stock: { "S": 10, "M": 10, "L": 10, "XL": 10 }
   },
   {
     id: 'chaqueta8',
@@ -756,7 +832,8 @@ const PRODUCTOS = [
     precio: 24990,
     imagen: 'img/hombre/chaqueta2.jpeg',
     imagenes: ['img/hombre/chaqueta2.jpeg', 'img/hombre/chaqueta2.1.jpeg'],
-    descripcion: 'Chaqueta deportiva bordo con mangas blancas y texto "PAVT ROS".'
+    descripcion: 'Chaqueta deportiva bordo con mangas blancas y texto "PAVT ROS".',
+    stock: { "S": 10, "M": 10, "L": 10, "XL": 10 }
   },
   {
     id: 'chaqueta9',
@@ -766,7 +843,8 @@ const PRODUCTOS = [
     precio: 24990,
     imagen: 'img/hombre/chaqueta3.jpeg',
     imagenes: ['img/hombre/chaqueta3.jpeg', 'img/hombre/chaqueta3.1.jpeg'],
-    descripcion: 'Chaqueta negra con paneles verdes y blancos, estilo urbano.'
+    descripcion: 'Chaqueta negra con paneles verdes y blancos, estilo urbano.',
+    stock: { "S": 10, "M": 10, "L": 10, "XL": 10 }
   },
   {
     id: 'chaqueta10',
@@ -776,7 +854,8 @@ const PRODUCTOS = [
     precio: 24990,
     imagen: 'img/hombre/chaqueta4.jpeg',
     imagenes: ['img/hombre/chaqueta4.jpeg', 'img/hombre/chaqueta4.1.jpeg'],
-    descripcion: 'Chaqueta negra con paneles morados y blancos, estilo deportivo.'
+    descripcion: 'Chaqueta negra con paneles morados y blancos, estilo deportivo.',
+    stock: { "S": 10, "M": 10, "L": 10, "XL": 10 }
   },
   {
     id: 'chaqueta11',
@@ -786,7 +865,8 @@ const PRODUCTOS = [
     precio: 24990,
     imagen: 'img/hombre/chaqueta5.jpeg',
     imagenes: ['img/hombre/chaqueta5.jpeg', 'img/hombre/chaqueta5.1.jpeg'],
-    descripcion: 'Chaqueta negra con paneles rojos y blancos, estilo urbano.'
+    descripcion: 'Chaqueta negra con paneles rojos y blancos, estilo urbano.',
+    stock: { "S": 10, "M": 10, "L": 10, "XL": 10 }
   },
   {
     id: 'chaqueta12',
@@ -796,7 +876,8 @@ const PRODUCTOS = [
     precio: 27990,
     imagen: 'img/hombre/chaqueta6.jpeg',
     imagenes: ['img/hombre/chaqueta6.jpeg', 'img/hombre/chaqueta6.1.jpeg'],
-    descripcion: 'Chaqueta negra con líneas plateadas y logo "P" en el pecho.'
+    descripcion: 'Chaqueta negra con líneas plateadas y logo "P" en el pecho.',
+    stock: { "S": 10, "M": 10, "L": 10, "XL": 10 }
   },
   {
     id: 'chaqueta13',
@@ -806,7 +887,8 @@ const PRODUCTOS = [
     precio: 29990,
     imagen: 'img/hombre/chaqueta7.jpeg',
     imagenes: ['img/hombre/chaqueta7.jpeg', 'img/hombre/chaqueta7.1.jpeg', 'img/hombre/chaqueta7.2.jpeg'],
-    descripcion: 'Chaqueta negra con estampado de ángel y detalles góticos en las mangas.'
+    descripcion: 'Chaqueta negra con estampado de ángel y detalles góticos en las mangas.',
+    stock: { "S": 10, "M": 10, "L": 10, "XL": 10 }
   },
   {
     id: 'chaqueta14',
@@ -816,10 +898,11 @@ const PRODUCTOS = [
     precio: 28990,
     imagen: 'img/hombre/chaqueta8.jpeg',
     imagenes: ['img/hombre/chaqueta8.jpeg'],
-    descripcion: 'Chaqueta beige con capucha y múltiples bolsillos, estilo utilitario.'
+    descripcion: 'Chaqueta beige con capucha y múltiples bolsillos, estilo utilitario.',
+    stock: { "S": 10, "M": 10, "L": 10, "XL": 10 }
   },
 
-    //  PANTALONES 
+    //  PANTALONES
   {
     id: 'pantalon6',
     nombre: 'Pantalón Vaquero Oscuro',
@@ -828,7 +911,8 @@ const PRODUCTOS = [
     precio: 19990,
     imagen: 'img/hombre/pantalon1.jpeg',
     imagenes: ['img/hombre/pantalon1.jpeg'],
-    descripcion: 'Pantalón vaquero oscuro de corte recto, un básico para cualquier look.'
+    descripcion: 'Pantalón vaquero oscuro de corte recto, un básico para cualquier look.',
+    stock: { "S": 10, "M": 10, "L": 10, "XL": 10 }
   },
   {
     id: 'pantalon7',
@@ -838,7 +922,8 @@ const PRODUCTOS = [
     precio: 19990,
     imagen: 'img/hombre/pantalon2.jpeg',
     imagenes: ['img/hombre/pantalon2.jpeg'],
-    descripcion: 'Pantalón vaquero azul de tiro medio y pierna ancha.'
+    descripcion: 'Pantalón vaquero azul de tiro medio y pierna ancha.',
+    stock: { "S": 10, "M": 10, "L": 10, "XL": 10 }
   },
   {
     id: 'pantalon8',
@@ -848,10 +933,11 @@ const PRODUCTOS = [
     precio: 20990,
     imagen: 'img/hombre/pantalon3.jpeg',
     imagenes: ['img/hombre/pantalon3.jpeg'],
-    descripcion: 'Pantalón vaquero marrón oscuro, ideal para outfits de tonos tierra.'
+    descripcion: 'Pantalón vaquero marrón oscuro, ideal para outfits de tonos tierra.',
+    stock: { "S": 10, "M": 10, "L": 10, "XL": 10 }
   },
 
-    //  POLERAS 
+    //  POLERAS
   {
     id: 'polera8',
     nombre: 'Polera World Hero',
@@ -860,7 +946,8 @@ const PRODUCTOS = [
     precio: 14990,
     imagen: 'img/hombre/polera1.jpeg',
     imagenes: ['img/hombre/polera1.jpeg', 'img/hombre/polera1.1.jpeg'],
-    descripcion: 'Polera negra con estampado de la Estatua de la Libertad y texto "World Hero" en rojo y blanco.'
+    descripcion: 'Polera negra con estampado de la Estatua de la Libertad y texto "World Hero" en rojo y blanco.',
+    stock: { "S": 10, "M": 10, "L": 10, "XL": 10 }
   },
   {
     id: 'polera9',
@@ -870,7 +957,8 @@ const PRODUCTOS = [
     precio: 13990,
     imagen: 'img/hombre/polera2.jpeg',
     imagenes: ['img/hombre/polera2.jpeg', 'img/hombre/polera2.1.jpeg', 'img/hombre/polera2.2.jpeg'],
-    descripcion: 'Polera manga larga blanca con mangas negras y texto gótico en los brazos.'
+    descripcion: 'Polera manga larga blanca con mangas negras y texto gótico en los brazos.',
+    stock: { "S": 10, "M": 10, "L": 10, "XL": 10 }
   },
   {
     id: 'polera10',
@@ -880,7 +968,8 @@ const PRODUCTOS = [
     precio: 14990,
     imagen: 'img/hombre/polera3.jpeg',
     imagenes: ['img/hombre/polera3.jpeg', 'img/hombre/polera3.1.jpeg', 'img/hombre/polera3.2.jpeg'],
-    descripcion: 'Polera negra con estampado de calavera, alas y detalles en morado, estilo rockero.'
+    descripcion: 'Polera negra con estampado de calavera, alas y detalles en morado, estilo rockero.',
+    stock: { "S": 10, "M": 10, "L": 10, "XL": 10 }
   },
   {
     id: 'polera11',
@@ -890,7 +979,8 @@ const PRODUCTOS = [
     precio: 14990,
     imagen: 'img/hombre/polera4.jpeg',
     imagenes: ['img/hombre/polera4.jpeg', 'img/hombre/polera4.1.jpeg'],
-    descripcion: 'Polera oversize gris con estampado de la Estatua de la Libertad y tipografía "Los Ángeles".'
+    descripcion: 'Polera oversize gris con estampado de la Estatua de la Libertad y tipografía "Los Ángeles".',
+    stock: { "S": 10, "M": 10, "L": 10, "XL": 10 }
   },
   {
     id: 'polera12',
@@ -900,7 +990,8 @@ const PRODUCTOS = [
     precio: 15990,
     imagen: 'img/hombre/polera5.jpeg',
     imagenes: ['img/hombre/polera5.jpeg', 'img/hombre/polera5.1.jpeg'],
-    descripcion: 'Polera negra con ángel y texto "PAUTROS", un diseño llamativo y urbano.'
+    descripcion: 'Polera negra con ángel y texto "PAUTROS", un diseño llamativo y urbano.',
+    stock: { "S": 10, "M": 10, "L": 10, "XL": 10 }
   },
   {
     id: 'polera13',
@@ -910,7 +1001,8 @@ const PRODUCTOS = [
     precio: 14990,
     imagen: 'img/hombre/polera6.jpeg',
     imagenes: ['img/hombre/polera6.jpeg', 'img/hombre/polera6.1.jpeg'],
-    descripcion: 'Polera negra con alas blancas y detalles góticos en el pecho.'
+    descripcion: 'Polera negra con alas blancas y detalles góticos en el pecho.',
+    stock: { "S": 10, "M": 10, "L": 10, "XL": 10 }
   },
   {
     id: 'polera14',
@@ -920,10 +1012,11 @@ const PRODUCTOS = [
     precio: 13990,
     imagen: 'img/hombre/polera7.jpeg',
     imagenes: ['img/hombre/polera7.jpeg', 'img/hombre/polera7.1.jpeg'],
-    descripcion: 'Polera blanca con estampado de labios y cruces en tonos oscuros.'
+    descripcion: 'Polera blanca con estampado de labios y cruces en tonos oscuros.',
+    stock: { "S": 10, "M": 10, "L": 10, "XL": 10 }
   },
 
-    //  POLERONES 
+    //  POLERONES
   {
     id: 'poleron5',
     nombre: 'Sudadera Gris Oscura',
@@ -932,7 +1025,8 @@ const PRODUCTOS = [
     precio: 19990,
     imagen: 'img/hombre/poleron1.jpeg',
     imagenes: ['img/hombre/poleron1.jpeg', 'img/hombre/poleron1.1.jpeg'],
-    descripcion: 'Sudadera con capucha en gris oscuro, estilo básico y cómodo.'
+    descripcion: 'Sudadera con capucha en gris oscuro, estilo básico y cómodo.',
+    stock: { "S": 10, "M": 10, "L": 10, "XL": 10 }
   },
   {
     id: 'poleron6',
@@ -942,7 +1036,8 @@ const PRODUCTOS = [
     precio: 19990,
     imagen: 'img/hombre/poleron2.jpeg',
     imagenes: ['img/hombre/poleron2.jpeg'],
-    descripcion: 'Sudadera con capucha en gris claro, un básico versátil.'
+    descripcion: 'Sudadera con capucha en gris claro, un básico versátil.',
+    stock: { "S": 10, "M": 10, "L": 10, "XL": 10 }
   },
   {
     id: 'poleron7',
@@ -952,7 +1047,8 @@ const PRODUCTOS = [
     precio: 18990,
     imagen: 'img/hombre/poleron3.jpeg',
     imagenes: ['img/hombre/poleron3.jpeg', 'img/hombre/poleron3.1.jpeg'],
-    descripcion: 'Sudadera con capucha en tono verde suave.'
+    descripcion: 'Sudadera con capucha en tono verde suave.',
+    stock: { "S": 10, "M": 10, "L": 10, "XL": 10 }
   },
   {
     id: 'poleron8',
@@ -962,7 +1058,8 @@ const PRODUCTOS = [
     precio: 21990,
     imagen: 'img/hombre/poleron5.jpeg',
     imagenes: ['img/hombre/poleron5.jpeg', 'img/hombre/poleron5.1.jpeg'],
-    descripcion: 'Sudadera negra con estampado de ángel en el pecho y mangas decoradas.'
+    descripcion: 'Sudadera negra con estampado de ángel en el pecho y mangas decoradas.',
+    stock: { "S": 10, "M": 10, "L": 10, "XL": 10 }
   },
   {
     id: 'poleron9',
@@ -972,7 +1069,8 @@ const PRODUCTOS = [
     precio: 21990,
     imagen: 'img/hombre/poleron6.jpeg',
     imagenes: ['img/hombre/poleron6.jpeg', 'img/hombre/poleron6.1.jpeg'],
-    descripcion: 'Sudadera negra con diseño tribal en las mangas y espalda.'
+    descripcion: 'Sudadera negra con diseño tribal en las mangas y espalda.',
+    stock: { "S": 10, "M": 10, "L": 10, "XL": 10 }
   },
 
     // ---------- SHORTS ----------
@@ -984,10 +1082,11 @@ const PRODUCTOS = [
     precio: 14990,
     imagen: 'img/hombre/short1.jpeg',
     imagenes: ['img/hombre/short1.jpeg', 'img/hombre/short1.1.jpeg'],
-    descripcion: 'Short de pana en tono morado, estilo casual y cómodo.'
+    descripcion: 'Short de pana en tono morado, estilo casual y cómodo.',
+    stock: { "S": 10, "M": 10, "L": 10, "XL": 10 }
   },
 
-    //  CALZADO 
+    //  CALZADO
   {
     id: 'calzado6',
     nombre: 'Zapatillas Puma Negras',
@@ -996,7 +1095,8 @@ const PRODUCTOS = [
     precio: 34990,
     imagen: 'img/hombre/zapatilla1.jpeg',
     imagenes: ['img/hombre/zapatilla1.jpeg'],
-    descripcion: 'Zapatillas Puma negras con detalles blancos, estilo clásico.'
+    descripcion: 'Zapatillas Puma negras con detalles blancos, estilo clásico.',
+    stock: { "S": 10, "M": 10, "L": 10, "XL": 10 }
   },
   {
     id: 'calzado7',
@@ -1006,7 +1106,8 @@ const PRODUCTOS = [
     precio: 32990,
     imagen: 'img/hombre/zapatilla2.jpeg',
     imagenes: ['img/hombre/zapatilla2.jpeg'],
-    descripcion: 'Zapatillas Adidas negras con tres franjas blancas, un clásico urbano.'
+    descripcion: 'Zapatillas Adidas negras con tres franjas blancas, un clásico urbano.',
+    stock: { "S": 10, "M": 10, "L": 10, "XL": 10 }
   },
   {
     id: 'calzado8',
@@ -1016,7 +1117,8 @@ const PRODUCTOS = [
     precio: 39990,
     imagen: 'img/hombre/zapatilla3.jpeg',
     imagenes: ['img/hombre/zapatilla3.jpeg'],
-    descripcion: 'Zapatillas Nike Air Force blancas con swoosh negro, estilo atemporal.'
+    descripcion: 'Zapatillas Nike Air Force blancas con swoosh negro, estilo atemporal.',
+    stock: { "S": 10, "M": 10, "L": 10, "XL": 10 }
   },
   {
     id: 'calzado9',
@@ -1026,7 +1128,8 @@ const PRODUCTOS = [
     precio: 45990,
     imagen: 'img/hombre/zapatilla4.jpeg',
     imagenes: ['img/hombre/zapatilla4.jpeg'],
-    descripcion: 'Zapatillas Jordan rojas y verdes con detalles blancos, edición especial.'
+    descripcion: 'Zapatillas Jordan rojas y verdes con detalles blancos, edición especial.',
+    stock: { "S": 10, "M": 10, "L": 10, "XL": 10 }
   },
   {
     id: 'calzado10',
@@ -1036,6 +1139,7 @@ const PRODUCTOS = [
     precio: 39990,
     imagen: 'img/hombre/zapatilla5.jpeg',
     imagenes: ['img/hombre/zapatilla5.jpeg'],
-    descripcion: 'Zapatillas Nike Air Force marrones con suela negra, estilo premium.'
+    descripcion: 'Zapatillas Nike Air Force marrones con suela negra, estilo premium.',
+    stock: { "S": 10, "M": 10, "L": 10, "XL": 10 }
   }
 ];

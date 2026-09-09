@@ -55,18 +55,15 @@
 
         <div class="product-section">
           <h3>Tallas disponibles</h3>
-          <div class="size-options">
-            <button class="size-chip">S</button>
-            <button class="size-chip size-chip-active">M</button>
-            <button class="size-chip">L</button>
-            <button class="size-chip size-chip-disabled">XL</button>
+          <div class="size-options" id="tallas-container">
+            <!-- Se llena dinámicamente según stock -->
           </div>
-          <p class="stock-note">Stock por talla de referencia, puede variar según el producto.</p>
+          <p class="stock-note" id="stock-info"></p>
         </div>
 
         <div class="product-actions">
-          <button id="btn-agregar" class="btn-primary">Agregar al carrito</button>
-          <button class="btn-secondary" onclick="history.back()">Volver atrás</button>
+          <button id="btn-agregar" class="btn-primary btn-agregar">Agregar al carrito</button>
+          <button class="btn-volver" onclick="history.back()">Volver atrás</button>
         </div>
 
         <p class="product-note">
@@ -89,66 +86,9 @@
   </footer>
 
   <script src="js/cart.js"></script>
+  <script src="js/utils.js"></script>
   <script src="js/productos-data.js"></script>
+  <script src="js/producto.js"></script>
   <script src="js/header.js"></script>
-  <script>
-    const params = new URLSearchParams(window.location.search);
-    const productId = params.get('id');
-    const product = PRODUCTOS.find(p => p.id === productId);
-
-    if (!product) {
-      document.getElementById('p-title').textContent = 'Producto no encontrado';
-      document.getElementById('p-category').textContent = '';
-      document.getElementById('p-price').textContent = '';
-      document.getElementById('p-description').textContent = '';
-    } else {
-      // Formatear precio a CLP
-      const precioFormateado = '$' + product.precio.toLocaleString('es-CL');
-
-      // Inyectar datos
-      document.getElementById('p-category').textContent = product.categoria;
-      document.getElementById('p-title').textContent = product.nombre;
-      document.getElementById('p-price').textContent = precioFormateado;
-      document.getElementById('p-description').textContent = product.descripcion;
-
-      // Carrusel
-      let current = 0;
-      const images = product.imagenes || ['img/default.png'];
-      const img = document.getElementById('carousel-img');
-      const indicator = document.getElementById('carousel-indicator');
-      const prevBtn = document.getElementById('prev-btn');
-      const nextBtn = document.getElementById('next-btn');
-
-      function updateCarousel() {
-        img.src = images[current];
-        img.alt = product.nombre;
-        indicator.textContent = (current + 1) + ' / ' + images.length;
-      }
-
-      if (prevBtn) prevBtn.onclick = () => {
-        current = (current - 1 + images.length) % images.length;
-        updateCarousel();
-      };
-      if (nextBtn) nextBtn.onclick = () => {
-        current = (current + 1) % images.length;
-        updateCarousel();
-      };
-
-      updateCarousel();
-
-      // Botón agregar al carrito
-      document.getElementById("btn-agregar").addEventListener("click", (e) => {
-        e.preventDefault();
-        addToCart({
-          id: product.id,
-          name: product.nombre,
-          price: product.precio,
-          image: product.imagen,
-          qty: 1
-        });
-        window.location.href = "checkout.html";
-      });
-    }
-  </script>
 </body>
 </html>

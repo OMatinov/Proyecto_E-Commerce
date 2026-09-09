@@ -1,19 +1,20 @@
-// Función para formatear precio
-function formatoPrecioCLP(numero) {
-  return "$" + Number(numero).toLocaleString("es-CL");
-}
-
-// Función para renderizar los productos en el grid
+// catalogo.js (VERSIÓN CORREGIDA)
+// Eliminadas: formatoPrecioCLP, obtenerStockProducto, hayStockDisponible, renderizarTallasConStock
+// Ahora vienen de utils.js
 function renderizarProductos(lista) {
   const contenedor = document.getElementById('product-grid');
   contenedor.innerHTML = '';
 
   lista.forEach(producto => {
+    const stockTotal = producto.stock ? Object.values(producto.stock).reduce((a, b) => a + b, 0) : 0;
+    const sinStock = stockTotal === 0;
+
     const tarjeta = `
-      <a href="producto.html?id=${producto.id}" class="product-card-link">
-        <article class="product-card">
+      <a href="producto.html?id=${producto.id}" class="product-card-link ${sinStock ? 'product-sin-stock' : ''}">
+        <article class="product-card ${sinStock ? 'product-card-sin-stock' : ''}">
           <div class="product-card-image">
             <img src="${producto.imagen}" alt="${producto.nombre}">
+            ${sinStock ? '<div class="badge-sin-stock">Agotado</div>' : ''}
           </div>
           <div class="product-body">
             <p class="product-category">${producto.categoria}</p>
@@ -27,13 +28,11 @@ function renderizarProductos(lista) {
   });
 }
 
-// Filtro por categoría
 function filtrarPorCategoria(categoria) {
   let listaFiltrada = PRODUCTOS;
   if (categoria !== 'todos') {
     listaFiltrada = listaFiltrada.filter(p => p.categoria === categoria);
   }
-  // Aplicar también el filtro de género actual
   const generoActivo = document.querySelector('.gender-button.active')?.dataset.gender || 'todos';
   if (generoActivo !== 'todos') {
     listaFiltrada = listaFiltrada.filter(p => p.genero === generoActivo);
@@ -41,13 +40,11 @@ function filtrarPorCategoria(categoria) {
   renderizarProductos(listaFiltrada);
 }
 
-// Filtro por género
 function filtrarPorGenero(genero) {
   let listaFiltrada = PRODUCTOS;
   if (genero !== 'todos') {
     listaFiltrada = listaFiltrada.filter(p => p.genero === genero);
   }
-  // Aplicar también el filtro de categoría actual
   const categoriaActiva = document.querySelector('.filter-button.active')?.dataset.category || 'todos';
   if (categoriaActiva !== 'todos') {
     listaFiltrada = listaFiltrada.filter(p => p.categoria === categoriaActiva);
@@ -59,7 +56,6 @@ function filtrarPorGenero(genero) {
 document.addEventListener('DOMContentLoaded', () => {
   renderizarProductos(PRODUCTOS);
 
-  // Botones de categoría
   document.querySelectorAll('.filter-button').forEach(boton => {
     boton.addEventListener('click', () => {
       document.querySelectorAll('.filter-button').forEach(b => b.classList.remove('active'));
@@ -68,7 +64,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // Botones de género
   document.querySelectorAll('.gender-button').forEach(boton => {
     boton.addEventListener('click', () => {
       document.querySelectorAll('.gender-button').forEach(b => b.classList.remove('active'));
