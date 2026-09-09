@@ -47,6 +47,6 @@ function validarCampoCorreoLogin() {
       }
 
       // Credenciales correctas: activamos la sesión (la cuenta ya estaba guardada)
-      localStorage.setItem("GRWUSesionActivaSesionActiva", "1");
+      localStorage.setItem("GRWUSesionActiva", "1");
       window.location.href = "cuenta.html";
     });

@@ -58,7 +58,7 @@
   <script src="js/header.js"></script>
   <script>
     function renderCuenta() {
-      const datos = localStorage.getItem("GRWUUsuario");
+      const datos = localStorage.getItem("GRWU_Usuario");
       const sesionActiva = localStorage.getItem("GRWUSesionActiva") === "1";
       const titulo = document.getElementById("tituloBienvenida");
       const lista = document.getElementById("datosUsuario");
@@ -85,7 +85,7 @@
 
       const usuario = JSON.parse(datos);
 
-      titulo.textContent = `Bienvenida, ${usuario.nombre}`;
+      titulo.textContent = `Hola, ${usuario.nombre}`;
       lista.innerHTML = `
         <li><strong>RUN:</strong> ${usuario.run}</li>
         <li><strong>Correo registrado:</strong> ${usuario.correo}</li>
