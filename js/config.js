@@ -4,7 +4,7 @@
 // ==================== CLAVES DE LOCALSTORAGE ====================
 const STORAGE_KEYS = {
   CARRITO: "GRWU_Cart",
-  SESION_ACTIVA: "GRWU_SesionActiva",
+  SESION_ACTIVA: "GRWUSesionActiva",
   USUARIO_ACTIVO: "GRWU_Usuario",
   USUARIOS_ADMIN: "GRWU_usuariosAdmin",
   PRODUCTOS_ADMIN: "GRWU_productosAdmin",

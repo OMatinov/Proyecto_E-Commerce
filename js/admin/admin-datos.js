@@ -8,7 +8,13 @@ function cargarProductosAdmin() {
   if (guardado) return JSON.parse(guardado);
 
   const productosConInventario = PRODUCTOS.map(function (p) {
-    return Object.assign({ codigo: p.id.toUpperCase(), stock: 10, stockCritico: 3 }, p);
+    // Convertir el objeto de stock por talla en un stock total numérico
+    const stockTotal = p.stock ? Object.values(p.stock).reduce((a, b) => a + b, 0) : 10;
+    return Object.assign({}, p, {
+      codigo: p.id.toUpperCase(),
+      stock: stockTotal,
+      stockCritico: 3
+    });
   });
 
   localStorage.setItem(CLAVE_PRODUCTOS_ADMIN, JSON.stringify(productosConInventario));
