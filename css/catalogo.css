@@ -194,6 +194,43 @@
   border-radius: 50%;
 }
 
+/* Paginación */
+.pagination-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+}
+
+.pagination {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.page-btn {
+  padding: 8px 16px;
+  border: 1px solid var(--color-gris);
+  border-radius: var(--radius-full);
+  background: var(--color-blanco);
+  cursor: pointer;
+  font-family: var(--font-cuerpo);
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+  min-width: 40px;
+  text-align: center;
+}
+
+.page-btn:hover:not(.page-btn-active) {
+  background: var(--color-claro);
+  border-color: var(--color-primario);
+}
+
+.page-btn-active {
+  background: var(--color-primario);
+  color: var(--color-claro);
+  border-color: var(--color-primario);
+}
+
 /* ===== RESPONSIVE ===== */
 @media (max-width: 768px) {
   .product-grid {

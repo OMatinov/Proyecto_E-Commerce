@@ -1,5 +1,19 @@
 /* ===== PÁGINA DE INICIO ===== */
+/* Banner GIF */
+.banner-gif {
+  margin: 20px 0 40px;
+  width: 100%;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
 
+.banner-gif-img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+}
 /* Hero */
 .hero {
   display: flex;
