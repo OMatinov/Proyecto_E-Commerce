@@ -1,0 +1,32 @@
+{
+  "name": "grwu-react",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "lint": "oxlint",
+    "preview": "vite preview",
+    "test:node": "TSX_TSCONFIG_PATH=tsconfig.test.json node --import tsx node_modules/jasmine/bin/jasmine.js --config=spec/support/jasmine.json"
+  },
+  "dependencies": {
+    "bootstrap": "^5.3.8",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8",
+    "react-router-dom": "^7.18.4"
+  },
+  "devDependencies": {
+    "@testing-library/dom": "^10.4.2",
+    "@testing-library/react": "^16.3.3",
+    "@types/react": "^19.2.18",
+    "@types/react-dom": "^19.2.7",
+    "@vitejs/plugin-react": "^6.1.1",
+    "global-jsdom": "^30.0.0",
+    "jasmine": "^7.0.0",
+    "jsdom": "^30.1.3",
+    "oxlint": "^1.81.0",
+    "tsx": "^4.23.15",
+    "vite": "^8.3.0"
+  }
+}
