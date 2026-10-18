@@ -1,122 +1,90 @@
-import { useState } from 'react'
-import heroImg from './assets/hero.png'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import './App.css'
+import { Routes, Route } from 'react-router-dom'
+import Layout from './components/Layout'
+import AdminLayout from './components/AdminLayout'
 
-function App() {
-  const [count, setCount] = useState(0)
+// Tienda
+import Home from './pages/Home'
+import Productos from './pages/Productos'
+import DetalleProducto from './pages/DetalleProducto'
+import Categorias from './pages/Categorias'
+import Categoria from './pages/Categoria'
+import Ofertas from './pages/Ofertas'
+import Carrito from './pages/Carrito'
+import Checkout from './pages/Checkout'
+import PagoCorrecto from './pages/PagoCorrecto'
+import PagoError from './pages/PagoError'
+import Registro from './pages/Registro'
+import Login from './pages/Login'
+import Nosotros from './pages/Nosotros'
+import Blogs from './pages/Blogs'
+import BlogDetalle from './pages/BlogDetalle'
+import Contacto from './pages/Contacto'
 
+// Admin
+import AdminDashboard from './pages/admin/AdminDashboard'
+import AdminOrdenes from './pages/admin/AdminOrdenes'
+import AdminBoleta from './pages/admin/AdminBoleta'
+import AdminProductos from './pages/admin/AdminProductos'
+import AdminProductoNuevo from './pages/admin/AdminProductoNuevo'
+import AdminProductoEditar from './pages/admin/AdminProductoEditar'
+import AdminProductosCriticos from './pages/admin/AdminProductosCriticos'
+import AdminCategorias from './pages/admin/AdminCategorias'
+import AdminCategoriaNueva from './pages/admin/AdminCategoriaNueva'
+import AdminCategoriaEditar from './pages/admin/AdminCategoriaEditar'
+import AdminUsuarios from './pages/admin/AdminUsuarios'
+import AdminUsuarioNuevo from './pages/admin/AdminUsuarioNuevo'
+import AdminUsuarioEditar from './pages/admin/AdminUsuarioEditar'
+import AdminHistorialCompras from './pages/admin/AdminHistorialCompras'
+import AdminReportes from './pages/admin/AdminReportes'
+import AdminPerfil from './pages/admin/AdminPerfil'
+import AdminBlogs from './pages/admin/AdminBlogs'
+import AdminContactos from './pages/admin/AdminContactos'
+
+export default function App() {
   return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
-        </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
-          </p>
-        </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
-      </section>
+    <Routes>
+      {/* Tienda (pública) */}
+      <Route element={<Layout />}>
+        <Route path="/" element={<Home />} />
+        <Route path="/productos" element={<Productos />} />
+        <Route path="/productos/:id" element={<DetalleProducto />} />
+        <Route path="/categorias" element={<Categorias />} />
+        <Route path="/categorias/:slug" element={<Categoria />} />
+        <Route path="/ofertas" element={<Ofertas />} />
+        <Route path="/carrito" element={<Carrito />} />
+        <Route path="/checkout" element={<Checkout />} />
+        <Route path="/pago-correcto" element={<PagoCorrecto />} />
+        <Route path="/pago-error" element={<PagoError />} />
+        <Route path="/registro" element={<Registro />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/nosotros" element={<Nosotros />} />
+        <Route path="/blogs" element={<Blogs />} />
+        <Route path="/blogs/:id" element={<BlogDetalle />} />
+        <Route path="/contacto" element={<Contacto />} />
+        <Route path="*" element={<h1 className="container py-5">Página no encontrada</h1>} />
+      </Route>
 
-      <div className="ticks"></div>
-
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
-
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
+      {/* Administrador */}
+      <Route path="/admin" element={<AdminLayout />}>
+        <Route index element={<AdminDashboard />} />
+        <Route path="ordenes" element={<AdminOrdenes />} />
+        <Route path="ordenes/:id" element={<AdminBoleta />} />
+        <Route path="productos" element={<AdminProductos />} />
+        <Route path="productos/nuevo" element={<AdminProductoNuevo />} />
+        <Route path="productos/:id/editar" element={<AdminProductoEditar />} />
+        <Route path="productos/criticos" element={<AdminProductosCriticos />} />
+        <Route path="categorias" element={<AdminCategorias />} />
+        <Route path="categorias/nueva" element={<AdminCategoriaNueva />} />
+        <Route path="categorias/:id/editar" element={<AdminCategoriaEditar />} />
+        <Route path="usuarios" element={<AdminUsuarios />} />
+        <Route path="usuarios/nuevo" element={<AdminUsuarioNuevo />} />
+        <Route path="usuarios/:id/editar" element={<AdminUsuarioEditar />} />
+        <Route path="usuarios/:id/historial" element={<AdminHistorialCompras />} />
+        <Route path="reportes" element={<AdminReportes />} />
+        <Route path="perfil" element={<AdminPerfil />} />
+        <Route path="blogs" element={<AdminBlogs />} />
+        <Route path="contactos" element={<AdminContactos />} />
+      </Route>
+    </Routes>
   )
 }
-
-export default App
