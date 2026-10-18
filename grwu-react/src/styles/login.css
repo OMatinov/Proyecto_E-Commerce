@@ -1,0 +1,43 @@
+/* ============================================================
+   LOGIN
+   Usado por login.html y recuperar-clave.html (misma tarjeta
+   de formulario centrada).
+   ============================================================ */
+.login-section {
+  display: flex;
+  justify-content: center;
+}
+
+.login-box {
+  width: 100%;
+  max-width: 420px;
+  background: var(--color-fondo-tarjeta);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  padding: 32px;
+}
+
+.login-box h3 {
+  font-family: var(--font-titulos);
+  font-size: 1.6rem;
+  letter-spacing: 1px;
+  margin-bottom: 20px;
+  color: var(--color-primario);
+}
+
+.login-extra {
+  margin-top: 16px;
+  font-size: 0.85rem;
+  text-align: center;
+}
+
+.login-extra a {
+  color: var(--color-primario);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.login-extra a:hover {
+  text-decoration: underline;
+}

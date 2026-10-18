@@ -3,9 +3,6 @@ import Layout from './components/Layout'
 import AdminLayout from './components/AdminLayout'
 
 // Tienda
-import DemoNavbar from "./demo/DemoNavbar.jsx"
-import DemoInicio from "./demo/DemoInicio.jsx"
-import DemoPendiente from "./demo/DemoPendiente.jsx"
 import Home from './pages/Home'
 import Productos from './pages/Productos'
 import DetalleProducto from './pages/DetalleProducto'

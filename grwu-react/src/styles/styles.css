@@ -1,0 +1,397 @@
+/* Reset básico */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Variables globales */
+:root {
+  /* Colores principales */
+  --color-fondo: #F7F7F7;
+  --color-fondo-claro: #EAF2FF;
+  --color-primario: #4B1D5A;
+  --color-secundario: #244FA4;
+  --color-acento: #02756D;
+
+  /* Colores neutros */
+  --color-oscuro: #1A1A1A;
+  --color-claro: #FFFFFF;
+  --color-gris: #9CA3AF;
+  --color-borde: #E5E7EB;
+  --color-fondo-tarjeta: #FFFFFF;
+
+  /* Colores de texto */
+  --color-texto: #333333;
+  --color-texto-suave: #666666;
+  --color-blanco: #FFFFFF;
+
+  /* Colores de estado */
+  --color-error: #B22222;
+
+  /* Tipografía */
+  --font-titulos: 'Bebas Neue', sans-serif;
+  --font-cuerpo: 'Poppins', sans-serif;
+
+  /* Bordes y sombras */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-full: 999px;
+  --shadow-card: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+/* Estilos base del body */
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;        /* altura mínima = 100% de la ventana */
+  margin: 0;
+  font-family: var(--font-cuerpo);
+  background-color: var(--color-fondo);
+  color: var(--color-texto);
+  line-height: 1.6;
+}
+
+/* Contenedor general */
+.container {
+  flex: 1;  
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* Botones generales */
+.btn {
+  display: inline-block;
+  padding: 10px 20px;
+  border-radius: var(--radius-full);
+  font-family: var(--font-cuerpo);
+  font-size: 0.9rem;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.btn-primary {
+  display: inline-block;
+  background-color: var(--color-primario);
+  color: var(--color-claro);
+  border: none;
+  padding: 10px 20px;
+  border-radius: var(--radius-full);
+  font-family: var(--font-cuerpo);
+  font-size: 0.9rem;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.btn-primary:hover {
+  background-color: #351240;
+}
+
+/* Imágenes responsivas */
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* ============================================================
+   HEADER GENERAL DEL SITIO
+   Usado por TODAS las páginas públicas de la tienda (no admin),
+   para que el logo y el menú de navegación sean siempre iguales.
+   ============================================================ */
+.site-header {
+  background: var(--color-oscuro);
+  color: var(--color-claro);
+  padding: 16px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  border-bottom: 2px solid var(--color-primario);
+}
+
+.site-header-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.site-logo {
+  height: 48px;
+  width: auto;
+  object-fit: contain;
+  display: block;
+}
+
+.site-title {
+  font-family: var(--font-titulos);
+  font-size: 1.8rem;
+  color: var(--color-claro);
+  margin: 0;
+  line-height: 1;
+}
+
+.site-subtitle {
+  font-size: 0.7rem;
+  color: var(--color-gris);
+  margin: 0;
+  letter-spacing: 2px;
+}
+
+.site-nav {
+  display: flex;
+  gap: 24px;
+  font-family: var(--font-cuerpo);
+  font-size: 0.85rem;
+  flex-wrap: wrap;
+}
+
+.nav-link {
+  color: var(--color-gris);
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.nav-link:hover {
+  color: var(--color-claro);
+}
+
+.nav-link-active {
+  color: var(--color-claro);
+  border-bottom: 2px solid var(--color-primario);
+  padding-bottom: 4px;
+}
+
+.site-header-actions {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  font-family: var(--font-cuerpo);
+  font-size: 0.85rem;
+  flex-wrap: wrap;
+}
+
+.action-link {
+  color: var(--color-claro);
+  text-decoration: none;
+}
+
+.action-link:hover {
+  text-decoration: underline;
+}
+
+.action-button {
+  background: var(--color-primario);
+  color: var(--color-claro);
+  padding: 8px 18px;
+  border-radius: var(--radius-full);
+  text-decoration: none;
+  transition: background 0.3s;
+  white-space: nowrap;
+}
+
+.action-button:hover {
+  background: #6e2730;
+}
+
+.action-cart {
+  color: var(--color-claro);
+  text-decoration: none;
+  border: 1px solid var(--color-gris);
+  padding: 6px 14px;
+  border-radius: var(--radius-full);
+  transition: border-color 0.3s;
+  white-space: nowrap;
+}
+
+.action-cart:hover {
+  border-color: var(--color-primario);
+}
+
+@media (max-width: 900px) {
+  .site-header {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 16px;
+  }
+
+  .site-nav {
+    justify-content: center;
+    width: 100%;
+  }
+
+  .site-header-actions {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* ============================================================
+   SECCIÓN GENÉRICA
+   Envoltorio con espaciado usado por login, registro, etc.
+   ============================================================ */
+.section {
+  padding: 40px 24px;
+}
+
+/* ============================================================
+   FOOTER GENERAL DEL SITIO
+   ============================================================ */
+footer {
+  background: var(--color-oscuro);
+  color: var(--color-gris);
+  margin-top: auto;
+}
+
+.footer-content {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 24px 32px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  font-size: 0.8rem;
+}
+
+.footer-links {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.footer-links a {
+  color: var(--color-gris);
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.footer-links a:hover {
+  color: var(--color-claro);
+}
+
+/* ============================================================
+   FORMULARIOS
+   Reglas compartidas por login.html, registro.html y checkout.html.
+   Todas usan la misma estructura: .form-field > label + input + .form-error
+   ============================================================ */
+.form-field {
+  margin-bottom: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form-field label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--color-texto);
+}
+
+.form-field input,
+.form-field select {
+  padding: 10px 14px;
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-cuerpo);
+  font-size: 0.9rem;
+  color: var(--color-texto);
+  background: var(--color-claro);
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.form-field input:focus,
+.form-field select:focus {
+  outline: none;
+  border-color: var(--color-primario);
+  box-shadow: 0 0 0 3px rgba(75, 29, 90, 0.12);
+}
+
+/* validaciones.js agrega esta clase cuando un campo es inválido */
+.form-field input.input-invalido,
+.form-field select.input-invalido {
+  border-color: var(--color-error);
+}
+
+/* validaciones.js hace error.style.display = "block"/"none",
+   por eso partimos ocultos con display:none */
+.form-error {
+  font-size: 0.78rem;
+  color: var(--color-error);
+  display: none;
+}
+
+.form-row {
+  display: flex;
+  gap: 16px;
+}
+
+.form-row .form-field {
+  flex: 1;
+}
+
+.form-actions {
+  margin-top: 8px;
+}
+
+.form-actions .btn-primary {
+  width: 100%;
+  padding: 12px;
+  font-size: 0.95rem;
+}
+
+@media (max-width: 600px) {
+  .form-row {
+    flex-direction: column;
+    gap: 0;
+  }
+}
+
+/* ============================================================
+   ELEMENTOS DE "ÉXITO" COMPARTIDOS
+   .success-icon y .success-main se usan tanto en compra-exitosa.html
+   (checkout) como en recuperar-clave.html (login), por eso quedan
+   aquí en el CSS general en vez de en checkout.css.
+   ============================================================ */
+.success-icon {
+  width: 72px;
+  height: 72px;
+  margin: 0 auto 20px;
+  border-radius: 50%;
+  background: var(--color-acento);
+  color: var(--color-claro);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  font-weight: 700;
+  animation: success-pop 0.4s ease;
+}
+
+@keyframes success-pop {
+  0% { transform: scale(0.3); opacity: 0; }
+  70% { transform: scale(1.1); opacity: 1; }
+  100% { transform: scale(1); }
+}
+
+.success-main {
+  font-size: 1rem;
+  color: var(--color-texto);
+  margin-bottom: 20px;
+}
+
+/* Nota pequeña reutilizada en checkout.html y recuperar-clave.html */
+.summary-note {
+  font-size: 0.78rem;
+  color: var(--color-texto-suave);
+  margin-top: 12px;
+}
