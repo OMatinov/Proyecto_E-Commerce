@@ -6,28 +6,28 @@ describe("validaciones", () => {
   });
 
   it("validarRun acepta un RUN con dígito verificador correcto", () => {
-    expect(validarRun("190110222").valido).toBeTrue();
+    expect(validarRun("190110222").valido).toBe(true);
   });
 
   it("validarRun rechaza un dígito verificador incorrecto", () => {
     const r = validarRun("190110221");
-    expect(r.valido).toBeFalse();
+    expect(r.valido).toBe(false);
     expect(r.mensaje).toContain("dígito verificador");
   });
 
   it("validarCorreo solo acepta los dominios permitidos", () => {
-    expect(validarCorreo("cesar@gmail.com").valido).toBeTrue();
-    expect(validarCorreo("cesar@hotmail.com").valido).toBeFalse();
+    expect(validarCorreo("cesar@gmail.com").valido).toBe(true);
+    expect(validarCorreo("cesar@hotmail.com").valido).toBe(false);
   });
 
   it("validarPassword respeta el largo mínimo y máximo", () => {
-    expect(validarPassword("123").valido).toBeFalse();
-    expect(validarPassword("1234").valido).toBeTrue();
-    expect(validarPassword("12345678901").valido).toBeFalse();
+    expect(validarPassword("123").valido).toBe(false);
+    expect(validarPassword("1234").valido).toBe(true);
+    expect(validarPassword("12345678901").valido).toBe(false);
   });
 
   it("validarTelefono acepta formato chileno y rechaza texto", () => {
-    expect(validarTelefono("+56 9 1234 5678").valido).toBeTrue();
-    expect(validarTelefono("hola").valido).toBeFalse();
+    expect(validarTelefono("+56 9 1234 5678").valido).toBe(true);
+    expect(validarTelefono("hola").valido).toBe(false);
   });
 });

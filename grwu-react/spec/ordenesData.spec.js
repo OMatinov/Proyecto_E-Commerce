@@ -57,7 +57,7 @@ describe("ordenesData", () => {
 
   it("eliminarOrden borra la orden", () => {
     const o = crearOrden(base);
-    expect(eliminarOrden(o.id)).toBeTrue();
+    expect(eliminarOrden(o.id)).toBe(true);
     expect(listarOrdenes().length).toBe(0);
   });
 });

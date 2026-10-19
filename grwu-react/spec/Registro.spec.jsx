@@ -1,6 +1,6 @@
 import { render, screen, fireEvent, cleanup } from "@testing-library/react";
 import { MemoryRouter, Routes, Route } from "react-router-dom";
-import Registro from "../src/pages/tienda/Registro.jsx";
+import Registro from "../src/pages/Registro.jsx";
 import { SesionProvider, CLAVE_SESION } from "../src/context/SesionContext.jsx";
 import { CLAVE_USUARIOS, obtenerUsuario } from "../src/data/usuariosData.js";
 import { borrar, leer } from "../src/data/storage.js";
@@ -47,9 +47,9 @@ describe("Registro", () => {
 
   it("la comuna está deshabilitada hasta elegir una región", () => {
     montar();
-    expect(screen.getByLabelText("Comuna").disabled).toBeTrue();
+    expect(screen.getByLabelText("Comuna").disabled).toBe(true);
     escribir("Región", "Región del Biobío");
-    expect(screen.getByLabelText("Comuna").disabled).toBeFalse();
+    expect(screen.getByLabelText("Comuna").disabled).toBe(false);
   });
 
   it("al elegir región se cargan solo las comunas de esa región", () => {

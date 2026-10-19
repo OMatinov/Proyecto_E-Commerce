@@ -17,7 +17,7 @@ describe("usuariosData", () => {
   });
 
   it("nunca devuelve la clave en los listados", () => {
-    expect(listarUsuarios().every((u) => !("clave" in u))).toBeTrue();
+    expect(listarUsuarios().every((u) => !("clave" in u))).toBe(true);
   });
 
   it("crearUsuario agrega el usuario como Cliente por defecto", () => {
@@ -49,15 +49,15 @@ describe("usuariosData", () => {
 
   it("eliminarUsuario borra al usuario y avisa si no existía", () => {
     crearUsuario(nuevoUsuario);
-    expect(eliminarUsuario("19011022K")).toBeTrue();
+    expect(eliminarUsuario("19011022K")).toBe(true);
     expect(obtenerUsuario("19011022K")).toBeNull();
-    expect(eliminarUsuario("19011022K")).toBeFalse();
+    expect(eliminarUsuario("19011022K")).toBe(false);
   });
 
   it("autenticar acepta credenciales correctas sin importar mayúsculas del correo", () => {
     const u = autenticar("CESAR.MUNOZ@gmail.com", "1234");
     expect(u.nombre).toBe("César");
-    expect("clave" in u).toBeFalse();
+    expect("clave" in u).toBe(false);
   });
 
   it("autenticar devuelve null con clave incorrecta", () => {

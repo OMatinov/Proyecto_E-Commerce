@@ -1,4 +1,5 @@
 import { render, screen, fireEvent, cleanup } from "@testing-library/react";
+import { vi } from "vitest"; // ✅ Agregado para Vitest
 import CampoFormulario from "../src/components/CampoFormulario.jsx";
 
 describe("CampoFormulario", () => {
@@ -17,7 +18,8 @@ describe("CampoFormulario", () => {
 
     rerender(<CampoFormulario id="x" etiqueta="X" error="Campo obligatorio" />);
     expect(screen.getByRole("alert").textContent).toBe("Campo obligatorio");
-    expect(screen.getByLabelText("X").classList.contains("is-invalid")).toBeTrue();
+    // ✅ Cambiado .toBeTrue() por .toBe(true)
+    expect(screen.getByLabelText("X").classList.contains("is-invalid")).toBe(true);
   });
 
   // --- Props recibidas ---
@@ -40,7 +42,8 @@ describe("CampoFormulario", () => {
 
   // --- Eventos ---
   it("ejecuta onChange (mock) cuando el usuario escribe", () => {
-    const onChange = jasmine.createSpy("onChange");
+    // ✅ Cambiado jasmine.createSpy por vi.fn()
+    const onChange = vi.fn();
     render(<CampoFormulario id="n" etiqueta="Nombre" value="" onChange={onChange} />);
     fireEvent.change(screen.getByLabelText("Nombre"), { target: { value: "Ana" } });
     expect(onChange).toHaveBeenCalledTimes(1);
