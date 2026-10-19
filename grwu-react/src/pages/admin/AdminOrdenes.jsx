@@ -1,13 +1,26 @@
-﻿
-import React from 'react';
+﻿import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import { listarOrdenes } from '../../data/ordenesData';
 
 const AdminOrdenes = () => {
-  // Datos de prueba (reemplazar con import de '../../data/ordenes' cuando esté listo)
-  const ordenesMock = [
-    { id: '#ORD-001', cliente: 'Camila Olmedo', fecha: '2026-08-30', total: 35970, estado: 'Pagado' },
-    { id: '#ORD-002', cliente: 'Carlos Rojas', fecha: '2026-08-29', total: 21990, estado: 'Pendiente' },
-    { id: '#ORD-003', cliente: 'Valentina B.', fecha: '2026-08-28', total: 12990, estado: 'Pagado' },
-  ];
+  const [ordenes, setOrdenes] = useState([]);
+
+  useEffect(() => {
+    // Cargamos las órdenes desde la base de datos de César
+    setOrdenes(listarOrdenes());
+  }, []);
+
+  // Función auxiliar para pintar el color del badge según el estado
+  const getBadgeClass = (estado) => {
+    switch (estado) {
+      case 'pagada': return 'bg-success';
+      case 'rechazada': return 'bg-danger';
+      case 'enviada': return 'bg-info text-dark';
+      case 'entregada': return 'bg-primary';
+      case 'cancelada': return 'bg-secondary';
+      default: return 'bg-warning text-dark';
+    }
+  };
 
   return (
     <div>
@@ -30,22 +43,31 @@ const AdminOrdenes = () => {
               </tr>
             </thead>
             <tbody>
-              {ordenesMock.map(orden => (
-                <tr key={orden.id}>
-                  <td className="fw-bold">{orden.id}</td>
-                  <td>{orden.cliente}</td>
-                  <td>{orden.fecha}</td>
-                  <td>${orden.total.toLocaleString('es-CL')}</td>
-                  <td>
-                    <span className={`badge ${orden.estado === 'Pagado' ? 'bg-success' : 'bg-warning text-dark'}`}>
-                      {orden.estado}
-                    </span>
-                  </td>
-                  <td>
-                    <button className="btn btn-sm btn-outline-dark">Ver Boleta 📄</button>
-                  </td>
+              {ordenes.length === 0 ? (
+                <tr>
+                  <td colSpan="6" className="text-center py-4 text-muted">No hay órdenes registradas aún.</td>
                 </tr>
-              ))}
+              ) : (
+                ordenes.map(orden => (
+                  <tr key={orden.id}>
+                    <td className="fw-bold">{orden.id}</td>
+                    {/* César guarda el nombre dentro de cliente.nombre */}
+                    <td>{orden.cliente?.nombre || 'Cliente sin nombre'}</td> 
+                    <td>{new Date(orden.fecha).toLocaleDateString('es-CL')}</td>
+                    <td>${orden.total?.toLocaleString('es-CL')}</td>
+                    <td>
+                      <span className={`badge ${getBadgeClass(orden.estado)}`}>
+                        {orden.estado.toUpperCase()}
+                      </span>
+                    </td>
+                    <td>
+                      <Link to={`/admin/ordenes/${orden.id}`} className="btn btn-sm btn-outline-dark">
+                        Ver Boleta 📄
+                      </Link>
+                    </td>
+                  </tr>
+                ))
+              )}
             </tbody>
           </table>
         </div>
