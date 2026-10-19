@@ -1,8 +1,7 @@
-﻿// src/pages/Blogs.jsx
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { getBlogs } from '../data/Blogs';
-
+import BlogCard from '../components/BlogCard'; 
 const Blogs = () => {
   const [blogs, setBlogs] = useState([]);
   const [filtro, setFiltro] = useState('Todos');
@@ -39,7 +38,7 @@ const Blogs = () => {
         ))}
       </div>
 
-      {/* Grid de Blogs */}
+      {/* Grid de Blogs usando el componente BlogCard */}
       <div className="row g-4">
         {blogsFiltrados.length === 0 ? (
           <div className="col-12 text-center text-muted py-5">
@@ -48,21 +47,20 @@ const Blogs = () => {
         ) : (
           blogsFiltrados.map(blog => (
             <div className="col-md-6 col-lg-4" key={blog.id}>
-              <div className="card h-100 border-0 shadow-sm">
-                <img src={blog.imagen} className="card-img-top" alt={blog.titulo} style={{ height: '200px', objectFit: 'cover' }} />
-                <div className="card-body d-flex flex-column">
-                  <div className="d-flex justify-content-between mb-2">
-                    <span className="badge" style={{ backgroundColor: 'var(--color-secundario)' }}>{blog.categoria}</span>
-                    <small className="text-muted">{new Date(blog.fecha).toLocaleDateString('es-CL')}</small>
-                  </div>
-                  <h5 className="card-title fw-bold">{blog.titulo}</h5>
-                  <p className="card-text text-muted small flex-grow-1">{blog.resumen}</p>
-                  <Link to={`/blogs/${blog.id}`} className="fw-bold text-decoration-none" style={{ color: 'var(--color-primario)' }}></Link>
-                </div>
-              </div>
+              <BlogCard blog={blog} /> {/* AQUÍ USAMOS EL COMPONENTE */}
             </div>
           ))
         )}
+      </div>
+
+      {/* Llamado a la acción */}
+      <div className="text-center mt-5 pt-5 border-top">
+        <span className="text-uppercase fw-bold small" style={{ color: 'var(--color-secundario)', letterSpacing: '3px' }}>GET READY WITH US</span>
+        <h2 className="display-6 fw-bold mt-2" style={{ fontFamily: "'Bebas Neue', sans-serif" }}>Encuentra prendas para hacerlo tuyo.</h2>
+        <p className="text-muted">Explora nuestro catálogo y combina las ideas del blog con tu propio estilo.</p>
+        <Link to="/productos" className="btn btn-primary mt-3 rounded-pill px-4" style={{ backgroundColor: 'var(--color-texto)', border: 'none' }}>
+          Ver catálogo
+        </Link>
       </div>
     </div>
   );
