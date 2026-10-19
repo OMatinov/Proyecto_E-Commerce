@@ -1,28 +1,24 @@
-import { render, screen, fireEvent, cleanup } from "@testing-library/react";
-import { vi } from "vitest"; // ✅ Agregado para Vitest
-import CampoFormulario from "../src/components/CampoFormulario.jsx";
+import React from 'react';
+import { render, screen, fireEvent, cleanup } from '@testing-library/react';
+import CampoFormulario from "../components/CampoFormulario.jsx";
 
 describe("CampoFormulario", () => {
   afterEach(cleanup);
 
-  // --- Renderizado correcto ---
   it("renderiza la etiqueta asociada a su input", () => {
     render(<CampoFormulario id="correo" etiqueta="Correo electrónico" />);
     expect(screen.getByLabelText("Correo electrónico").tagName).toBe("INPUT");
   });
 
-  // --- Renderizado condicional ---
   it("muestra el mensaje de error solo cuando hay error", () => {
     const { rerender } = render(<CampoFormulario id="x" etiqueta="X" />);
     expect(screen.queryByRole("alert")).toBeNull();
 
     rerender(<CampoFormulario id="x" etiqueta="X" error="Campo obligatorio" />);
     expect(screen.getByRole("alert").textContent).toBe("Campo obligatorio");
-    // ✅ Cambiado .toBeTrue() por .toBe(true)
-    expect(screen.getByLabelText("X").classList.contains("is-invalid")).toBe(true);
+    expect(screen.getByLabelText("X").classList.contains("is-invalid")).toBeTrue();
   });
 
-  // --- Props recibidas ---
   it("pasa value, type y placeholder al input", () => {
     render(<CampoFormulario id="clave" etiqueta="Clave" type="password" value="1234" placeholder="••••" onChange={() => {}} />);
     const input = screen.getByLabelText("Clave");
@@ -40,10 +36,9 @@ describe("CampoFormulario", () => {
     expect(select.options[0].textContent).toBe("-- Elige --");
   });
 
-  // --- Eventos ---
   it("ejecuta onChange (mock) cuando el usuario escribe", () => {
-    // ✅ Cambiado jasmine.createSpy por vi.fn()
-    const onChange = vi.fn();
+    // ✅ SINTAXIS CORRECTA DE JASMINE PARA SPYS
+    const onChange = jasmine.createSpy("onChange");
     render(<CampoFormulario id="n" etiqueta="Nombre" value="" onChange={onChange} />);
     fireEvent.change(screen.getByLabelText("Nombre"), { target: { value: "Ana" } });
     expect(onChange).toHaveBeenCalledTimes(1);

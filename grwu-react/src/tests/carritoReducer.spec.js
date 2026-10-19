@@ -1,4 +1,4 @@
-import { carritoReducer, ACCIONES_CARRITO } from "../src/context/carritoReducer.js";
+import { carritoReducer, ACCIONES_CARRITO } from "../context/carritoReducer.js";
 
 const polera = { id: "polera1", nombre: "Polera", precio: 9990, imagen: "x.png" };
 

@@ -44,7 +44,7 @@ export default function Layout() {
             {haySesion ? (
                 <>
                   <span className="action-link">Hola, {usuario.nombre}</span>
-                  <button onClick={cerrarSesion} className="action-link" style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'inherit', font: 'inherit' }}>
+                  <button onClick={cerrarSesion} className="action-link" style={{ background: 'transparent', border: 'none', cursor: 'pointer', fontSize: 'inherit', fontFamily: 'inherit', color: 'inherit', padding: '0', textDecoration: 'underline' }}>
                     Cerrar sesión
                   </button>
                 </>
@@ -54,7 +54,8 @@ export default function Layout() {
                   <Link to="/registro" className="action-button">Registrarse</Link>
                 </>
             )}
-            <Link to="/carrito" className="action-cart">
+            {/* ✅ AQUÍ ESTÁ EL CAMBIO CLAVE: data-testid="contador-carrito" */}
+            <Link to="/carrito" className="action-cart" data-testid="contador-carrito">
               🛒 Carrito ({cantidad})
             </Link>
           </div>

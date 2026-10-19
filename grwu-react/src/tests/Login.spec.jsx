@@ -1,9 +1,9 @@
 import { render, screen, fireEvent, cleanup } from "@testing-library/react";
 import { MemoryRouter, Routes, Route } from "react-router-dom";
-import Login from "../src/pages/Login.jsx";
-import { SesionProvider, CLAVE_SESION } from "../src/context/SesionContext.jsx";
-import { CLAVE_USUARIOS } from "../src/data/usuariosData.js";
-import { borrar, leer } from "../src/data/storage.js";
+import Login from "../pages/Login.jsx";
+import { SesionProvider, CLAVE_SESION } from "../context/SesionContext.jsx";
+import { CLAVE_USUARIOS } from "../data/usuariosData.js";
+import { borrar, leer } from "../data/storage.js";
 
 function montar() {
   return render(

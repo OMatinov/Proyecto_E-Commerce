@@ -1,8 +1,8 @@
 import {
   listarUsuarios, obtenerUsuario, crearUsuario, actualizarUsuario, eliminarUsuario,
   autenticar, CLAVE_USUARIOS, USUARIOS_SEMILLA
-} from "../src/data/usuariosData.js";
-import { borrar } from "../src/data/storage.js";
+} from "../data/usuariosData.js";
+import { borrar } from "../data/storage.js";
 
 const nuevoUsuario = {
   run: "19011022K", nombre: "Ana", apellidos: "Pérez", correo: "ana.perez@gmail.com",

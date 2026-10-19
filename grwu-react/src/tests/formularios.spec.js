@@ -1,4 +1,4 @@
-import { validarLogin, validarRegistro } from "../src/utils/formularios.js";
+import { validarLogin, validarRegistro } from "../utils/formularios.js";
 
 const registroValido = {
   run: "190110222", nombre: "Ana", apellidos: "Pérez", correo: "ana@gmail.com", telefono: "",

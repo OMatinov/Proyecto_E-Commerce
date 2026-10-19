@@ -2,8 +2,8 @@ import {
   agregarItem, quitarItem, cambiarCantidad, calcularSubtotal, calcularEnvio, calcularTotal,
   cantidadTotal, cargarCarrito, guardarCarrito, CLAVE_CARRITO,
   UMBRAL_ENVIO_GRATIS, COSTO_ENVIO_ESTANDAR, COSTO_ENVIO_PREMIUM
-} from "../src/data/carritoData.js";
-import { borrar } from "../src/data/storage.js";
+} from "../data/carritoData.js";
+import { borrar } from "../data/storage.js";
 
 const polera = { id: "polera1", nombre: "Polera Básica", precio: 9990, imagen: "img/polera1.png" };
 const abrigo = { id: "abrigo1", nombre: "Abrigo Camel", precio: 18990, imagen: "img/abrigo1.png" };

@@ -22,7 +22,7 @@ module.exports = function(config) {
           },
           {
             test: /\.(css|scss)$/,
-            use: ['identity-obj-proxy']
+            use: ['style-loader', 'css-loader']
           }
         ]
       },

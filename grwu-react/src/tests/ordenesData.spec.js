@@ -1,7 +1,7 @@
 import {
   crearOrden, listarOrdenes, obtenerOrden, ordenesPorUsuario, actualizarEstadoOrden, eliminarOrden, CLAVE_ORDENES
-} from "../src/data/ordenesData.js";
-import { borrar } from "../src/data/storage.js";
+} from "../data/ordenesData.js";
+import { borrar } from "../data/storage.js";
 
 const base = {
   cliente: { nombre: "Ana", apellidos: "Pérez", correo: "ana@gmail.com" },

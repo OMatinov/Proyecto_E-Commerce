@@ -7,7 +7,7 @@ describe('Pruebas en el componente React Contacto', () => {
   // PRUEBA 9
   it('9. Debe renderizar el formulario y los campos correctamente', () => {
     render(<Contacto />);
-    expect(screen.getByText('¿Tienes alguna duda?')).toBeTruthy();
+    expect(screen.getByText(/Estamos aquí para ayudarte/i)).toBeTruthy();
     expect(screen.getByPlaceholderText('Ej. Juan Pérez')).toBeTruthy();
     expect(screen.getByRole('button', { name: /Enviar mensaje/i })).toBeTruthy();
   });

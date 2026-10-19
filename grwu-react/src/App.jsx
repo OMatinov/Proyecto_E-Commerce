@@ -53,8 +53,8 @@ export default function App() {
         <Route path="/ofertas" element={<Ofertas />} />
         <Route path="/carrito" element={<Carrito />} />
         <Route path="/checkout" element={<Checkout />} />
-        <Route path="/pago-correcto" element={<PagoCorrecto />} />
-        <Route path="/pago-error" element={<PagoError />} />
+        <Route path="/pago-correcto/:id" element={<PagoCorrecto />} />
+        <Route path="/pago-error/:id" element={<PagoError />} />
         <Route path="/registro" element={<Registro />} />
         <Route path="/login" element={<Login />} />
         <Route path="/nosotros" element={<Nosotros />} />
