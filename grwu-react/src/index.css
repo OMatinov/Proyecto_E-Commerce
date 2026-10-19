@@ -109,3 +109,11 @@ code {
   padding: 4px 8px;
   background: var(--code-bg);
 }
+
+.blog-content-html h2 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.8rem;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  color: var(--color-primario);
+}
