@@ -57,9 +57,7 @@ const Blogs = () => {
                   </div>
                   <h5 className="card-title fw-bold">{blog.titulo}</h5>
                   <p className="card-text text-muted small flex-grow-1">{blog.resumen}</p>
-                  <Link to={`/blog/${blog.id}`} className="fw-bold text-decoration-none" style={{ color: 'var(--color-primario)' }}>
-                    Leer más →
-                  </Link>
+                  <Link to={`/blogs/${blog.id}`} className="fw-bold text-decoration-none" style={{ color: 'var(--color-primario)' }}></Link>
                 </div>
               </div>
             </div>

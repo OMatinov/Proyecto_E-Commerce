@@ -1,4 +1,4 @@
-// src/data/blogs.js
+
 
 const initialBlogs = [
   {
