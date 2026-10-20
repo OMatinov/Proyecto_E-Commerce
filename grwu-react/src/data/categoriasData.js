@@ -3,11 +3,17 @@ import { leer, guardar } from './storage.js';
 const CLAVE = 'grwu_categorias';
 
 export const CATEGORIAS_SEMILLA = [
-  { id: 'c-001', slug: 'polerones',  nombre: 'Polerones',  descripcion: 'Abrigo y comodidad.',        imagen: 'img/mujer/poleron-negra.png' },
-  { id: 'c-002', slug: 'poleras',    nombre: 'Poleras',    descripcion: 'Básicos para todo el año.',   imagen: 'img/hombre/polera-blanca.png' },
-  { id: 'c-003', slug: 'pantalones', nombre: 'Pantalones', descripcion: 'Jeans y pantalones de vestir.', imagen: 'img/mujer/jeans-mom.png' },
-  { id: 'c-004', slug: 'chaquetas',  nombre: 'Chaquetas',  descripcion: 'Outerwear para el frío.',     imagen: 'img/hombre/bomber.png' },
-  { id: 'c-005', slug: 'accesorios', nombre: 'Accesorios', descripcion: 'Gorros, cinturones y más.',   imagen: 'img/mujer/beanie.png' },
+  { id: 'c-001', slug: 'polerones',  nombre: 'Polerones',  descripcion: 'Abrigo y comodidad.',        imagen: 'img/mujer/poleron1.png' },
+  { id: 'c-002', slug: 'poleras',    nombre: 'Poleras',    descripcion: 'Básicos para todo el año.',   imagen: 'img/mujer/polera1.png' },
+  { id: 'c-003', slug: 'pantalones', nombre: 'Pantalones', descripcion: 'Jeans y pantalones de vestir.', imagen: 'img/mujer/pantalon2.png' },
+  { id: 'c-004', slug: 'chaquetas',  nombre: 'Chaquetas',  descripcion: 'Outerwear para el frío.',     imagen: 'img/mujer/chaqueta1.png' },
+  { id: 'c-005', slug: 'abrigos',    nombre: 'Abrigos',    descripcion: 'Abrigos de paño y invierno.', imagen: 'img/mujer/abrigo1.png' },
+  { id: 'c-006', slug: 'vestidos',   nombre: 'Vestidos',   descripcion: 'Para cada ocasión.',          imagen: 'img/mujer/vestido1.png' },
+  { id: 'c-007', slug: 'faldas',     nombre: 'Faldas',     descripcion: 'Cortes variados.',            imagen: 'img/mujer/falda1.png' },
+  { id: 'c-008', slug: 'shorts',     nombre: 'Shorts',     descripcion: 'Cómodos para el verano.',     imagen: 'img/mujer/short1.png' },
+  { id: 'c-009', slug: 'conjuntos',  nombre: 'Conjuntos',  descripcion: 'Looks coordinados.',          imagen: 'img/mujer/conjunto1.png' },
+  { id: 'c-010', slug: 'calzados',   nombre: 'Calzados',   descripcion: 'Zapatillas y calzado urbano.', imagen: 'img/mujer/calzado1.png' },
+  { id: 'c-011', slug: 'accesorios', nombre: 'Accesorios', descripcion: 'Gorros, lentes, cadenas y más.', imagen: 'img/hombre/gorro1.jpeg' },
 ];
 
 const asegurarSemilla = () => {
