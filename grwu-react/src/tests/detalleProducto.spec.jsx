@@ -20,7 +20,7 @@ describe('<DetalleProducto />', () => {
 
     // ✅ 2. Cambiado .toBeInTheDocument() por .toBeTruthy() (Nativo de Jasmine)
     // Usar getByRole es la mejor práctica y evita el error de "múltiples elementos"
-    expect(screen.getByRole('heading', { name: /Polerón Oversize Negra/i })).toBeTruthy();
+      expect(screen.getByRole('heading', { name: /Abrigo Largo Paño/i })).toBeTruthy();
   });
 
   it('renderiza mensaje de error cuando no existe (renderizado condicional)', () => {

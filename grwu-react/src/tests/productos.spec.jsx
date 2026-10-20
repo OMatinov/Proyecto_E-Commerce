@@ -1,7 +1,7 @@
-import { render, screen, fireEvent } from '@testing-library/react'; // ✅ 1. Usamos fireEvent en lugar de userEvent
+import { render, screen, fireEvent } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
-import Productos from '../pages/Productos.jsx'; // ✅ 2. Agregada extensión .jsx
-import { CarritoProvider } from '../context/CarritoContext.jsx'; // ✅ 2. Agregada extensión .jsx
+import Productos from '../pages/Productos.jsx';
+import { CarritoProvider } from '../context/CarritoContext.jsx';
 
 const renderPage = () =>
     render(
@@ -19,38 +19,44 @@ describe('<Productos />', () => {
 
   it('renderiza la lista de productos desde la semilla', () => {
     renderPage();
-    // ✅ 3. Cambiado .toBeInTheDocument() por .toBeTruthy() (Nativo de Jasmine)
-    expect(screen.getByText('Polerón Oversize Negra')).toBeTruthy();
+    expect(screen.getByText('Abrigo Largo Paño')).toBeTruthy();
   });
 
   it('filtra por búsqueda en tiempo real', () => {
     renderPage();
 
-    // Nota: Asegúrate de que el texto coincida exactamente con el placeholder o label de tu JSX
-    const input = screen.getByRole('searchbox', { name: /buscar/i }) || screen.getByPlaceholderText(/Buscar producto/i);
-
-    // ✅ 4. Usamos fireEvent.change en lugar de userEvent.type (más estable en Karma)
+    // ✅ Selector infalible para el input de búsqueda
+    const input = screen.getByRole('searchbox') || screen.getByPlaceholderText(/Buscar producto/i);
     fireEvent.change(input, { target: { value: 'jeans' } });
 
-    expect(screen.getByText(/Jeans Mom Fit/i)).toBeTruthy();
-    // ✅ 5. Cambiado .not.toBeInTheDocument() por .toBeNull()
+    // ✅ Usamos getAllByText porque la base de datos tiene 2 productos con "Jeans"
+    expect(screen.getAllByText(/Pantalón Jeans Recto/i).length).toBeGreaterThan(0);
+
+    // ✅ Verificamos que un producto que NO es jeans haya desaparecido
     expect(screen.queryByText('Polera Básica Blanca')).toBeNull();
   });
 
-  it('filtra por búsqueda en tiempo real', () => {
+  it('filtra por categoría', () => {
     renderPage();
-    // ✅ 'searchbox' es el role nativo de <input type="search">
-    const input = screen.getByRole('searchbox');
-    fireEvent.change(input, { target: { value: 'jeans' } });
 
-    expect(screen.getByText(/Jeans Mom Fit/i)).toBeTruthy();
-    expect(screen.queryByText('Polera Básica Blanca')).toBeNull();
+    // ✅ Buscamos el select por su role o por su label
+    const select = screen.getByRole('combobox', { name: /categoría/i }) || screen.getByLabelText(/Filtrar por categoría/i);
+
+    // ✅ Disparamos el cambio a la categoría 'abrigos' (sabemos que "Abrigo Largo Paño" está en la semilla)
+    fireEvent.change(select, { target: { value: 'abrigos' } });
+
+    // ✅ Verificamos que aparezca el producto de esa categoría
+    expect(screen.getByText(/Abrigo Largo Paño/i)).toBeTruthy();
+
+    // ✅ Verificamos que un producto de OTRA categoría (ej. pantalones) ya no aparezca
+    expect(screen.queryByText(/Pantalón Jeans Recto/i)).toBeNull();
   });
 
   it('muestra mensaje cuando no hay resultados', () => {
     renderPage();
+
     // ✅ Mismo selector infalible
-    const input = screen.getByRole('searchbox');
+    const input = screen.getByRole('searchbox') || screen.getByPlaceholderText(/Buscar producto/i);
     fireEvent.change(input, { target: { value: 'zzzz' } });
 
     expect(screen.getByText(/No se encontraron productos/i)).toBeTruthy();
