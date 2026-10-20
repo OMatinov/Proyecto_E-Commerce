@@ -17,9 +17,9 @@ export default function CampoFormulario({ id, etiqueta, error, opciones, placeho
       {opciones ? (
         <select id={id} name={id} className={clases} aria-invalid={Boolean(error)} {...props}>
           {placeholderOpcion !== null && <option value="">{placeholderOpcion}</option>}
-          {opciones.map((o) => (
-            <option key={o.valor} value={o.valor}>{o.texto}</option>
-          ))}
+            {opciones.map((op) => (
+                <option key={op.valor} value={op.valor}>{op.texto}</option>
+            ))}
         </select>
       ) : (
         <input id={id} name={id} className={clases} aria-invalid={Boolean(error)} {...props} />

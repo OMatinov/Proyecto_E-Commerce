@@ -2,7 +2,7 @@ import {
   listarProductos, obtenerProducto, crearProducto,
   actualizarProducto, eliminarProducto,
   listarOfertas, listarProductosCriticos, listarPorCategoria,
-} from '../data/productosData';
+} from '../data/productosData.js';
 
 describe('productosData', () => {
   beforeEach(() => localStorage.clear());

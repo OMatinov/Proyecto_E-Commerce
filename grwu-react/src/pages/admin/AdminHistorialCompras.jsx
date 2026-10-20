@@ -1,11 +1,11 @@
-﻿import { useParams, Link } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import { obtenerUsuario } from '../../data/usuariosData';
 import { ordenesPorUsuario } from '../../data/ordenesData';
 import { formatearCLP } from '../../data/carritoData';
 import { formatearFecha } from '../../utils/formatos';
 
 export default function AdminHistorialCompras() {
-  const { run } = useParams();
+  const { id: run } = useParams();
   const usuario = obtenerUsuario(run);
   const ordenes = ordenesPorUsuario(run);
 
@@ -21,7 +21,7 @@ export default function AdminHistorialCompras() {
   return (
     <div className="p-4">
       <h1 className="h3 mb-1">Historial de compras</h1>
-      <p className="text-muted mb-4">{usuario.nombres} {usuario.apellidos} · RUN {usuario.run}</p>
+      <p className="text-muted mb-4">{usuario.nombre} {usuario.apellidos} · RUN {usuario.run}</p>
 
       {ordenes.length === 0 ? (
         <div className="alert alert-info">Este usuario aún no tiene compras registradas.</div>

@@ -1,52 +1,57 @@
-﻿import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { crearUsuario } from '../../data/usuariosData';
-import { validarRegistro } from '../../utils/formularios';
-import CampoFormulario from '../../components/CampoFormulario';
+// AdminUsuarioNuevo.jsx - Admin: crear un usuario con cualquier tipo (Cliente, Vendedor, Administrador).
+// Autor: César
+//
+// Estado propio: valores del formulario, errores por campo y mensaje general.
+// Reutiliza validarRegistro (las mismas reglas que el registro público).
+// crearUsuario lanza Error si el RUN o el correo ya existen; aquí se captura y se muestra en el campo.
+
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import FormularioUsuario from "../../components/FormularioUsuario.jsx";
+import { crearUsuario } from "../../data/usuariosData.js";
+import { validarRegistro } from "../../utils/formularios.js";
+import { limpiarRun } from "../../utils/validaciones.js";
 
 const VACIO = {
-  run: '', nombres: '', apellidos: '', correo: '',
-  clave: '', clave2: '', region: '', comuna: '', telefono: '', rol: 'Cliente',
+  run: "", nombre: "", apellidos: "", correo: "", telefono: "",
+  tipoUsuario: "Cliente", region: "", comuna: "", clave: "", clave2: ""
 };
 
 export default function AdminUsuarioNuevo() {
+  const navigate = useNavigate();
   const [valores, setValores] = useState(VACIO);
   const [errores, setErrores] = useState({});
-  const [mensaje, setMensaje] = useState('');
-  const navigate = useNavigate();
 
-  const cambiar = (campo) => (e) =>
-    setValores((v) => ({ ...v, [campo]: e.target.value }));
+  const manejarCambio = (e) => {
+    const { name, value } = e.target;
+    if (name === "region") setValores({ ...valores, region: value, comuna: "" });
+    else setValores({ ...valores, [name]: value });
+  };
 
-  const enviar = (e) => {
+  const manejarEnvio = (e) => {
     e.preventDefault();
-    const errs = validarRegistro(valores);
-    setErrores(errs);
-    if (Object.keys(errs).length > 0) return;
-    const res = crearUsuario(valores);
-    if (!res.ok) { setMensaje(res.mensaje); return; }
-    navigate('/admin/usuarios');
+    const erroresNuevos = validarRegistro(valores);
+    setErrores(erroresNuevos);
+    if (Object.keys(erroresNuevos).length > 0) return;
+
+    const { clave2: _clave2, ...datos } = valores;
+    try {
+      crearUsuario({ ...datos, run: limpiarRun(datos.run) });
+      navigate("/admin/usuarios");
+    } catch (err) {
+      const campo = err.message.includes("RUN") ? "run" : "correo";
+      setErrores({ [campo]: err.message });
+    }
   };
 
   return (
     <div className="p-4">
       <h1 className="h3 mb-4">Nuevo usuario</h1>
-      {mensaje && <div className="alert alert-danger">{mensaje}</div>}
-      <form onSubmit={enviar} noValidate className="row g-3" style={{ maxWidth: 800 }}>
-        <div className="col-md-4"><CampoFormulario id="run" label="RUN" value={valores.run} onChange={cambiar('run')} error={errores.run} /></div>
-        <div className="col-md-4"><CampoFormulario id="nombres" label="Nombres" value={valores.nombres} onChange={cambiar('nombres')} error={errores.nombres} /></div>
-        <div className="col-md-4"><CampoFormulario id="apellidos" label="Apellidos" value={valores.apellidos} onChange={cambiar('apellidos')} error={errores.apellidos} /></div>
-        <div className="col-md-6"><CampoFormulario id="correo" label="Correo" type="email" value={valores.correo} onChange={cambiar('correo')} error={errores.correo} /></div>
-        <div className="col-md-3"><CampoFormulario id="clave" label="Contraseña" type="password" value={valores.clave} onChange={cambiar('clave')} error={errores.clave} /></div>
-        <div className="col-md-3"><CampoFormulario id="clave2" label="Repetir" type="password" value={valores.clave2} onChange={cambiar('clave2')} error={errores.clave2} /></div>
-        <div className="col-md-4"><CampoFormulario id="rol" label="Rol" value={valores.rol} onChange={cambiar('rol')}
-          opciones={[{ value: 'Cliente', label: 'Cliente' }, { value: 'Vendedor', label: 'Vendedor' }, { value: 'Administrador', label: 'Administrador' }]} /></div>
-        <div className="col-md-4"><CampoFormulario id="region" label="Región" value={valores.region} onChange={cambiar('region')} error={errores.region} /></div>
-        <div className="col-md-4"><CampoFormulario id="comuna" label="Comuna" value={valores.comuna} onChange={cambiar('comuna')} error={errores.comuna} /></div>
-        <div className="col-md-6"><CampoFormulario id="telefono" label="Teléfono (opcional)" value={valores.telefono} onChange={cambiar('telefono')} error={errores.telefono} /></div>
-        <div className="col-12 d-flex gap-2">
-          <button className="btn btn-primary" type="submit">Guardar</button>
-          <button className="btn btn-outline-secondary" type="button" onClick={() => navigate('/admin/usuarios')}>Cancelar</button>
+      <form onSubmit={manejarEnvio} noValidate style={{ maxWidth: 900 }}>
+        <FormularioUsuario valores={valores} errores={errores} onChange={manejarCambio} />
+        <div className="d-flex gap-2 mt-4">
+          <button type="submit" className="btn btn-primary">Guardar</button>
+          <button type="button" className="btn btn-outline-secondary" onClick={() => navigate("/admin/usuarios")}>Cancelar</button>
         </div>
       </form>
     </div>

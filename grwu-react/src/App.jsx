@@ -15,6 +15,7 @@ import PagoCorrecto from './pages/PagoCorrecto'
 import PagoError from './pages/PagoError'
 import Registro from './pages/Registro'
 import Login from './pages/Login'
+import RecuperarClave from './pages/RecuperarClave'
 import Nosotros from './pages/Nosotros'
 import Blogs from './pages/Blogs'
 import BlogDetalle from './pages/BlogDetalle'
@@ -57,6 +58,7 @@ export default function App() {
         <Route path="/pago-error/:id" element={<PagoError />} />
         <Route path="/registro" element={<Registro />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/recuperar-clave" element={<RecuperarClave />} />
         <Route path="/nosotros" element={<Nosotros />} />
         <Route path="/blogs" element={<Blogs />} />
         <Route path="/blogs/:id" element={<BlogDetalle />} />

@@ -1,7 +1,7 @@
 import {
   listarCategorias, obtenerCategoriaPorSlug, crearCategoria,
   actualizarCategoria, eliminarCategoria,
-} from '../data/categoriasData';
+} from '../data/categoriasData.js';
 
 describe('categoriasData', () => {
   beforeEach(() => localStorage.clear());

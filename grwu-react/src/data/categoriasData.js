@@ -1,4 +1,4 @@
-import { leer, guardar } from './storage';
+import { leer, guardar } from './storage.js';
 
 const CLAVE = 'grwu_categorias';
 

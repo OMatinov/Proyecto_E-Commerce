@@ -1,4 +1,4 @@
-import { validarProducto, validarCategoria, slugify } from '../utils/validacionesAdmin';
+import { validarProducto, validarCategoria, slugify } from '../utils/validacionesAdmin.js';
 
 describe('validacionesAdmin', () => {
   it('slugify convierte acentos y espacios', () => {

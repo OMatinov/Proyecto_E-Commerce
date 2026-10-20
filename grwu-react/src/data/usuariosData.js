@@ -109,3 +109,12 @@ export function autenticar(correo, clave) {
   const u = cargarTodos().find((x) => x.correo.toLowerCase() === c);
   return u && u.clave === clave ? sinClave(u) : null;
 }
+
+// ---------- RECUPERAR CONTRASEÑA ----------
+// Cambia la clave del usuario con ese correo. Devuelve true si lo encontró, false si no existe.
+export function restablecerClave(correo, nuevaClave) {
+  const usuario = obtenerUsuarioPorCorreo(correo);
+  if (!usuario) return false;
+  actualizarUsuario(usuario.run, { clave: nuevaClave });
+  return true;
+}
