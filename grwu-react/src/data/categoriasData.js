@@ -31,7 +31,7 @@ const asegurarSemilla = () => {
   // entre despliegues), se re-inyectan solo esas para que /categorias/hombre y
   // /categorias/mujer dejen de mostrar "Categoría no encontrada".
   const faltantes = CATEGORIAS_SEMILLA.filter(
-    (c) => !actual.some((a) => a.slug === c.slug)
+      (c) => !actual.some((a) => a.slug === c.slug)
   );
   if (faltantes.length > 0) guardar(CLAVE, [...actual, ...faltantes]);
 };
@@ -42,10 +42,10 @@ export const listarCategorias = () => {
 };
 
 export const obtenerCategoria = (id) =>
-  listarCategorias().find((c) => String(c.id) === String(id)) || null;
+    listarCategorias().find((c) => String(c.id) === String(id)) || null;
 
 export const obtenerCategoriaPorSlug = (slug) =>
-  listarCategorias().find((c) => c.slug === slug) || null;
+    listarCategorias().find((c) => c.slug === slug) || null;
 
 export const crearCategoria = (datos) => {
   const categorias = listarCategorias();
@@ -56,7 +56,7 @@ export const crearCategoria = (datos) => {
 
 export const actualizarCategoria = (id, cambios) => {
   const categorias = listarCategorias().map((c) =>
-    String(c.id) === String(id) ? { ...c, ...cambios, id: c.id } : c
+      String(c.id) === String(id) ? { ...c, ...cambios, id: c.id } : c
   );
   guardar(CLAVE, categorias);
   return categorias.find((c) => String(c.id) === String(id)) || null;

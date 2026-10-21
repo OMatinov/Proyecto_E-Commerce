@@ -27,8 +27,13 @@ describe('categoriasData', () => {
   });
 
   it('eliminarCategoria quita la categoría', () => {
-    const c = listarCategorias()[0];
-    eliminarCategoria(c.id);
-    expect(listarCategorias().some((x) => x.id === c.id)).toBe(false);
+    const categoriaTemporal = crearCategoria({
+      slug: 'temp-para-borrar',
+      nombre: 'Temporal',
+      descripcion: 'Solo para testing'
+    });
+    expect(listarCategorias().some((x) => x.id === categoriaTemporal.id)).toBe(true);
+    eliminarCategoria(categoriaTemporal.id);
+    expect(listarCategorias().some((x) => x.id === categoriaTemporal.id)).toBe(false);
   });
 });
