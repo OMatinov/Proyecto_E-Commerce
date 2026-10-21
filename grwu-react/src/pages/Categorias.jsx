@@ -1,21 +1,24 @@
 ﻿import { Link } from 'react-router-dom';
 import { listarCategorias } from '../data/categoriasData';
-import { listarProductos } from '../data/productosData';
+import { listarPorCategoria } from '../data/productosData';
 
 export default function Categorias() {
   const categorias = listarCategorias();
-  const productos = listarProductos();
 
   return (
     <div className="container py-5">
-      <h1 className="mb-4">Categorías</h1>
+      <div className="catalog-hero mb-5 text-center">
+        <span className="catalog-hero-kicker">Colección GRWU</span>
+        <h1 className="catalog-hero-title">Categorías</h1>
+        <p className="catalog-hero-sub">Explora nuestra ropa por género o tipo de prenda.</p>
+      </div>
       <div className="row g-4">
         {categorias.map((c) => {
-          const total = productos.filter((p) => p.categoria === c.slug).length;
+          const total = listarPorCategoria(c.slug).length;
           return (
             <div className="col-12 col-sm-6 col-lg-4" key={c.id}>
               <Link to={`/categorias/${c.slug}`} className="text-decoration-none">
-                <div className="card h-100 shadow-sm">
+                <div className="card h-100 shadow-sm categoria-card">
                   <img
                     src={c.imagen}
                     alt={c.nombre}

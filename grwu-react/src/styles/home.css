@@ -1,0 +1,192 @@
+/* ============================================================
+   HOME — hero, banners de género, secciones y franja de ofertas
+   Requiere las variables de styles.css
+   ============================================================ */
+
+/* ===== HERO PRINCIPAL ===== */
+.hero-grwu {
+  background: linear-gradient(135deg, var(--color-primario) 0%, #2b0f36 55%, var(--color-oscuro) 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-grwu::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 15% 20%, rgba(36, 79, 164, 0.35), transparent 40%),
+    radial-gradient(circle at 85% 75%, rgba(2, 117, 109, 0.3), transparent 45%);
+  pointer-events: none;
+}
+
+.hero-grwu .container { position: relative; z-index: 1; }
+
+.hero-kicker {
+  font-family: var(--font-cuerpo);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: var(--radius-full);
+  padding: 6px 18px;
+}
+
+.hero-title {
+  font-family: var(--font-titulos);
+  letter-spacing: 4px;
+  font-weight: 400;
+  text-shadow: 0 4px 24px rgba(0, 0, 0, 0.35);
+}
+
+.hero-sub {
+  color: rgba(255, 255, 255, 0.85);
+  max-width: 540px;
+  margin: 0 auto;
+}
+
+.hero-cta {
+  font-weight: 600;
+  border-radius: var(--radius-full);
+  padding-inline: 34px;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.hero-cta:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.25);
+}
+
+.hero-cta-alt {
+  border-radius: var(--radius-full);
+  padding-inline: 34px;
+  transition: transform 0.25s ease, background 0.25s ease;
+}
+
+.hero-cta-alt:hover {
+  transform: translateY(-2px);
+  background: rgba(255, 255, 255, 0.12);
+}
+
+/* ===== BANNERS DE GÉNERO (Mujer / Hombre) ===== */
+.gender-banner {
+  position: relative;
+  height: 260px;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  display: flex;
+  align-items: flex-end;
+  box-shadow: var(--shadow-card);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.gender-banner:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 14px 32px rgba(26, 26, 26, 0.18);
+}
+
+.gender-banner--cap {
+  background-size: cover;
+  background-position: center top;
+}
+
+.gender-banner::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(26, 26, 26, 0.72) 0%, rgba(26, 26, 26, 0.15) 55%, transparent 100%);
+}
+
+.gender-banner-content {
+  position: relative;
+  z-index: 1;
+  padding: 22px 26px;
+  color: #fff;
+}
+
+.gender-banner-title {
+  font-family: var(--font-titulos);
+  font-size: 2.2rem;
+  letter-spacing: 2px;
+  margin: 0;
+  color: #fff;
+}
+
+.gender-banner-count {
+  font-size: 0.85rem;
+  opacity: 0.85;
+  margin: 0 0 10px;
+}
+
+/* ===== ENCABEZADOS DE SECCIÓN ===== */
+.section-kicker {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--color-secundario);
+  margin-bottom: 4px;
+}
+
+.section-kicker--accent { color: var(--color-acento); }
+
+.section-title {
+  font-family: var(--font-titulos);
+  font-size: 2rem;
+  letter-spacing: 1.5px;
+  color: var(--color-oscuro);
+}
+
+.link-ver-todo {
+  color: var(--color-primario);
+  font-weight: 600;
+  font-size: 0.9rem;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.link-ver-todo:hover { color: var(--color-secundario); }
+
+/* ===== CHIPS DE CATEGORÍA ===== */
+.categoria-chip {
+  background: var(--color-fondo-tarjeta);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radius-md);
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+.categoria-chip img {
+  width: 100%;
+  border-radius: var(--radius-sm);
+}
+
+.categoria-chip:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px rgba(75, 29, 90, 0.12);
+  border-color: var(--color-primario);
+}
+
+.categoria-chip strong {
+  color: var(--color-oscuro);
+  font-size: 0.95rem;
+}
+
+/* ===== FRANJA DE OFERTAS ===== */
+.ofertas-strip {
+  background: linear-gradient(180deg, var(--color-fondo-claro) 0%, #f2ecf6 100%);
+  border-top: 1px solid var(--color-borde);
+  border-bottom: 1px solid var(--color-borde);
+}
+
+@media (max-width: 768px) {
+  .gender-banner { height: 200px; }
+  .gender-banner-title { font-size: 1.7rem; }
+  .section-title { font-size: 1.6rem; }
+}
+
+/* Imágenes de fondo para los banners de género (carpetas del catálogo) */
+.gender-banner[data-genero='mujer'] { background-image: url('/img/mujer/vestido1.png'); }
+.gender-banner[data-genero='hombre'] { background-image: url('/img/hombre/poleron1.jpeg'); }

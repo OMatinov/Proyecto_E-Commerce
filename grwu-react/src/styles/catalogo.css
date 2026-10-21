@@ -68,12 +68,12 @@
 .product-card {
   display: flex;
   flex-direction: column;
-  height: 100%;             
+  height: 100%;
 }
 
 .product-card-image {
   width: 100%;
-  height: 360px;           
+  height: 360px;
   background: #F0F0F0;
   overflow: hidden;
 }
@@ -81,7 +81,7 @@
 .product-card-image img {
   width: 100%;
   height: 100%;
-  object-fit: cover;       
+  object-fit: cover;
   display: block;
 }
 
@@ -91,7 +91,7 @@
 
 .product-body {
   padding: 12px;
-  flex-grow: 1; 
+  flex-grow: 1;
 }
 
 .product-category {
@@ -107,7 +107,7 @@
   font-size: 1.2rem;
   margin: 0 0 8px;
   color: var(--color-texto);
-  min-height: 2.5em;        
+  min-height: 2.5em;
   overflow: hidden;
 }
 
@@ -242,4 +242,156 @@
   .product-card-image {
     height: 160px;
   }
+}
+
+/* ============================================================
+   MEJORAS CATÁLOGO / OFERTAS (v2)
+   Héroes de página, toolbar con sombra suave y tarjetas pulidas
+   ============================================================ */
+
+/* ===== HERO DE PÁGINA (catálogo, categorías, ofertas, categoría) ===== */
+.catalog-hero .catalog-hero-kicker,
+.offers-hero .offers-hero-badge {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--color-secundario);
+  margin-bottom: 6px;
+}
+
+.offers-hero-badge {
+  background: rgba(178, 34, 34, 0.08);
+  color: var(--color-error);
+  border-radius: var(--radius-full);
+  padding: 6px 16px;
+  letter-spacing: 1px;
+}
+
+.catalog-hero-title,
+.offers-hero-title {
+  font-family: var(--font-titulos);
+  font-size: 2.6rem;
+  letter-spacing: 2px;
+  color: var(--color-oscuro);
+  margin: 0 0 6px;
+}
+
+.catalog-hero-sub,
+.offers-hero-sub {
+  color: var(--color-texto-suave);
+  max-width: 560px;
+  margin: 0 auto;
+}
+
+.offers-hero-title::after {
+  content: '';
+  display: block;
+  width: 64px;
+  height: 4px;
+  margin: 12px auto 0;
+  border-radius: 2px;
+  background: linear-gradient(90deg, var(--color-error), #ff7b54);
+}
+
+.catalog-count {
+  font-size: 0.85rem;
+  letter-spacing: 0.5px;
+}
+
+/* ===== TOOLBAR ===== */
+.catalog-toolbar {
+  border: 1px solid var(--color-borde);
+}
+
+.catalog-toolbar .form-control,
+.catalog-toolbar .form-select {
+  border-radius: var(--radius-sm);
+  border-color: var(--color-borde);
+  font-family: var(--font-cuerpo);
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.catalog-toolbar .form-control:focus,
+.catalog-toolbar .form-select:focus {
+  border-color: var(--color-primario);
+  box-shadow: 0 0 0 3px rgba(75, 29, 90, 0.12);
+}
+
+/* ===== TARJETAS DE PRODUCTO MEJORADAS ===== */
+.card.product-card {
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background: var(--color-fondo-tarjeta);
+  box-shadow: var(--shadow-card);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card.product-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 16px 32px rgba(26, 26, 26, 0.14);
+}
+
+.card.product-card .product-card-image img {
+  height: 260px;
+  width: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.card.product-card .card-title {
+  font-family: var(--font-titulos);
+  font-size: 1.15rem;
+  letter-spacing: 1px;
+}
+
+.badge-oferta {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  background: var(--color-error);
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 5px 12px;
+  border-radius: var(--radius-full);
+  box-shadow: 0 4px 10px rgba(178, 34, 34, 0.35);
+  z-index: 2;
+}
+
+.product-price.on-sale { color: var(--color-error); }
+
+.card.product-card .btn-primary {
+  border-radius: var(--radius-full);
+  font-weight: 600;
+  transition: background 0.25s ease, transform 0.2s ease;
+}
+
+.card.product-card .btn-primary:hover:not(:disabled) {
+  transform: translateY(-1px);
+  filter: brightness(1.12);
+}
+
+/* ===== TARJETAS DE CATEGORÍA (página Categorías) ===== */
+.categoria-card {
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.categoria-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 16px 32px rgba(75, 29, 90, 0.15);
+}
+
+.categoria-card img { transition: transform 0.4s ease; }
+.categoria-card:hover img { transform: scale(1.05); }
+
+@media (max-width: 768px) {
+  .catalog-hero-title,
+  .offers-hero-title { font-size: 2rem; }
+  .card.product-card .product-card-image img { height: 200px; }
 }

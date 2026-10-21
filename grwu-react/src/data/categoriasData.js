@@ -3,6 +3,10 @@ import { leer, guardar } from './storage.js';
 const CLAVE = 'grwu_categorias';
 
 export const CATEGORIAS_SEMILLA = [
+  // Categorías de género (agrupan toda la ropa de hombre / mujer)
+  { id: 'c-g-hombre', slug: 'hombre', nombre: 'Hombre', descripcion: 'Toda la ropa y accesorios para hombre.', imagen: 'img/hombre/poleron1.jpeg', genero: 'todos' },
+  { id: 'c-g-mujer', slug: 'mujer', nombre: 'Mujer', descripcion: 'Toda la ropa y accesorios para mujer.', imagen: 'img/mujer/vestido1.png', genero: 'todos' },
+  // Categorías de prenda
   { id: 'c-001', slug: 'polerones',  nombre: 'Polerones',  descripcion: 'Abrigo y comodidad.',        imagen: 'img/mujer/poleron1.png' },
   { id: 'c-002', slug: 'poleras',    nombre: 'Poleras',    descripcion: 'Básicos para todo el año.',   imagen: 'img/mujer/polera1.png' },
   { id: 'c-003', slug: 'pantalones', nombre: 'Pantalones', descripcion: 'Jeans y pantalones de vestir.', imagen: 'img/mujer/pantalon2.png' },

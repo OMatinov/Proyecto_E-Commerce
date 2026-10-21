@@ -1344,8 +1344,19 @@ export const listarProductos = () => {
 export const obtenerProducto = (id) =>
   listarProductos().find((p) => String(p.id) === String(id)) || null;
 
-export const listarPorCategoria = (categoria) =>
-  listarProductos().filter((p) => p.categoria === categoria);
+// Categorías de género: agrupan todos los productos cuyo genero coincida,
+// además de cualquier producto asignado directamente a esa categoría.
+const CATEGORIAS_GENERO = ['hombre', 'mujer'];
+
+export const listarPorCategoria = (categoria) => {
+  const productos = listarProductos();
+  if (CATEGORIAS_GENERO.includes(categoria)) {
+    return productos.filter(
+      (p) => p.categoria === categoria || p.genero === categoria
+    );
+  }
+  return productos.filter((p) => p.categoria === categoria);
+};
 
 export const listarOfertas = () =>
   listarProductos().filter((p) => Number(p.oferta) > 0);
