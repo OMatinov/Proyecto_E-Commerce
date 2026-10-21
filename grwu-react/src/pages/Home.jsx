@@ -1,7 +1,7 @@
 ﻿import { Link } from 'react-router-dom';
 import { listarProductos, listarOfertas, listarPorCategoria } from '../data/productosData';
 import { listarCategorias } from '../data/categoriasData';
-import ProductCard from '../components/ProductCard';
+import ProductCard, { normalizarImagen } from '../components/ProductCard';
 
 export default function Home() {
   const productos = listarProductos().slice(0, 4);
@@ -60,11 +60,11 @@ export default function Home() {
               <Link to={`/categorias/${c.slug}`} className="text-decoration-none">
                 <div className="card h-100 text-center p-3 categoria-chip">
                   <img
-                    src={c.imagen}
+                    src={normalizarImagen(c.imagen) || '/img/logoGRWU.png'}
                     alt={c.nombre}
                     style={{ height: 120, objectFit: 'cover' }}
                     className="rounded mb-2"
-                    onError={(e) => { e.currentTarget.src = 'img/logoGRWU.png'; }}
+                    onError={(e) => { e.currentTarget.src = '/img/logoGRWU.png'; }}
                   />
                   <strong>{c.nombre}</strong>
                 </div>

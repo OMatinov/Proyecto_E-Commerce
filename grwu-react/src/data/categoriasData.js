@@ -22,7 +22,18 @@ export const CATEGORIAS_SEMILLA = [
 
 const asegurarSemilla = () => {
   const actual = leer(CLAVE, null);
-  if (!Array.isArray(actual)) guardar(CLAVE, CATEGORIAS_SEMILLA);
+  if (!Array.isArray(actual)) {
+    guardar(CLAVE, CATEGORIAS_SEMILLA);
+    return;
+  }
+  // Migración: versiones anteriores del seed no incluían las categorías de
+  // género 'hombre'/'mujer'. Si faltan en el localStorage del usuario (persiste
+  // entre despliegues), se re-inyectan solo esas para que /categorias/hombre y
+  // /categorias/mujer dejen de mostrar "Categoría no encontrada".
+  const faltantes = CATEGORIAS_SEMILLA.filter(
+    (c) => !actual.some((a) => a.slug === c.slug)
+  );
+  if (faltantes.length > 0) guardar(CLAVE, [...actual, ...faltantes]);
 };
 
 export const listarCategorias = () => {

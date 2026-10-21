@@ -3,7 +3,7 @@ import { Link, useParams } from 'react-router-dom';
 import { obtenerProducto, listarPorCategoria } from '../data/productosData';
 import { formatearCLP } from '../data/carritoData';
 import { useCarrito } from '../context/CarritoContext';
-import ProductCard from '../components/ProductCard';
+import ProductCard, { normalizarImagen } from '../components/ProductCard';
 
 export default function DetalleProducto() {
   const { id } = useParams();
@@ -27,6 +27,17 @@ export default function DetalleProducto() {
 
   const tieneOferta = Number(producto.oferta) > 0;
 
+  // Galería: imagen principal + imágenes adicionales del producto (sin duplicados).
+  // normalizarImagen() convierte rutas relativas 'img/...' en absolutas '/img/...'
+  // para que cargen también dentro de la ruta anidada /productos/:id.
+  const galeria = [...new Set(
+    [producto.imagen, ...(producto.imagenes || [])]
+      .map(normalizarImagen)
+      .filter(Boolean)
+  )];
+
+  const [imagenActiva, setImagenActiva] = useState(0);
+
   return (
     <div className="container py-5">
       <nav aria-label="breadcrumb" className="mb-3">
@@ -40,12 +51,34 @@ export default function DetalleProducto() {
       <div className="row g-4">
         <div className="col-12 col-md-6">
           <img
-            src={producto.imagen}
-            alt={producto.nombre}
+            key={galeria[imagenActiva]}
+            src={galeria[imagenActiva] || '/img/logoGRWU.png'}
+            alt={`${producto.nombre} - imagen ${imagenActiva + 1}`}
             className="img-fluid rounded"
             style={{ maxHeight: 480, objectFit: 'cover', width: '100%' }}
-            onError={(e) => { e.currentTarget.src = 'img/logoGRWU.png'; }}
+            onError={(e) => { e.currentTarget.src = '/img/logoGRWU.png'; }}
           />
+          {galeria.length > 1 && (
+            <div className="d-flex gap-2 mt-2 galeria-miniaturas flex-wrap">
+              {galeria.map((src, i) => (
+                <button
+                  type="button"
+                  key={src}
+                  className={`btn p-0 overflow-hidden${i === imagenActiva ? ' border border-primary' : ' border'}`}
+                  style={{ width: 64, height: 64 }}
+                  aria-label={`Ver imagen ${i + 1} de ${producto.nombre}`}
+                  onClick={() => setImagenActiva(i)}
+                >
+                  <img
+                    src={src}
+                    alt=""
+                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                    onError={(e) => { e.currentTarget.src = '/img/logoGRWU.png'; }}
+                  />
+                </button>
+              ))}
+            </div>
+          )}
         </div>
         <div className="col-12 col-md-6">
           <h1>{producto.nombre}</h1>

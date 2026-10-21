@@ -1,6 +1,7 @@
 ﻿import { Link } from 'react-router-dom';
 import { listarCategorias } from '../data/categoriasData';
 import { listarPorCategoria } from '../data/productosData';
+import { normalizarImagen } from '../components/ProductCard';
 
 export default function Categorias() {
   const categorias = listarCategorias();
@@ -20,11 +21,11 @@ export default function Categorias() {
               <Link to={`/categorias/${c.slug}`} className="text-decoration-none">
                 <div className="card h-100 shadow-sm categoria-card">
                   <img
-                    src={c.imagen}
+                    src={normalizarImagen(c.imagen) || '/img/logoGRWU.png'}
                     alt={c.nombre}
                     className="card-img-top"
                     style={{ height: 200, objectFit: 'cover' }}
-                    onError={(e) => { e.currentTarget.src = 'img/logoGRWU.png'; }}
+                    onError={(e) => { e.currentTarget.src = '/img/logoGRWU.png'; }}
                   />
                   <div className="card-body">
                     <h5 className="card-title text-dark">{c.nombre}</h5>
