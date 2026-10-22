@@ -7,6 +7,7 @@ import {
 import { listarPorCategoria } from '../../data/productosData';
 import { validarCategoria, slugify } from '../../utils/validacionesAdmin';
 import CampoFormulario from '../../components/CampoFormulario';
+import { normalizarImagen } from '../../components/ProductCard';
 
 export default function AdminCategoriaEditar() {
   const { id } = useParams();
@@ -147,11 +148,11 @@ export default function AdminCategoriaEditar() {
           <div className="col-12">
             <p className="mb-1 small text-muted">Vista previa:</p>
             <img
-              src={valores.imagen}
+              src={normalizarImagen(valores.imagen) || '/img/logoGRWU.png'}
               alt="Vista previa"
               style={{ height: 120, objectFit: 'cover' }}
               className="rounded border"
-              onError={(e) => { e.currentTarget.src = 'img/logoGRWU.png'; }}
+              onError={(e) => { e.currentTarget.src = '/img/logoGRWU.png'; }}
             />
           </div>
         )}

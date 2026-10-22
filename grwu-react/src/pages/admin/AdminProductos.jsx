@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import { listarProductos, eliminarProducto } from '../../data/productosData';
 import { formatearCLP } from '../../data/carritoData';
+import { normalizarImagen } from '../../components/ProductCard';
 
 export default function AdminProductos() {
   const [productos, setProductos] = useState(listarProductos());
@@ -31,9 +32,9 @@ export default function AdminProductos() {
             {productos.map((p) => (
               <tr key={p.id}>
                 <td>
-                  <img src={p.imagen} alt={p.nombre} width="48" height="48"
+                  <img src={normalizarImagen(p.imagen) || '/img/logoGRWU.png'} alt={p.nombre} width="48" height="48"
                        style={{ objectFit: 'cover' }}
-                       onError={(e) => { e.currentTarget.src = 'img/logoGRWU.png'; }} />
+                       onError={(e) => { e.currentTarget.src = '/img/logoGRWU.png'; }} />
                 </td>
                 <td>{p.nombre}</td>
                 <td>{p.categoria}</td>

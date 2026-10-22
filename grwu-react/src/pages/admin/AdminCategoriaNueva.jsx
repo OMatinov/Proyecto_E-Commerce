@@ -26,7 +26,7 @@ export default function AdminCategorias() {
                 <td>
                   <img src={c.imagen} alt={c.nombre} width="48" height="48"
                        style={{ objectFit: 'cover' }}
-                       onError={(e) => { e.currentTarget.src = 'img/logoGRWU.png'; }} />
+                       onError={(e) => { e.currentTarget.src = '/img/logoGRWU.png'; }} />
                 </td>
                 <td>{c.nombre}</td>
                 <td><code>{c.slug}</code></td>
