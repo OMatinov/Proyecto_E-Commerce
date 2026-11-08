@@ -144,6 +144,21 @@ npm run test
 ```
 *Se abrirá un navegador Chrome en modo invisible (Headless) y se ejecutarán todos los tests (`.spec.js` y `.spec.jsx`).*
 
+### Reporte de cobertura (coverage)
+
+```bash
+npm test -- --coverage
+```
+*(equivale a `npm run test:coverage`)*
+
+Ejecuta todas las pruebas una sola vez, instrumenta el código de `src/` con `babel-plugin-istanbul` y genera el reporte con `karma-coverage`:
+
+- **Terminal:** resumen de Statements, Branches, Functions y Lines.
+- **HTML:** abrir `coverage/index.html` en el navegador para ver el detalle por carpeta y archivo.
+- **lcov:** `coverage/lcov.info` para otras herramientas.
+
+La carpeta `coverage/` se regenera en cada corrida y no se sube al repositorio.
+
 ---
 
 ## 💾 Base de Datos (Simulada en JS)
@@ -170,7 +185,7 @@ Los datos se almacenan en el navegador mediante `localStorage`, gestionados por 
 {
   id: "ORD-20260001",
   cliente: { nombre, apellidos, correo },
-  items: [{ id, nombre, precio, cantidad }],
+  items: [{ id, nombre, precio, imagen, qty }],
   subtotal: 24990,
   envio: 0,
   total: 24990,

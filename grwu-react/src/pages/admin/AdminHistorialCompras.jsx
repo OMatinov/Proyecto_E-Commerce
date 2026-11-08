@@ -1,8 +1,26 @@
+// AdminHistorialCompras.jsx - Historial de compras de un usuario (/admin/usuarios/:id/historial).
+// Columnas: Fecha, Monto, Comprador, Cantidad (unidades), Estado y Detalle (lleva a la boleta).
+
 import { useParams, Link } from 'react-router-dom';
 import { obtenerUsuario } from '../../data/usuariosData';
-import { ordenesPorUsuario } from '../../data/ordenesData';
+import { cantidadProductos, ordenesPorUsuario } from '../../data/ordenesData';
 import { formatearCLP } from '../../data/carritoData';
 import { formatearFecha } from '../../utils/formatos';
+
+const CLASE_ESTADO = {
+  pagada: 'bg-success',
+  rechazada: 'bg-danger',
+  enviada: 'bg-info text-dark',
+  entregada: 'bg-primary',
+  cancelada: 'bg-secondary'
+};
+
+// El comprador sale de la orden (datos del checkout); si falta, se usa el usuario del historial.
+function nombreComprador(orden, usuario) {
+  const c = orden.cliente;
+  const nombre = c ? `${c.nombre || ''} ${c.apellidos || ''}`.trim() : '';
+  return nombre || `${usuario.nombre} ${usuario.apellidos}`;
+}
 
 export default function AdminHistorialCompras() {
   const { id: run } = useParams();
@@ -29,18 +47,26 @@ export default function AdminHistorialCompras() {
         <div className="table-responsive">
           <table className="table table-striped align-middle">
             <thead>
-              <tr><th>Orden</th><th>Fecha</th><th>Estado</th><th>Total</th><th></th></tr>
+              <tr>
+                <th>Fecha</th>
+                <th>Monto</th>
+                <th>Comprador</th>
+                <th className="text-center">Cantidad</th>
+                <th>Estado</th>
+                <th>Detalle</th>
+              </tr>
             </thead>
             <tbody>
               {ordenes.map((o) => (
                 <tr key={o.id}>
-                  <td>{o.id}</td>
                   <td>{formatearFecha(o.fecha)}</td>
-                  <td><span className="badge bg-info text-dark">{o.estado}</span></td>
                   <td>{formatearCLP(o.total)}</td>
+                  <td>{nombreComprador(o, usuario)}</td>
+                  <td className="text-center">{cantidadProductos(o)}</td>
+                  <td><span className={`badge ${CLASE_ESTADO[o.estado] || 'bg-warning text-dark'}`}>{o.estado}</span></td>
                   <td>
                     <Link to={`/admin/ordenes/${o.id}`} className="btn btn-sm btn-outline-primary">
-                      Ver boleta
+                      Ver detalle
                     </Link>
                   </td>
                 </tr>

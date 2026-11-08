@@ -59,6 +59,11 @@ export function ordenesPorUsuario(run) {
   return listarOrdenes().filter((o) => o.usuarioRun === r);
 }
 
+// Total de unidades compradas en una orden (suma de la cantidad `qty` de cada ítem).
+export function cantidadProductos(orden) {
+  return (orden?.items || []).reduce((suma, item) => suma + (Number(item.qty) || 0), 0);
+}
+
 // ---------- UPDATE ----------
 // Sirve para "Volver a realizar el pago": la orden rechazada pasa a pagada.
 export function actualizarEstadoOrden(id, estado) {
