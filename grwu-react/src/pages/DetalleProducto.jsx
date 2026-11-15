@@ -10,6 +10,8 @@ export default function DetalleProducto() {
   const producto = obtenerProducto(id);
   const { agregar } = useCarrito();
   const [cantidad, setCantidad] = useState(1);
+  // Todos los hooks van antes de cualquier return condicional (reglas de los hooks).
+  const [imagenActiva, setImagenActiva] = useState(0);
 
   if (!producto) {
     return (
@@ -35,8 +37,6 @@ export default function DetalleProducto() {
       .map(normalizarImagen)
       .filter(Boolean)
   )];
-
-  const [imagenActiva, setImagenActiva] = useState(0);
 
   return (
     <div className="container py-5">

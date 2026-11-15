@@ -1,5 +1,5 @@
-import { render, screen } from '@testing-library/react';
-import { MemoryRouter, Routes, Route } from 'react-router-dom';
+import { render, screen, fireEvent } from '@testing-library/react';
+import { MemoryRouter, Routes, Route, useNavigate } from 'react-router-dom';
 import DetalleProducto from '../pages/DetalleProducto.jsx'; // ✅ 1. Agregada extensión .jsx
 import { CarritoProvider } from '../context/CarritoContext.jsx'; // ✅ 1. Agregada extensión .jsx
 
@@ -13,6 +13,12 @@ const renderConId = (id) =>
           </CarritoProvider>
         </MemoryRouter>
     );
+
+// Botón de apoyo: cambia el :id de la URL sin desmontar <DetalleProducto />.
+function IrAlProducto() {
+  const navigate = useNavigate();
+  return <button type="button" onClick={() => navigate('/productos/p-001')}>ir al producto</button>;
+}
 
 describe('<DetalleProducto />', () => {
   it('renderiza el producto cuando existe', () => {
@@ -31,6 +37,26 @@ describe('<DetalleProducto />', () => {
 
     // ✅ 4. Cambiado .not.toBeInTheDocument() por .toBeNull() (Nativo de Jasmine para verificar ausencia)
     expect(screen.queryByRole('button', { name: /Agregar al carrito/i })).toBeNull();
+  });
+
+  it('no falla al pasar de un producto inexistente a uno existente (los hooks van antes del return)', () => {
+    // El mismo componente sigue montado al cambiar el :id; si un hook estuviera después del
+    // "return" de producto no encontrado, React lanzaría "Rendered more hooks than during the previous render".
+    render(
+      <MemoryRouter initialEntries={['/productos/no-existe']}>
+        <CarritoProvider>
+          <IrAlProducto />
+          <Routes>
+            <Route path="/productos/:id" element={<DetalleProducto />} />
+          </Routes>
+        </CarritoProvider>
+      </MemoryRouter>
+    );
+    expect(screen.getByText(/Producto no encontrado/i)).toBeTruthy();
+
+    fireEvent.click(screen.getByRole('button', { name: /ir al producto/i }));
+
+    expect(screen.getByRole('heading', { name: /Abrigo Largo Paño/i })).toBeTruthy();
   });
 
   it('usa rutas absolutas para las imágenes (corrige la carga en /productos/:id)', () => {
