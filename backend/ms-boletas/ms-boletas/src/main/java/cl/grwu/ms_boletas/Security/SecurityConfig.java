@@ -33,20 +33,19 @@ public class SecurityConfig {
             .csrf(AbstractHttpConfigurer::disable)
             .cors(cors -> cors.configurationSource(corsConfigurationSource()))
             .authorizeHttpRequests(auth -> auth
-                // Rutas públicas
                 .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
                 .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-                // Rutas de Swagger (Spring Boot 3/4)
                 .requestMatchers("/error").permitAll()
                 
                 // MATRIZ DE ACCESOS GRWU
-                // Solo Administrador y Vendedor pueden ver todas las boletas
                 .requestMatchers(HttpMethod.GET, "/api/v1/boletas").hasAnyRole("ADMINISTRADOR", "VENDEDOR")
-                // Solo Administrador puede cambiar estado o eliminar
                 .requestMatchers(HttpMethod.PATCH, "/api/v1/boletas/*/estado").hasRole("ADMINISTRADOR")
                 .requestMatchers(HttpMethod.DELETE, "/api/v1/boletas/*").hasRole("ADMINISTRADOR")
                 
-                // Cualquier otra petición a /api/v1/boletas requiere estar autenticado (Cliente, Vendedor, Admin)
+                // NUEVAS REGLAS
+                .requestMatchers(HttpMethod.POST, "/api/v1/boletas").hasRole("CLIENTE")
+                .requestMatchers(HttpMethod.POST, "/api/v1/boletas/*/reintentar-pago").hasRole("CLIENTE")
+                
                 .anyRequest().authenticated()
             )
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
@@ -58,7 +57,6 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        // Permitimos el puerto de React (Vite)
         configuration.setAllowedOrigins(List.of("http://localhost:5173"));
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(List.of("Authorization", "Content-Type"));

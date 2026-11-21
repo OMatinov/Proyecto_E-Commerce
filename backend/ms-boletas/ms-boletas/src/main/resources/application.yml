@@ -25,6 +25,7 @@ pasarela:
 servicios:
   catalogo:
     url: http://localhost:8082/api/v1
+    service-key: ${SERVICE_KEY:clave-interna-grwu}
 
 springdoc:
   api-docs:

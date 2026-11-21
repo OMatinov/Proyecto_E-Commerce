@@ -2,18 +2,19 @@ package cl.grwu.ms_boletas.Controller;
 
 import cl.grwu.ms_boletas.DTO.BoletaResponse;
 import cl.grwu.ms_boletas.DTO.CrearBoletaRequest;
-import cl.grwu.ms_boletas.Entity.Boleta;
 import cl.grwu.ms_boletas.Service.BoletaService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/v1/boletas")
@@ -26,48 +27,70 @@ public class BoletaController {
         this.boletaService = boletaService;
     }
 
-    // 1. Crear una boleta (Solo Clientes)
     @PostMapping
+    @PreAuthorize("hasRole('CLIENTE')")
     @Operation(summary = "Crear una nueva boleta", description = "Recibe los productos del carrito y procesa el pago simulado")
     public ResponseEntity<BoletaResponse> crearBoleta(@Valid @RequestBody CrearBoletaRequest request) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String usuarioRun = auth.getName(); 
-
+        String usuarioRun = auth.getName();
         BoletaResponse response = boletaService.crearBoleta(request, usuarioRun);
-        // Si la pasarela rechazó el pago, devolvemos 201 igual (porque la boleta se creó como "rechazada")
-        // El frontend leerá el campo "estado" para saber si mostrar la pantalla de error.
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
-    // 2. Listar todas las boletas (Admin y Vendedor)
     @GetMapping
     @Operation(summary = "Listar todas las boletas", description = "Solo accesible para Administradores y Vendedores")
-    public ResponseEntity<List<Boleta>> listarBoletas() {
-        return ResponseEntity.ok(boletaService.listarBoletas());
+    public ResponseEntity<List<BoletaResponse>> listarBoletas() {
+        // Nota: Para que esto devuelva DTOs, tu BoletaService.listarBoletas() debería devolver List<BoletaResponse>.
+        // Como el Service devuelve entidades, necesitamos una forma de mapearlas. 
+        // La forma correcta es crear un método 'obtenerTodasResponse()' en el Service.
+        // Por ahora, lo dejamos con el método existente asumiendo que lo actualizaremos en el siguiente paso.
+        return ResponseEntity.ok(boletaService.listarBoletasResponse());
     }
 
-    // 3. Ver mis boletas (Cliente)
     @GetMapping("/mias")
     @Operation(summary = "Ver mis boletas", description = "Devuelve el historial de compras del usuario autenticado")
-    public ResponseEntity<List<Boleta>> obtenerMisBoletas() {
+    public ResponseEntity<List<BoletaResponse>> obtenerMisBoletas() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String usuarioRun = auth.getName();
-        return ResponseEntity.ok(boletaService.obtenerBoletasPorUsuario(usuarioRun));
+        return ResponseEntity.ok(boletaService.obtenerBoletasPorUsuarioResponse(usuarioRun));
     }
 
-    // 4. Ver detalle de una boleta (Admin, Vendedor o Cliente dueño)
     @GetMapping("/{id}")
     @Operation(summary = "Obtener detalle de una boleta")
-    public ResponseEntity<Boleta> obtenerBoleta(@PathVariable String id) {
-        return ResponseEntity.ok(boletaService.obtenerBoleta(id));
+    public ResponseEntity<BoletaResponse> obtenerBoleta(@PathVariable String id) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String usuarioRun = auth.getName();
+        boolean esCliente = auth.getAuthorities().stream()
+                .anyMatch(a -> "ROLE_CLIENTE".equals(a.getAuthority()));
+        
+        BoletaResponse boleta = esCliente
+                ? boletaService.obtenerBoletaDelClienteResponse(id, usuarioRun)
+                : boletaService.obtenerBoletaResponse(id);
+        return ResponseEntity.ok(boleta);
     }
 
-    // 5. Reintentar pago (Solo Cliente dueño)
     @PostMapping("/{id}/reintentar-pago")
+    @PreAuthorize("hasRole('CLIENTE')")
     @Operation(summary = "Reintentar el pago de una boleta rechazada")
     public ResponseEntity<BoletaResponse> reintentarPago(@PathVariable String id) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String usuarioRun = auth.getName();
         return ResponseEntity.ok(boletaService.reintentarPago(id, usuarioRun));
+    }
+
+    @PatchMapping("/{id}/estado")
+    @PreAuthorize("hasRole('ADMINISTRADOR')")
+    @Operation(summary = "Cambiar el estado de una boleta")
+    public ResponseEntity<BoletaResponse> cambiarEstado(@PathVariable String id,
+                                                        @RequestBody Map<String, String> cuerpo) {
+        return ResponseEntity.ok(boletaService.cambiarEstado(id, cuerpo.get("estado")));
+    }
+
+    @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMINISTRADOR')")
+    @Operation(summary = "Cancelar una boleta")
+    public ResponseEntity<Void> cancelarBoleta(@PathVariable String id) {
+        boletaService.cancelarBoleta(id);
+        return ResponseEntity.noContent().build();
     }
 }

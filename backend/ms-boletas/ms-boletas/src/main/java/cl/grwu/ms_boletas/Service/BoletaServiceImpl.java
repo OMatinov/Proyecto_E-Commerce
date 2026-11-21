@@ -7,15 +7,24 @@ import cl.grwu.ms_boletas.Entity.Boleta;
 import cl.grwu.ms_boletas.Entity.DetalleBoleta;
 import cl.grwu.ms_boletas.Repository.BoletaRepository;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 @Service
 public class BoletaServiceImpl implements BoletaService {
@@ -32,6 +41,9 @@ public class BoletaServiceImpl implements BoletaService {
     @Value("${pasarela.limite-monto:100000}")
     private int limiteMonto;
 
+    @Value("${servicios.catalogo.service-key:}")
+    private String serviceKey;
+
     public BoletaServiceImpl(BoletaRepository boletaRepository, RestTemplate restTemplate) {
         this.boletaRepository = boletaRepository;
         this.restTemplate = restTemplate;
@@ -40,8 +52,6 @@ public class BoletaServiceImpl implements BoletaService {
     @Override
     public BoletaResponse crearBoleta(CrearBoletaRequest request, String usuarioRun) {
         Boleta boleta = new Boleta();
-        
-        // 1. Generar ID y número correlativo
         Optional<Boleta> ultimaBoleta = boletaRepository.findTopByOrderByNumeroDesc();
         long nuevoNumero = ultimaBoleta.map(b -> b.getNumero() + 1).orElse(20260001L);
         
@@ -50,7 +60,6 @@ public class BoletaServiceImpl implements BoletaService {
         boleta.setFecha(Instant.now());
         boleta.setUsuarioRun(usuarioRun);
         
-        // 2. Datos del cliente y dirección
         boleta.setClienteNombre(request.getCliente().getNombre());
         boleta.setClienteApellidos(request.getCliente().getApellidos());
         boleta.setClienteCorreo(request.getCliente().getCorreo());
@@ -63,12 +72,10 @@ public class BoletaServiceImpl implements BoletaService {
         boleta.setDespacho(request.getDespacho());
         boleta.setMetodoPago(request.getMetodoPago());
 
-        // 3. Calcular totales consultando a ms-catalogo
         int subtotal = 0;
         List<DetalleBoleta> detalles = new ArrayList<>();
 
         for (CrearBoletaRequest.ItemRequest itemReq : request.getItems()) {
-            // Llamada a ms-catalogo (Matías)
             String urlProducto = urlCatalogo + "/productos/" + itemReq.getProductoId();
             ResponseEntity<ProductoDTO> response = restTemplate.getForEntity(urlProducto, ProductoDTO.class);
             ProductoDTO producto = response.getBody();
@@ -98,8 +105,6 @@ public class BoletaServiceImpl implements BoletaService {
         }
 
         boleta.setSubtotal(subtotal);
-        
-        // 4. Calcular envío
         int envio = 0;
         if (request.getDespacho().equals("premium")) {
             envio = 5990;
@@ -109,22 +114,16 @@ public class BoletaServiceImpl implements BoletaService {
         boleta.setEnvio(envio);
         boleta.setTotal(subtotal + envio);
 
-        // 5. Simular pasarela de pago
         boolean pagoAprobado = simularPago(boleta.getTotal(), request.getMetodoPago());
         
         if (pagoAprobado) {
             boleta.setEstado("pagada");
-            // Aquí deberías llamar a ms-catalogo para descontar stock
-            // (Lo dejamos comentado hasta que Matías tenga listo el endpoint de stock)
-            // descontarStock(detalles);
         } else {
             boleta.setEstado("rechazada");
             boleta.setMotivoRechazo("Pago rechazado por la pasarela simulada.");
         }
 
-        // 6. Guardar en la base de datos
         boletaRepository.save(boleta);
-
         return mapearAResponse(boleta);
     }
 
@@ -144,20 +143,42 @@ public class BoletaServiceImpl implements BoletaService {
         res.setSubtotal(boleta.getSubtotal());
         res.setEnvio(boleta.getEnvio());
         res.setTotal(boleta.getTotal());
+        res.setDespacho(boleta.getDespacho());
+        res.setMetodoPago(boleta.getMetodoPago());
         res.setEstado(boleta.getEstado());
         res.setMotivoRechazo(boleta.getMotivoRechazo());
-        
+
+        // Mapear Cliente
+        BoletaResponse.ClienteResponse clienteRes = new BoletaResponse.ClienteResponse();
+        clienteRes.setNombre(boleta.getClienteNombre());
+        clienteRes.setApellidos(boleta.getClienteApellidos());
+        clienteRes.setCorreo(boleta.getClienteCorreo());
+        res.setCliente(clienteRes);
+
+        // Mapear Dirección
+        BoletaResponse.DireccionResponse dirRes = new BoletaResponse.DireccionResponse();
+        dirRes.setCalle(boleta.getDireccionCalle());
+        dirRes.setDepartamento(boleta.getDireccionDepartamento());
+        dirRes.setIndicaciones(boleta.getDireccionIndicaciones());
+        dirRes.setRegion(boleta.getDireccionRegion());
+        dirRes.setComuna(boleta.getDireccionComuna());
+        res.setDireccion(dirRes);
+
+        // Mapear Items
         List<BoletaResponse.DetalleResponse> detallesRes = new ArrayList<>();
         for (DetalleBoleta d : boleta.getItems()) {
             BoletaResponse.DetalleResponse dr = new BoletaResponse.DetalleResponse();
             dr.setProductoId(d.getProductoId());
             dr.setNombre(d.getNombreProducto());
+            dr.setImagen(d.getImagen());
+            dr.setCategoria(d.getCategoria());
             dr.setPrecioUnitario(d.getPrecioUnitario());
             dr.setCantidad(d.getCantidad());
             dr.setSubtotal(d.getSubtotalLinea());
             detallesRes.add(dr);
         }
         res.setItems(detallesRes);
+        
         return res;
     }
 
@@ -169,7 +190,7 @@ public class BoletaServiceImpl implements BoletaService {
     @Override
     public Boleta obtenerBoleta(String id) {
         return boletaRepository.findById(id)
-            .orElseThrow(() -> new RuntimeException("Boleta no encontrada"));
+            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Boleta no encontrada"));
     }
 
     @Override
@@ -178,22 +199,118 @@ public class BoletaServiceImpl implements BoletaService {
     }
 
     @Override
+    public Boleta obtenerBoletaDelCliente(String id, String usuarioRun) {
+        Boleta boleta = obtenerBoleta(id);
+        if (!boleta.getUsuarioRun().equals(usuarioRun)) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "No tienes permiso para ver esta boleta");
+        }
+        return boleta;
+    }
+
+    @Override
     public BoletaResponse reintentarPago(String id, String usuarioRun) {
         Boleta boleta = obtenerBoleta(id);
+        if (!boleta.getUsuarioRun().equals(usuarioRun)) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "No tienes permiso para reintentar esta boleta");
+        }
         if (!boleta.getEstado().equals("rechazada")) {
-            throw new RuntimeException("Solo se pueden reintentar boletas rechazadas");
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Solo se pueden reintentar boletas rechazadas");
         }
         
         boolean pagoAprobado = simularPago(boleta.getTotal(), boleta.getMetodoPago());
         if (pagoAprobado) {
             boleta.setEstado("pagada");
             boleta.setMotivoRechazo(null);
-            // descontarStock(boleta.getItems());
         } else {
             boleta.setMotivoRechazo("Pago rechazado en el reintento.");
         }
         
         boletaRepository.save(boleta);
         return mapearAResponse(boleta);
+    }
+
+    @Override
+    public BoletaResponse cambiarEstado(String id, String nuevoEstado) {
+        Boleta boleta = obtenerBoleta(id);
+        if (nuevoEstado == null || nuevoEstado.isBlank()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "El estado es obligatorio");
+        }
+        if (!esTransicionValida(boleta.getEstado(), nuevoEstado)) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT,
+                    "Transición no permitida: " + boleta.getEstado() + " → " + nuevoEstado);
+        }
+        if (boleta.getEstado().equals("pagada") && nuevoEstado.equals("cancelada")) {
+            reponerStock(boleta);
+        }
+        boleta.setEstado(nuevoEstado);
+        boletaRepository.save(boleta);
+        return mapearAResponse(boleta);
+    }
+
+    @Override
+    public void cancelarBoleta(String id) {
+        Boleta boleta = obtenerBoleta(id);
+        if (!esTransicionValida(boleta.getEstado(), "cancelada")) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT,
+                    "No se puede cancelar una boleta " + boleta.getEstado());
+        }
+        if (boleta.getEstado().equals("pagada")) {
+            reponerStock(boleta);
+        }
+        boleta.setEstado("cancelada");
+        boletaRepository.save(boleta);
+    }
+
+    private void reponerStock(Boleta boleta) {
+        if (serviceKey == null || serviceKey.isBlank()) {
+            throw new ResponseStatusException(HttpStatus.SERVICE_UNAVAILABLE,
+                    "Reposición de stock no configurada (SERVICE_KEY)");
+        }
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("X-Service-Key", serviceKey);
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        for (DetalleBoleta detalle : boleta.getItems()) {
+            String url = urlCatalogo + "/productos/" + detalle.getProductoId() + "/stock";
+            Map<String, Object> cuerpo = Map.of("cantidad", detalle.getCantidad(), "operacion", "reponer");
+            try {
+                restTemplate.exchange(url, HttpMethod.PATCH, new HttpEntity<>(cuerpo, headers), Void.class);
+            } catch (RestClientException e) {
+                throw new ResponseStatusException(HttpStatus.CONFLICT,
+                        "No se pudo reponer el stock de " + detalle.getProductoId(), e);
+            }
+        }
+    }
+
+    private boolean esTransicionValida(String estadoActual, String nuevoEstado) {
+        return switch (estadoActual) {
+            case "pagada" -> nuevoEstado.equals("enviada") || nuevoEstado.equals("cancelada");
+            case "enviada" -> nuevoEstado.equals("entregada");
+            case "rechazada" -> nuevoEstado.equals("cancelada");
+            default -> false;
+        };
+    }
+
+    @Override
+    public List<BoletaResponse> listarBoletasResponse() {
+        return boletaRepository.findAll().stream()
+                .map(this::mapearAResponse)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<BoletaResponse> obtenerBoletasPorUsuarioResponse(String usuarioRun) {
+        return boletaRepository.findByUsuarioRunOrderByFechaDesc(usuarioRun).stream()
+                .map(this::mapearAResponse)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public BoletaResponse obtenerBoletaResponse(String id) {
+        return mapearAResponse(obtenerBoleta(id));
+    }
+
+    @Override
+    public BoletaResponse obtenerBoletaDelClienteResponse(String id, String usuarioRun) {
+        return mapearAResponse(obtenerBoletaDelCliente(id, usuarioRun));
     }
 }

@@ -138,5 +138,66 @@ public class BoletaServiceTest {
 
         assertEquals("Stock insuficiente para: Polera Test", exception.getMessage());
     }
+
+    @Test
+    void testObtenerBoletaDelCliente_LanzaExcepcionSiNoEsElDueño() {
+        // 1. Preparamos una boleta que pertenece a otro RUN
+        Boleta boletaFalsa = new Boleta();
+        boletaFalsa.setId("ORD-20260001");
+        boletaFalsa.setUsuarioRun("111111111"); // Otro usuario
+
+        when(boletaRepository.findById("ORD-20260001")).thenReturn(Optional.of(boletaFalsa));
+
+        // 2. Intentamos obtenerla con un RUN distinto
+        org.springframework.web.server.ResponseStatusException exception = assertThrows(
+                org.springframework.web.server.ResponseStatusException.class,
+                () -> boletaService.obtenerBoletaDelCliente("ORD-20260001", "222222222")
+        );
+
+        // 3. Verificamos que lance 403 FORBIDDEN
+        assertEquals(org.springframework.http.HttpStatus.FORBIDDEN, exception.getStatusCode());
+        assertEquals("No tienes permiso para ver esta boleta", exception.getReason());
+    }
+
+    @Test
+    void testReintentarPago_LanzaExcepcionSiLaBoletaNoEstaRechazada() {
+        // 1. Preparamos una boleta que YA está pagada
+        Boleta boletaFalsa = new Boleta();
+        boletaFalsa.setId("ORD-20260001");
+        boletaFalsa.setUsuarioRun("111111111");
+        boletaFalsa.setEstado("pagada");
+
+        when(boletaRepository.findById("ORD-20260001")).thenReturn(Optional.of(boletaFalsa));
+
+        // 2. Intentamos reintentar el pago (con el mismo dueño)
+        org.springframework.web.server.ResponseStatusException exception = assertThrows(
+                org.springframework.web.server.ResponseStatusException.class,
+                () -> boletaService.reintentarPago("ORD-20260001", "111111111")
+        );
+
+        // 3. Verificamos que lance 409 CONFLICT
+        assertEquals(org.springframework.http.HttpStatus.CONFLICT, exception.getStatusCode());
+        assertEquals("Solo se pueden reintentar boletas rechazadas", exception.getReason());
+    }
+
+    @Test
+    void testCambiarEstado_LanzaExcepcionSiLaTransicionEsInvalida() {
+        // 1. Preparamos una boleta "pagada"
+        Boleta boletaFalsa = new Boleta();
+        boletaFalsa.setId("ORD-20260001");
+        boletaFalsa.setEstado("pagada");
+
+        when(boletaRepository.findById("ORD-20260001")).thenReturn(Optional.of(boletaFalsa));
+
+        // 2. Intentamos pasarla a "entregada" (salteándonos "enviada")
+        org.springframework.web.server.ResponseStatusException exception = assertThrows(
+                org.springframework.web.server.ResponseStatusException.class,
+                () -> boletaService.cambiarEstado("ORD-20260001", "entregada")
+        );
+
+        // 3. Verificamos que lance 409 CONFLICT
+        assertEquals(org.springframework.http.HttpStatus.CONFLICT, exception.getStatusCode());
+        assertTrue(exception.getReason().contains("Transición no permitida"));
+    }
 }
 

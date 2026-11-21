@@ -1,5 +1,5 @@
 // Checkout.jsx - Vista "Carrito de compra / datos de entrega" (paso de pago).
-// Autor: César
+// Autor: César (modificado por Katerine para conectar con ms-boletas)
 //
 // Flujo al presionar "Pagar ahora":
 //   1. validarCheckout()  -> errores por campo
@@ -18,10 +18,12 @@ import ResumenTotales from "../components/ResumenTotales.jsx";
 import { useCarrito } from "../context/CarritoContext.jsx";
 import { useSesion } from "../context/SesionContext.jsx";
 import { REGIONES, comunasDeRegion } from "../data/regiones.js";
-import { crearOrden } from "../data/ordenesData.js";
 import { COSTO_ENVIO_PREMIUM, formatearCLP } from "../data/carritoData.js";
-import { procesarPago, METODOS_PAGO } from "../services/pago.js";
+import { METODOS_PAGO } from "../services/pago.js";
 import { validarCheckout } from "../utils/formularios.js";
+
+// IMPORTAMOS AXIOS
+import api from "../services/api.js";
 
 function valoresIniciales(usuario) {
   return {
@@ -49,6 +51,7 @@ export default function Checkout() {
   const navigate = useNavigate();
   const [valores, setValores] = useState(() => valoresIniciales(usuario));
   const [errores, setErrores] = useState({});
+  const [cargando, setCargando] = useState(false); // Para deshabilitar el botón mientras carga
 
   if (items.length === 0) {
     return (
@@ -65,31 +68,68 @@ export default function Checkout() {
     else setValores({ ...valores, [name]: value });
   };
 
-  const manejarEnvio = (e) => {
+  // AQUÍ ESTÁ LA MAGIA: Ahora es una función asíncrona que llama a la API
+  const manejarEnvio = async (e) => {
     e.preventDefault();
     const erroresNuevos = validarCheckout(valores);
     setErrores(erroresNuevos);
     if (Object.keys(erroresNuevos).length > 0) return;
 
-    const pago = procesarPago({ metodoPago: valores.metodoPago, total });
-    const orden = crearOrden({
-      usuarioRun: usuario?.run ?? null,
-      cliente: { nombre: valores.nombre.trim(), apellidos: valores.apellidos.trim(), correo: valores.correo.trim() },
-      direccion: {
-        calle: valores.calle.trim(), departamento: valores.departamento.trim(),
-        region: valores.region, comuna: valores.comuna, indicaciones: valores.indicaciones.trim()
-      },
-      items, subtotal, envio, total,
-      despacho: valores.despacho,
-      metodoPago: valores.metodoPago,
-      estado: pago.aprobado ? "pagada" : "rechazada"
-    });
+    // Si no hay usuario logueado, no dejamos comprar (Regla de negocio EV3)
+    if (!usuario) {
+      alert("Debes iniciar sesión para poder pagar.");
+      navigate("/login");
+      return;
+    }
 
-    if (pago.aprobado) {
-      vaciar();
-      navigate(`/pago-correcto/${orden.id}`);
-    } else {
-      navigate(`/pago-error/${orden.id}`, { state: { motivo: pago.motivo } });
+    setCargando(true);
+
+    try {
+      // 1. Armamos el body exactamente como lo espera tu DTO (CrearBoletaRequest)
+      const requestBody = {
+        items: items.map(item => ({
+          productoId: item.id,
+          cantidad: item.qty || 1
+        })),
+        despacho: valores.despacho,
+        metodoPago: valores.metodoPago,
+        cliente: {
+          nombre: valores.nombre.trim(),
+          apellidos: valores.apellidos.trim(),
+          correo: valores.correo.trim()
+        },
+        direccion: {
+          calle: valores.calle.trim(),
+          departamento: valores.departamento.trim(),
+          indicaciones: valores.indicaciones.trim(),
+          region: valores.region,
+          comuna: valores.comuna
+        }
+      };
+
+      // 2. Llamamos a ms-boletas (el proxy de Vite lo redirige al puerto 8083)
+      const respuesta = await api.post('/boletas', requestBody);
+      const boleta = respuesta.data;
+
+      // 3. Evaluamos la respuesta del backend
+      if (boleta.estado === "pagada") {
+        vaciar(); // Vaciamos el carrito
+        navigate(`/pago-correcto/${boleta.id}`);
+      } else {
+        navigate(`/pago-error/${boleta.id}`, { state: { motivo: boleta.motivoRechazo } });
+      }
+
+    } catch (error) {
+      console.error("Error al crear la boleta:", error);
+      // Aquí atrapamos errores 401 (sin token), 403 (sin permisos) o 500 (error del server)
+      if (error.response && error.response.status === 401) {
+        alert("Tu sesión ha expirado. Por favor, inicia sesión de nuevo.");
+        navigate("/login");
+      } else {
+        alert("Hubo un problema al procesar tu compra. Intenta nuevamente.");
+      }
+    } finally {
+      setCargando(false);
     }
   };
 
@@ -160,7 +200,9 @@ export default function Checkout() {
                 <h2 className="h5">Resumen de tu compra</h2>
                 <TablaItems items={items} />
                 <ResumenTotales subtotal={subtotal} envio={envio} total={total} />
-                <button type="submit" className="btn btn-success w-100 mt-3">Pagar ahora {formatearCLP(total)}</button>
+                <button type="submit" className="btn btn-success w-100 mt-3" disabled={cargando}>
+                  {cargando ? "Procesando pago..." : `Pagar ahora ${formatearCLP(total)}`}
+                </button>
               </div>
             </div>
           </aside>
