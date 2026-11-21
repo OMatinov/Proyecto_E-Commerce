@@ -1,0 +1,21 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "MsBoletasApplication",
+            "request": "launch",
+            "mainClass": "cl.grwu.ms_boletas.MsBoletasApplication",
+            "projectName": "cl.grwru-ms-boletas"
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-MsBoletasApplication<cl.grwru-ms-boletas>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "cl.grwru.ms_boletas.MsBoletasApplication",
+            "projectName": "cl.grwru-ms-boletas",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}

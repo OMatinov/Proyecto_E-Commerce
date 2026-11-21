@@ -1,0 +1,33 @@
+server:
+  port: 8083
+
+spring:
+  application:
+    name: ms-boletas
+  datasource:
+    url: jdbc:mysql://localhost:3306/grwu_boletas?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+    username: root
+    password: 1234
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+jwt:
+  secret: mi_clave_secreta_super_larga_para_que_funcione_el_jwt_123456
+  issuer: grwu-auth
+
+pasarela:
+  probabilidad-rechazo: 0.10
+  limite-monto: 100000
+
+servicios:
+  catalogo:
+    url: http://localhost:8082/api/v1
+
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
