@@ -1,6 +1,7 @@
 import axios from 'axios';
+import { getAccessToken, getRefreshToken, guardarTokens, limpiarTokens } from './tokenStore';
 
-// Creamos una instancia única de Axios
+// Instancia única de Axios
 const api = axios.create({
   baseURL: '/api/v1', // El proxy de Vite se encarga de redirigir esto
   headers: {
@@ -9,10 +10,10 @@ const api = axios.create({
 });
 
 // INTERCEPTOR DE PETICIONES (Request)
+// El access token vive en memoria (tokenStore), NO en localStorage.
 api.interceptors.request.use(
   (config) => {
-    // Buscamos el token en el localStorage (lo guardaremos ahí cuando César haga el login)
-    const token = localStorage.getItem('accessToken');
+    const token = getAccessToken();
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
@@ -21,14 +22,46 @@ api.interceptors.request.use(
   (error) => Promise.reject(error)
 );
 
+// Refresh compartido: si varias peticiones fallan con 401 a la vez, se hace un solo refresh.
+let refrescando = null;
+
+function refrescarTokens() {
+  if (!refrescando) {
+    const refreshToken = getRefreshToken();
+    if (!refreshToken) return Promise.reject(new Error('Sin refresh token'));
+    // axios "pelado" (no "api") para que este llamado no pase por los interceptores y no haya loop
+    refrescando = axios
+      .post('/api/v1/auth/refresh', { refreshToken })
+      .then((res) => {
+        guardarTokens(res.data);
+        return res.data.accessToken;
+      })
+      .finally(() => {
+        refrescando = null;
+      });
+  }
+  return refrescando;
+}
+
 // INTERCEPTOR DE RESPUESTAS (Response)
+// En 401: un solo refresh y reintento. Si falla, se cierra la sesión y se va a /login.
 api.interceptors.response.use(
   (response) => response,
-  (error) => {
-    // Si el backend dice 401 (No autorizado) o 403 (Prohibido), podríamos cerrar sesión
-    if (error.response && error.response.status === 401) {
-      console.warn("Sesión expirada o no autorizada");
-      // Aquí podrías redirigir al login
+  async (error) => {
+    const original = error.config;
+    const status = error.response?.status;
+    const esAuth = original?.url?.includes('/auth/');
+
+    if (status === 401 && original && !original._reintentado && !esAuth) {
+      original._reintentado = true;
+      try {
+        const nuevoAccess = await refrescarTokens();
+        original.headers.Authorization = `Bearer ${nuevoAccess}`;
+        return api(original);
+      } catch {
+        limpiarTokens();
+        if (window.location.pathname !== '/login') window.location.replace('/login');
+      }
     }
     return Promise.reject(error);
   }

@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
@@ -40,6 +41,7 @@ public class BoletaServiceTest {
         ReflectionTestUtils.setField(boletaService, "urlCatalogo", "http://localhost:8082/api/v1");
         ReflectionTestUtils.setField(boletaService, "probabilidadRechazo", 0.0); // Forzamos que el pago sea APROBADO
         ReflectionTestUtils.setField(boletaService, "limiteMonto", 100000);
+        ReflectionTestUtils.setField(boletaService, "serviceKey", "clave-interna-grwu");
     }
 
     @Test
@@ -51,14 +53,15 @@ public class BoletaServiceTest {
         productoFalso.setPrecio(20000);
         productoFalso.setStock(10);
 
-        // 2. Simulamos la llamada a ms-catalogo
+        // 2. Simulamos que Matías nos devuelve el producto las veces que sea necesario
         when(restTemplate.getForEntity(anyString(), eq(ProductoDTO.class)))
                 .thenReturn(ResponseEntity.ok(productoFalso));
 
-        // Simulamos que la base de datos devuelve vacío para generar la primera boleta
-        when(boletaRepository.findTopByOrderByNumeroDesc()).thenReturn(Optional.empty());
+        // 3. Simulamos que el descuento de stock responde OK
+        when(restTemplate.exchange(anyString(), eq(org.springframework.http.HttpMethod.PATCH), any(), eq(Void.class)))
+                .thenReturn(ResponseEntity.ok().build());
 
-        // 3. Preparamos la petición del cliente (2 poleras)
+        // 4. Preparamos la petición del cliente (2 poleras)
         CrearBoletaRequest request = new CrearBoletaRequest();
         CrearBoletaRequest.ItemRequest item = new CrearBoletaRequest.ItemRequest();
         item.setProductoId("p-001");
@@ -79,10 +82,10 @@ public class BoletaServiceTest {
         direccion.setComuna("Santiago");
         request.setDireccion(direccion);
 
-        // 4. Ejecutamos el método
+        // 5. Ejecutamos el método
         boletaService.crearBoleta(request, "190110222");
 
-        // 5. Verificamos que los cálculos estén bien
+        // 6. Verificamos que los cálculos estén bien
         // 2 poleras de 20.000 = 40.000. Como es menor a 44.990, el envío es 3.990. Total = 43.990.
         // Nota: No estamos guardando en la BD real gracias al Mock, pero podemos verificar el objeto antes de guardar.
         
