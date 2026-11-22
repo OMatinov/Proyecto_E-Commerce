@@ -117,6 +117,14 @@ public class BoletaServiceImpl implements BoletaService {
         boolean pagoAprobado = simularPago(boleta.getTotal(), request.getMetodoPago());
         
         if (pagoAprobado) {
+            try {
+                descontarStock(detalles); // Llama a Matías
+            } catch (Exception e) {
+                boleta.setEstado("rechazada");
+                boleta.setMotivoRechazo("Stock agotado al momento de procesar el pago.");
+                boletaRepository.save(boleta);
+                throw new ResponseStatusException(HttpStatus.CONFLICT, "No se pudo completar la compra: stock agotado.");
+            }
             boleta.setEstado("pagada");
         } else {
             boleta.setEstado("rechazada");
@@ -312,5 +320,24 @@ public class BoletaServiceImpl implements BoletaService {
     @Override
     public BoletaResponse obtenerBoletaDelClienteResponse(String id, String usuarioRun) {
         return mapearAResponse(obtenerBoletaDelCliente(id, usuarioRun));
+    }
+
+    private void descontarStock(List<DetalleBoleta> detalles) {
+        if (serviceKey == null || serviceKey.isBlank()) {
+            throw new ResponseStatusException(HttpStatus.SERVICE_UNAVAILABLE, "Descuento de stock no configurado");
+        }
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("X-Service-Key", serviceKey);
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+        for (DetalleBoleta detalle : detalles) {
+            String url = urlCatalogo + "/productos/" + detalle.getProductoId() + "/stock";
+            Map<String, Object> cuerpo = Map.of("cantidad", detalle.getCantidad(), "operacion", "descontar");
+            try {
+                restTemplate.exchange(url, HttpMethod.PATCH, new HttpEntity<>(cuerpo, headers), Void.class);
+            } catch (RestClientException e) {
+                throw new RuntimeException("Fallo al descontar stock de " + detalle.getProductoId(), e);
+            }
+        }
     }
 }
