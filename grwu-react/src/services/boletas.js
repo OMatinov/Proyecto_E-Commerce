@@ -42,3 +42,18 @@ export async function cambiarEstado(id, estado) {
 export async function cancelarBoleta(id) {
   await api.delete(`/boletas/${id}`);
 }
+
+// Export por defecto para integración: ms-boletas consumido como objeto de métodos.
+export default {
+  async crear(solicitud) { return crearBoleta(solicitud); },
+  async listar(filtros = {}) { return listarBoletas(filtros); },
+  async obtener(id) { return obtenerBoleta(id); },
+  async mias() { return misBoletas(); },
+  async porUsuario(run) {
+    const { data } = await api.get("/boletas", { params: { usuarioRun: run } });
+    return adaptarBoletas(data);
+  },
+  async reintentarPago(id) { return reintentarPago(id); },
+  async cambiarEstado(id, estado) { return cambiarEstado(id, estado); },
+  async cancelarBoleta(id) { return cancelarBoleta(id); },
+};

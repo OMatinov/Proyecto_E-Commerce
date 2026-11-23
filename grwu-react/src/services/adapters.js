@@ -54,3 +54,41 @@ export function aRequestBoleta({ items = [], ...resto }) {
     }))
   };
 }
+
+// --- Contrato alternativo de ms-boletas (consumido por Checkout/Pago* vinculados a main) ---
+
+// Valores del formulario de boleta -> cuerpo CrearBoletaRequest.
+export function aSolicitudBoleta({ items, valores }) {
+  return {
+    items: items.map((i) => ({ productoId: i.id, cantidad: i.qty || 1 })),
+    despacho: valores.despacho,
+    metodoPago: valores.metodoPago,
+    cliente: {
+      nombre: valores.nombre.trim(),
+      apellidos: valores.apellidos.trim(),
+      correo: valores.correo.trim()
+    },
+    direccion: {
+      calle: valores.calle.trim(),
+      departamento: valores.departamento.trim(),
+      indicaciones: valores.indicaciones.trim(),
+      region: valores.region,
+      comuna: valores.comuna
+    }
+  };
+}
+
+// Boleta de ms-boletas -> forma que usan ResumenOrden/TablaItems.
+export function desdeBoleta(boleta) {
+  if (!boleta) return null;
+  return {
+    ...boleta,
+    items: (boleta.items || []).map((i) => ({
+      id: i.productoId,
+      nombre: i.nombre,
+      imagen: i.imagen,
+      precio: i.precioUnitario,
+      qty: i.cantidad
+    }))
+  };
+}
