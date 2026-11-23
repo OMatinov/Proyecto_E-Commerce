@@ -19,8 +19,8 @@ jwt:
   issuer: grwu-auth
 
 pasarela:
-  probabilidad-rechazo: 0.10
-  limite-monto: 100000
+  probabilidad-rechazo: ${PASARELA_PROBABILIDAD_RECHAZO:0.10}
+  limite-monto: ${PASARELA_LIMITE_MONTO:100000}
 
 servicios:
   catalogo:
