@@ -63,8 +63,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 }
             }
         } catch (Exception e) {
-            // Si el token es invÃ¡lido, no autenticamos y seguimos (el SecurityConfig darÃ¡ 401)
-            System.out.println("Token invÃ¡lido: " + e.getMessage());
+            // Token inválido: Spring Security responderá 401
+            
         }
 
         filterChain.doFilter(request, response);

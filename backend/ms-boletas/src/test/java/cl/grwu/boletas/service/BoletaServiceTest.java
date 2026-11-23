@@ -143,7 +143,7 @@ public class BoletaServiceTest {
     }
 
     @Test
-    void testObtenerBoletaDelCliente_LanzaExcepcionSiNoEsElDueÃ±o() {
+    void testObtenerBoletaDelCliente_LanzaExcepcionSiNoEsElDueño() {
         // 1. Preparamos una boleta que pertenece a otro RUN
         Boleta boletaFalsa = new Boleta();
         boletaFalsa.setId("ORD-20260001");
@@ -164,7 +164,7 @@ public class BoletaServiceTest {
 
     @Test
     void testReintentarPago_LanzaExcepcionSiLaBoletaNoEstaRechazada() {
-        // 1. Preparamos una boleta que YA estÃ¡ pagada
+        // 1. Preparamos una boleta que ya esta pagada
         Boleta boletaFalsa = new Boleta();
         boletaFalsa.setId("ORD-20260001");
         boletaFalsa.setUsuarioRun("111111111");
@@ -172,7 +172,7 @@ public class BoletaServiceTest {
 
         when(boletaRepository.findById("ORD-20260001")).thenReturn(Optional.of(boletaFalsa));
 
-        // 2. Intentamos reintentar el pago (con el mismo dueÃ±o)
+        // 2. Intentamos reintentar el pago (con el mismo dueño)
         org.springframework.web.server.ResponseStatusException exception = assertThrows(
                 org.springframework.web.server.ResponseStatusException.class,
                 () -> boletaService.reintentarPago("ORD-20260001", "111111111")

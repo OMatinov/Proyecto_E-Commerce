@@ -5,9 +5,9 @@ spring:
   application:
     name: ms-boletas
   datasource:
-    url: jdbc:mysql://localhost:3306/grwu_boletas?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
-    username: root
-    password: 1234
+    url: ${DB_URL:jdbc:mysql://localhost:3306/grwu_boletas?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true}
+    username: ${DB_USERNAME:root}
+    password: ${DB_PASSWORD}
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     hibernate:
@@ -15,7 +15,7 @@ spring:
     show-sql: true
 
 jwt:
-  secret: mi_clave_secreta_super_larga_para_que_funcione_el_jwt_123456
+  secret: ${JWT_SECRET}
   issuer: grwu-auth
 
 pasarela:
@@ -24,8 +24,8 @@ pasarela:
 
 servicios:
   catalogo:
-    url: http://localhost:8082/api/v1
-    service-key: ${SERVICE_KEY:clave-interna-grwu}
+    url: ${CATALOGO_URL:http://localhost:8082/api/v1}
+    service-key: ${SERVICE_KEY}
 
 springdoc:
   api-docs:
