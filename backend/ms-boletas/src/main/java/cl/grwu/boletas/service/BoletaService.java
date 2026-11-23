@@ -22,6 +22,8 @@ public interface BoletaService {
 
     List<BoletaResponse> listarBoletasResponse();
 
+    List<BoletaResponse> listarBoletasResponse(String estado, String usuarioRun, String desde, String hasta);
+
     List<BoletaResponse> obtenerBoletasPorUsuarioResponse(String usuarioRun);
 
     BoletaResponse obtenerBoletaResponse(String id);

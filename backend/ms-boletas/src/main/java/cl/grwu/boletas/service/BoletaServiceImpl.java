@@ -21,6 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.LinkedHashMap;
 
 import java.time.Instant;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -92,11 +93,13 @@ public class BoletaServiceImpl implements BoletaService {
             ProductoDTO producto = response.getBody();
 
             if (producto == null) {
-                throw new RuntimeException("Producto no encontrado: " + productoId);
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND,
+                        "Producto no encontrado: " + productoId);
             }
 
-            if (producto.getStock() < cantidad) {
-                throw new RuntimeException("Stock insuficiente para: " + producto.getNombre());
+            if (producto.getStock() == null || producto.getStock() < cantidad) {
+                throw new ResponseStatusException(HttpStatus.CONFLICT,
+                        "Stock insuficiente para: " + producto.getNombre());
             }
 
             int subtotalLinea = producto.getPrecio() * cantidad;
@@ -174,7 +177,7 @@ public class BoletaServiceImpl implements BoletaService {
         clienteRes.setCorreo(boleta.getClienteCorreo());
         res.setCliente(clienteRes);
 
-        // Mapear DirecciÃ³n
+        // Mapear Dirección
         BoletaResponse.DireccionResponse dirRes = new BoletaResponse.DireccionResponse();
         dirRes.setCalle(boleta.getDireccionCalle());
         dirRes.setDepartamento(boleta.getDireccionDepartamento());
@@ -279,7 +282,7 @@ public class BoletaServiceImpl implements BoletaService {
         }
         if (!esTransicionValida(boleta.getEstado(), nuevoEstado)) {
             throw new ResponseStatusException(HttpStatus.CONFLICT,
-                    "TransiciÃ³n no permitida: " + boleta.getEstado() + " â†’ " + nuevoEstado);
+                    "Transición no permitida: " + boleta.getEstado() + " → " + nuevoEstado);
         }
         if (boleta.getEstado().equals("pagada") && nuevoEstado.equals("cancelada")) {
             reponerStock(boleta);
@@ -307,7 +310,7 @@ public class BoletaServiceImpl implements BoletaService {
     private void reponerStock(Boleta boleta) {
         if (serviceKey == null || serviceKey.isBlank()) {
             throw new ResponseStatusException(HttpStatus.SERVICE_UNAVAILABLE,
-                    "ReposiciÃ³n de stock no configurada (SERVICE_KEY)");
+                    "Reposición de stock no configurada (SERVICE_KEY)");
         }
         HttpHeaders headers = new HttpHeaders();
         headers.set("X-Service-Key", serviceKey);
@@ -341,6 +344,35 @@ public class BoletaServiceImpl implements BoletaService {
     }
 
     @Override
+    public List<BoletaResponse> listarBoletasResponse(String estado, String usuarioRun,
+                                                      String desde, String hasta) {
+        Instant desdeInstant = parsearFecha(desde, "desde");
+        Instant hastaInstant = parsearFecha(hasta, "hasta");
+
+        return boletaRepository.findAll().stream()
+                .filter(b -> estado == null || estado.isBlank() || b.getEstado().equalsIgnoreCase(estado))
+                .filter(b -> usuarioRun == null || usuarioRun.isBlank() || usuarioRun.equals(b.getUsuarioRun()))
+                .filter(b -> desdeInstant == null
+                        || (b.getFecha() != null && !b.getFecha().isBefore(desdeInstant)))
+                .filter(b -> hastaInstant == null
+                        || (b.getFecha() != null && !b.getFecha().isAfter(hastaInstant)))
+                .map(this::mapearAResponse)
+                .collect(Collectors.toList());
+    }
+
+    private Instant parsearFecha(String valor, String nombreParametro) {
+        if (valor == null || valor.isBlank()) {
+            return null;
+        }
+        try {
+            return Instant.parse(valor);
+        } catch (DateTimeParseException e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                    "El parámetro " + nombreParametro + " debe ser ISO-8601 UTC (ej. 2026-11-22T10:30:00Z)", e);
+        }
+    }
+
+    @Override
     public List<BoletaResponse> obtenerBoletasPorUsuarioResponse(String usuarioRun) {
         return boletaRepository.findByUsuarioRunOrderByFechaDesc(usuarioRun).stream()
                 .map(this::mapearAResponse)
@@ -371,7 +403,8 @@ public class BoletaServiceImpl implements BoletaService {
             try {
                 restTemplate.exchange(url, HttpMethod.PATCH, new HttpEntity<>(cuerpo, headers), Void.class);
             } catch (RestClientException e) {
-                throw new RuntimeException("Fallo al descontar stock de " + detalle.getProductoId(), e);
+                throw new ResponseStatusException(HttpStatus.CONFLICT,
+                        "Fallo al descontar stock de " + detalle.getProductoId(), e);
             }
         }
     }

@@ -16,6 +16,9 @@ public class JwtService {
     @Value("${jwt.secret}")
     private String secretKey;
 
+    @Value("${jwt.issuer:grwu-auth}")
+    private String issuer;
+
     public String extractUsername(String token) {
         return extractClaim(token, Claims::getSubject);
     }
@@ -31,11 +34,12 @@ public class JwtService {
 
     private Claims extractAllClaims(String token) {
         return Jwts
-                .parser() 
-                .verifyWith(getSignInKey()) 
+                .parser()
+                .verifyWith(getSignInKey())
+                .requireIssuer(issuer)
                 .build()
-                .parseSignedClaims(token) 
-                .getPayload(); 
+                .parseSignedClaims(token)
+                .getPayload();
     }   
 
     private SecretKey getSignInKey() {
