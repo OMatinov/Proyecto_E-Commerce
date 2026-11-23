@@ -18,14 +18,16 @@ spring:
   jackson:
     time-zone: UTC
 
+jwt:
+  # Debe ser identico en los tres servicios. En la entrega se define por variable de entorno.
+  secret: ${JWT_SECRET:cambiar-por-un-secreto-de-al-menos-32-caracteres}
+  issuer: ${JWT_ISSUER:grwu-auth}
+
 grwu:
-  jwt:
-    # Debe ser identico en los tres servicios. En la entrega se define por variable de entorno.
-    secret: ${JWT_SECRET:cambiar-por-un-secreto-de-al-menos-32-caracteres}
-    issuer: ${JWT_ISSUER:grwu-auth}
-  service-key:
-    # Secreto compartido para el endpoint interno de stock que consume ms-boletas.
-    value: ${SERVICE_KEY:cambiar-por-una-clave-interna}
+  # Secreto compartido para el endpoint interno de stock que consume ms-boletas.
+  service-key: ${SERVICE_KEY:cambiar-por-una-clave-interna}
+  cors:
+    allowed-origins: ${CORS_ALLOWED_ORIGINS:http://localhost:5173}
 
 springdoc:
   api-docs:
