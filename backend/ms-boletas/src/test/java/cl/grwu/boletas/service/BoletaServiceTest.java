@@ -23,6 +23,7 @@ import org.mockito.ArgumentCaptor;
 import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -41,6 +42,9 @@ public class BoletaServiceTest {
 
     @Mock
     private RestTemplate restTemplate;
+
+    @Mock
+    private Random random;
 
     @InjectMocks
     private BoletaServiceImpl boletaService;
@@ -261,6 +265,31 @@ public class BoletaServiceTest {
 
         assertEquals("rechazada", boletaGuardada().getEstado());
         verify(restTemplate, never()).exchange(anyString(), eq(HttpMethod.PATCH), any(), eq(Void.class));
+    }
+
+    @Test
+    void testCrearBoleta_RechazaCuandoAzarInyectadoEsMenorAlUmbral() {
+        ReflectionTestUtils.setField(boletaService, "probabilidadRechazo", 0.5);
+        when(random.nextDouble()).thenReturn(0.4);
+        when(restTemplate.getForEntity(anyString(), eq(ProductoDTO.class)))
+                .thenReturn(ResponseEntity.ok(producto("p-001", 20000, 10)));
+
+        boletaService.crearBoleta(requestCon("estandar", item("p-001", 1)), "190110222");
+
+        assertEquals("rechazada", boletaGuardada().getEstado());
+        assertEquals("Pago rechazado por la pasarela simulada.", boletaGuardada().getMotivoRechazo());
+        verify(restTemplate, never()).exchange(anyString(), eq(HttpMethod.PATCH), any(), eq(Void.class));
+    }
+
+    @Test
+    void testCrearBoleta_ApruebaCuandoAzarInyectadoEsAlto() {
+        ReflectionTestUtils.setField(boletaService, "probabilidadRechazo", 0.5);
+        when(random.nextDouble()).thenReturn(0.95);
+        stubProductoYStock(producto("p-001", 20000, 10));
+
+        boletaService.crearBoleta(requestCon("estandar", item("p-001", 1)), "190110222");
+
+        assertEquals("pagada", boletaGuardada().getEstado());
     }
 
     @Test

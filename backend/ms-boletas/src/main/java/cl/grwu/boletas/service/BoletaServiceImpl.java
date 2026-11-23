@@ -6,6 +6,7 @@ import cl.grwu.boletas.dto.ProductoDTO;
 import cl.grwu.boletas.entity.Boleta;
 import cl.grwu.boletas.entity.DetalleBoleta;
 import cl.grwu.boletas.repository.BoletaRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -34,6 +35,7 @@ public class BoletaServiceImpl implements BoletaService {
 
     private final BoletaRepository boletaRepository;
     private final RestTemplate restTemplate;
+    private final Random random;
 
     @Value("${servicios.catalogo.url}")
     private String urlCatalogo;
@@ -48,8 +50,14 @@ public class BoletaServiceImpl implements BoletaService {
     private String serviceKey;
 
     public BoletaServiceImpl(BoletaRepository boletaRepository, RestTemplate restTemplate) {
+        this(boletaRepository, restTemplate, new Random());
+    }
+
+    @Autowired
+    public BoletaServiceImpl(BoletaRepository boletaRepository, RestTemplate restTemplate, Random random) {
         this.boletaRepository = boletaRepository;
         this.restTemplate = restTemplate;
+        this.random = random;
     }
 
    @Override
@@ -153,7 +161,7 @@ public class BoletaServiceImpl implements BoletaService {
         if (!List.of("credito", "debito", "transferencia").contains(metodoPago)) return false;
         if (total <= 0) return false;
         if (total > limiteMonto) return false;
-        return new Random().nextDouble() >= probabilidadRechazo;
+        return random.nextDouble() >= probabilidadRechazo;
     }
 
     private BoletaResponse mapearAResponse(Boleta boleta) {
