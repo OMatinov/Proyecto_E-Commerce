@@ -1,17 +1,19 @@
+import { useEffect } from 'react'
 import { Link, NavLink, Outlet, useNavigate } from 'react-router-dom'
 import { useSesion } from '../context/SesionContext'
 import '../styles/admin.css'
 
+// El Vendedor solo ve Órdenes y Productos (matriz de acceso, sección 8 de AGENTS.md).
 const ENLACES = [
-  { to: '/admin', texto: '📊 Dashboard', end: true },
+  { to: '/admin', texto: '📊 Dashboard', end: true, soloAdmin: true },
   { to: '/admin/ordenes', texto: '🧾 Órdenes' },
   { to: '/admin/productos', texto: '👕 Productos' },
-  { to: '/admin/categorias', texto: '🏷️ Categorías' },
-  { to: '/admin/usuarios', texto: '👤 Usuarios' },
-  { to: '/admin/reportes', texto: '📈 Reportes' },
-  { to: '/admin/blogs', texto: '📝 Blogs' },
-  { to: '/admin/contactos', texto: ' Contactos' },
-  { to: '/admin/perfil', texto: '⚙️ Perfil' },
+  { to: '/admin/categorias', texto: '🏷️ Categorías', soloAdmin: true },
+  { to: '/admin/usuarios', texto: '👤 Usuarios', soloAdmin: true },
+  { to: '/admin/reportes', texto: '📈 Reportes', soloAdmin: true },
+  { to: '/admin/blogs', texto: '📝 Blogs', soloAdmin: true },
+  { to: '/admin/contactos', texto: ' Contactos', soloAdmin: true },
+  { to: '/admin/perfil', texto: '⚙️ Perfil', soloAdmin: true },
 ]
 
 export default function AdminLayout() {
@@ -22,6 +24,18 @@ export default function AdminLayout() {
     cerrarSesion()
     navigate('/login')
   }
+
+  const esAdmin = usuario?.tipoUsuario === 'Administrador'
+  const enlacesVisibles = ENLACES.filter(({ soloAdmin }) => !soloAdmin || esAdmin)
+
+  // Si el backend responde 403, llevamos al usuario a su vista permitida en vez de mostrar el error crudo.
+  useEffect(() => {
+    const alNoTenerPermisos = () => {
+      navigate(usuario?.tipoUsuario === 'Vendedor' ? '/admin/productos' : '/', { replace: true })
+    }
+    window.addEventListener('grwu:sin-permisos', alNoTenerPermisos)
+    return () => window.removeEventListener('grwu:sin-permisos', alNoTenerPermisos)
+  }, [navigate, usuario?.tipoUsuario])
 
   return (
       <div className="admin-layout">
@@ -35,7 +49,7 @@ export default function AdminLayout() {
           </div>
 
           <nav className="sidebar-nav">
-            {ENLACES.map(({ to, texto, end }) => (
+            {enlacesVisibles.map(({ to, texto, end }) => (
                 <NavLink
                     key={to}
                     to={to}

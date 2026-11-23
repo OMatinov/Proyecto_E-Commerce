@@ -1,27 +1,54 @@
-﻿import { useEffect, useState } from "react";
+﻿import { useCallback, useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
-import api from "../../services/api";
+import { useSesion } from "../../context/SesionContext";
+import { obtenerBoleta, cambiarEstado, cancelarBoleta } from "../../services/boletas.js";
+import { normalizarError } from "../../services/adapters.js";
+
+const TRANSICIONES = {
+  pagada: ["enviada", "cancelada"],
+  enviada: ["entregada"],
+  rechazada: ["cancelada"]
+};
 
 export default function AdminBoleta() {
   const { id } = useParams();
+  const { usuario } = useSesion();
+  const esAdmin = usuario?.tipoUsuario === "Administrador";
   const [orden, setOrden] = useState(null);
   const [cargando, setCargando] = useState(true);
   const [error, setError] = useState("");
+  const [accionError, setAccionError] = useState("");
+  const [procesando, setProcesando] = useState(false);
+
+  const cargarBoleta = useCallback(async () => {
+    setCargando(true);
+    setError("");
+    try {
+      setOrden(await obtenerBoleta(id));
+    } catch (err) {
+      const { mensaje } = normalizarError(err);
+      setError(`Orden no encontrada o sin permisos para verla: ${mensaje}`);
+    } finally {
+      setCargando(false);
+    }
+  }, [id]);
 
   useEffect(() => {
-    const cargarBoleta = async () => {
-      try {
-        const respuesta = await api.get(`/boletas/${id}`);
-        setOrden(respuesta.data);
-      } catch (err) {
-        console.error("Error al cargar boleta:", err);
-        setError("Orden no encontrada o no tienes permisos para verla.");
-      } finally {
-        setCargando(false);
-      }
-    };
     cargarBoleta();
-  }, [id]);
+  }, [cargarBoleta]);
+
+  const ejecutarAccion = async (accion) => {
+    setProcesando(true);
+    setAccionError("");
+    try {
+      await accion();
+      await cargarBoleta();
+    } catch (err) {
+      setAccionError(normalizarError(err).mensaje);
+    } finally {
+      setProcesando(false);
+    }
+  };
 
   if (cargando) return <div className="p-4">Cargando boleta...</div>;
   if (error || !orden) return (
@@ -35,9 +62,14 @@ export default function AdminBoleta() {
     switch (estado) {
       case 'pagada': return 'bg-success';
       case 'rechazada': return 'bg-danger';
+      case 'enviada': return 'bg-info text-dark';
+      case 'entregada': return 'bg-primary';
+      case 'cancelada': return 'bg-secondary';
       default: return 'bg-warning text-dark';
     }
   };
+
+  const opciones = TRANSICIONES[orden.estado] || [];
 
   return (
     <div>
@@ -93,11 +125,11 @@ export default function AdminBoleta() {
                   </thead>
                   <tbody>
                     {orden.items?.map((prod, index) => (
-                      <tr key={index}>
+                      <tr key={prod.productoId ?? index}>
                         <td>{prod.nombre}</td>
                         <td className="text-center">{prod.cantidad}</td>
-                        <td className="text-end">${prod.precioUnitario?.toLocaleString('es-CL')}</td>
-                        <td className="text-end">${prod.subtotal?.toLocaleString('es-CL')}</td>
+                        <td className="text-end">${Number(prod.precioUnitario || 0).toLocaleString('es-CL')}</td>
+                        <td className="text-end">${Number(prod.subtotal || 0).toLocaleString('es-CL')}</td>
                       </tr>
                     ))}
                   </tbody>
@@ -107,15 +139,15 @@ export default function AdminBoleta() {
               <div className="border-top pt-3">
                 <div className="d-flex justify-content-between mb-1">
                   <span className="text-muted">Subtotal</span>
-                  <span>${orden.subtotal?.toLocaleString('es-CL')}</span>
+                  <span>${Number(orden.subtotal || 0).toLocaleString('es-CL')}</span>
                 </div>
                 <div className="d-flex justify-content-between mb-1">
                   <span className="text-muted">Envío</span>
-                  <span>${orden.envio?.toLocaleString('es-CL')}</span>
+                  <span>${Number(orden.envio || 0).toLocaleString('es-CL')}</span>
                 </div>
                 <div className="d-flex justify-content-between fw-bold fs-5 mt-2 pt-2 border-top">
                   <span>Total Pagado</span>
-                  <span style={{ color: 'var(--color-primario)' }}>${orden.total?.toLocaleString('es-CL')}</span>
+                  <span style={{ color: 'var(--color-primario)' }}>${Number(orden.total || 0).toLocaleString('es-CL')}</span>
                 </div>
               </div>
             </div>
@@ -128,12 +160,46 @@ export default function AdminBoleta() {
               <h6 className="fw-bold text-muted text-uppercase small mb-3">Estado de la Orden</h6>
               <div className="d-flex align-items-center gap-2 mb-3">
                 <span className={`badge fs-6 ${getBadgeClass(orden.estado)}`}>
-                  {orden.estado?.toUpperCase()}
+                  {(orden.estado || '').toUpperCase()}
                 </span>
               </div>
               <p className="small text-muted mb-0">Fecha: {new Date(orden.fecha).toLocaleString('es-CL')}</p>
+              {orden.motivoRechazo && (
+                <p className="small text-danger mt-2 mb-0">Motivo: {orden.motivoRechazo}</p>
+              )}
             </div>
           </div>
+
+          {esAdmin ? (
+            <div className="card border-0 shadow-sm">
+              <div className="card-body p-4">
+                <h6 className="fw-bold text-muted text-uppercase small mb-3">Gestionar Boleta</h6>
+                {accionError && <div className="alert alert-danger small py-2">{accionError}</div>}
+                {opciones.length > 0 ? (
+                  <div className="d-grid gap-2">
+                    {opciones.filter((estado) => estado !== "cancelada").map((estado) => (
+                      <button key={estado} type="button" className="btn btn-primary btn-sm"
+                              disabled={procesando}
+                              onClick={() => ejecutarAccion(() => cambiarEstado(orden.id, estado))}>
+                        Marcar como {estado}
+                      </button>
+                    ))}
+                    {opciones.includes("cancelada") && (
+                      <button type="button" className="btn btn-outline-danger btn-sm"
+                              disabled={procesando}
+                              onClick={() => ejecutarAccion(() => cancelarBoleta(orden.id))}>
+                        Cancelar boleta
+                      </button>
+                    )}
+                  </div>
+                ) : (
+                  <p className="small text-muted mb-0">No hay transiciones disponibles para este estado.</p>
+                )}
+              </div>
+            </div>
+          ) : (
+            <p className="small text-muted px-2">Vista de solo lectura para Vendedores.</p>
+          )}
         </div>
       </div>
     </div>

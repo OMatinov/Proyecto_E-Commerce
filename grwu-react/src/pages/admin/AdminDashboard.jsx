@@ -3,6 +3,10 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { getBlogs } from '../../data/Blogs';
 import { getContactos } from '../../data/Contactos';
+import { listarBoletas } from '../../services/boletas.js';
+import { normalizarError } from '../../services/adapters.js';
+import { totalVentas } from '../../utils/reportes.js';
+import { formatearCLP } from '../../data/carritoData.js';
 
 const AdminDashboard = () => {
   const [stats, setStats] = useState({
@@ -10,16 +14,27 @@ const AdminDashboard = () => {
     contactos: 0,
     noLeidos: 0
   });
+  const [boletas, setBoletas] = useState(null);
+  const [errorBoletas, setErrorBoletas] = useState('');
 
   useEffect(() => {
     const blogs = getBlogs();
     const contactos = getContactos();
-    
+
     setStats({
       blogs: blogs.length,
       contactos: contactos.length,
       noLeidos: contactos.filter(c => !c.leido).length
     });
+  }, []);
+
+  // Las boletas viven en MySQL y se leen por API; nada de localStorage.
+  useEffect(() => {
+    let activo = true;
+    listarBoletas()
+      .then((datos) => { if (activo) setBoletas(datos); })
+      .catch((err) => { if (activo) setErrorBoletas(normalizarError(err).mensaje); });
+    return () => { activo = false; };
   }, []);
 
   return (
@@ -34,7 +49,40 @@ const AdminDashboard = () => {
         </div>
       </div>
 
-      {/* Tarjetas de Estadísticas */}
+      {/* Ventas reales desde ms-boletas */}
+      {errorBoletas && (
+        <div className="alert alert-warning small">No se pudieron cargar las ventas: {errorBoletas}</div>
+      )}
+      {!errorBoletas && (
+        <div className="row g-3 mb-4">
+          <div className="col-md-4">
+            <div className="card border-0 shadow-sm p-3 h-100" style={{ borderLeft: '4px solid var(--color-primary, #4B1D5A)' }}>
+              <p className="text-uppercase text-muted small fw-bold mb-1">Ventas registradas</p>
+              <h2 className="display-6 fw-bold mb-0" style={{ color: 'var(--color-primario)' }}>
+                {boletas ? formatearCLP(totalVentas(boletas)) : '...'}
+              </h2>
+            </div>
+          </div>
+          <div className="col-md-4">
+            <div className="card border-0 shadow-sm p-3 h-100" style={{ borderLeft: '4px solid #198754' }}>
+              <p className="text-uppercase text-muted small fw-bold mb-1">Órdenes concretadas</p>
+              <h2 className="display-6 fw-bold mb-0 text-success">
+                {boletas ? boletas.filter(b => ['pagada', 'enviada', 'entregada'].includes(b.estado)).length : '...'}
+              </h2>
+            </div>
+          </div>
+          <div className="col-md-4">
+            <div className="card border-0 shadow-sm p-3 h-100" style={{ borderLeft: '4px solid #dc3545' }}>
+              <p className="text-uppercase text-muted small fw-bold mb-1">Boletas rechazadas</p>
+              <h2 className="display-6 fw-bold mb-0 text-danger">
+                {boletas ? boletas.filter(b => b.estado === 'rechazada').length : '...'}
+              </h2>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Tarjetas de Estadísticas (contenido local: blogs y contactos) */}
       <div className="row g-3 mb-4">
         <div className="col-md-4">
           <div className="card border-0 shadow-sm p-3 h-100" style={{ borderLeft: '4px solid var(--color-primario)' }}>

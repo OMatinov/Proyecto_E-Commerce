@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { getAccessToken, getRefreshToken, guardarTokens, limpiarTokens } from './tokenStore';
+import { getAccessToken, getRefreshToken, guardarTokens, limpiarTokens } from './tokenStore.js';
 
 // Instancia única de Axios
 const api = axios.create({
@@ -51,6 +51,14 @@ api.interceptors.response.use(
     const original = error.config;
     const status = error.response?.status;
     const esAuth = original?.url?.includes('/auth/');
+
+    // 403: avisamos a la capa de UI para que redirija según el rol.
+    // No normalizamos ni reemplazamos el error: Checkout lee error.response.status.
+    if (status === 403 && typeof window !== 'undefined') {
+      window.dispatchEvent(new CustomEvent('grwu:sin-permisos', {
+        detail: { url: original?.url }
+      }));
+    }
 
     if (status === 401 && original && !original._reintentado && !esAuth) {
       original._reintentado = true;

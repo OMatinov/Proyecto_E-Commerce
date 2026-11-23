@@ -12,9 +12,10 @@ export default function RutaPorRol({ rolesPermitidos }) {
     return <Navigate to="/login" replace />;
   }
 
-  // Si el rol del usuario no está en la lista de permitidos, lo mandamos a la tienda
+  // Rol insuficiente: redirección a la vista permitida, nunca un 403 crudo.
   if (!rolesPermitidos.includes(usuario.tipoUsuario)) {
-    return <Navigate to="/" replace />; 
+    const destino = usuario.tipoUsuario === 'Vendedor' ? '/admin/productos' : '/';
+    return <Navigate to={destino} replace />;
   }
 
   return <Outlet />;
