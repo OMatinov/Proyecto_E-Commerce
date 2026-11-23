@@ -17,6 +17,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.server.ResponseStatusException;
+import org.springframework.transaction.annotation.Transactional;
+import java.util.LinkedHashMap;
 
 import java.time.Instant;
 import java.util.ArrayList;
@@ -49,7 +51,8 @@ public class BoletaServiceImpl implements BoletaService {
         this.restTemplate = restTemplate;
     }
 
-    @Override
+   @Override
+    @Transactional(noRollbackFor = ResponseStatusException.class)
     public BoletaResponse crearBoleta(CrearBoletaRequest request, String usuarioRun) {
         Boleta boleta = new Boleta();
         Optional<Boleta> ultimaBoleta = boletaRepository.findTopByOrderByNumeroDesc();
@@ -75,20 +78,28 @@ public class BoletaServiceImpl implements BoletaService {
         int subtotal = 0;
         List<DetalleBoleta> detalles = new ArrayList<>();
 
+        Map<String, Integer> cantidades = new LinkedHashMap<>();
         for (CrearBoletaRequest.ItemRequest itemReq : request.getItems()) {
-            String urlProducto = urlCatalogo + "/productos/" + itemReq.getProductoId();
+            cantidades.merge(itemReq.getProductoId(), itemReq.getCantidad(), Integer::sum);
+        }
+
+        for (Map.Entry<String, Integer> entry : cantidades.entrySet()) {
+            String productoId = entry.getKey();
+            Integer cantidad = entry.getValue();
+
+            String urlProducto = urlCatalogo + "/productos/" + productoId;
             ResponseEntity<ProductoDTO> response = restTemplate.getForEntity(urlProducto, ProductoDTO.class);
             ProductoDTO producto = response.getBody();
 
             if (producto == null) {
-                throw new RuntimeException("Producto no encontrado: " + itemReq.getProductoId());
+                throw new RuntimeException("Producto no encontrado: " + productoId);
             }
 
-            if (producto.getStock() < itemReq.getCantidad()) {
+            if (producto.getStock() < cantidad) {
                 throw new RuntimeException("Stock insuficiente para: " + producto.getNombre());
             }
 
-            int subtotalLinea = producto.getPrecio() * itemReq.getCantidad();
+            int subtotalLinea = producto.getPrecio() * cantidad;
             subtotal += subtotalLinea;
 
             DetalleBoleta detalle = new DetalleBoleta();
@@ -97,7 +108,7 @@ public class BoletaServiceImpl implements BoletaService {
             detalle.setPrecioUnitario(producto.getPrecio());
             detalle.setImagen(producto.getImagen());
             detalle.setCategoria(producto.getCategoriaSlug());
-            detalle.setCantidad(itemReq.getCantidad());
+            detalle.setCantidad(cantidad);
             detalle.setSubtotalLinea(subtotalLinea);
             
             detalles.add(detalle);
@@ -118,7 +129,7 @@ public class BoletaServiceImpl implements BoletaService {
         
         if (pagoAprobado) {
             try {
-                descontarStock(detalles); // Llama a MatÃ­as
+                descontarStock(detalles);
             } catch (Exception e) {
                 boleta.setEstado("rechazada");
                 boleta.setMotivoRechazo("Stock agotado al momento de procesar el pago.");
@@ -216,28 +227,51 @@ public class BoletaServiceImpl implements BoletaService {
     }
 
     @Override
+    @Transactional(noRollbackFor = ResponseStatusException.class)
     public BoletaResponse reintentarPago(String id, String usuarioRun) {
         Boleta boleta = obtenerBoleta(id);
         if (!boleta.getUsuarioRun().equals(usuarioRun)) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "No tienes permiso para reintentar esta boleta");
         }
-        if (!boleta.getEstado().equals("rechazada")) {
+        if (!"rechazada".equals(boleta.getEstado())) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Solo se pueden reintentar boletas rechazadas");
         }
-        
+
+        for (DetalleBoleta detalle : boleta.getItems()) {
+            ProductoDTO producto = restTemplate.getForEntity(
+                    urlCatalogo + "/productos/" + detalle.getProductoId(), ProductoDTO.class).getBody();
+            if (producto == null || producto.getStock() == null
+                    || producto.getStock() < detalle.getCantidad()) {
+                boleta.setEstado("rechazada");
+                boleta.setMotivoRechazo("Stock insuficiente al reintentar el pago.");
+                boletaRepository.save(boleta);
+                throw new ResponseStatusException(HttpStatus.CONFLICT,
+                        "Stock insuficiente para " + detalle.getProductoId());
+            }
+        }
+
         boolean pagoAprobado = simularPago(boleta.getTotal(), boleta.getMetodoPago());
         if (pagoAprobado) {
+            try {
+                descontarStock(boleta.getItems());
+            } catch (Exception e) {
+                boleta.setEstado("rechazada");
+                boleta.setMotivoRechazo("Stock agotado al reintentar el pago.");
+                boletaRepository.save(boleta);
+                throw new ResponseStatusException(HttpStatus.CONFLICT,
+                        "No se pudo completar el reintento: stock agotado.");
+            }
             boleta.setEstado("pagada");
             boleta.setMotivoRechazo(null);
         } else {
             boleta.setMotivoRechazo("Pago rechazado en el reintento.");
         }
-        
         boletaRepository.save(boleta);
         return mapearAResponse(boleta);
     }
 
     @Override
+    @Transactional
     public BoletaResponse cambiarEstado(String id, String nuevoEstado) {
         Boleta boleta = obtenerBoleta(id);
         if (nuevoEstado == null || nuevoEstado.isBlank()) {
@@ -256,6 +290,7 @@ public class BoletaServiceImpl implements BoletaService {
     }
 
     @Override
+    @Transactional
     public void cancelarBoleta(String id) {
         Boleta boleta = obtenerBoleta(id);
         if (!esTransicionValida(boleta.getEstado(), "cancelada")) {

@@ -4,6 +4,10 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 import lombok.Data;
 import java.util.List;
 
@@ -14,10 +18,12 @@ public class CrearBoletaRequest {
     @Valid
     private List<ItemRequest> items;
 
+    @Pattern(regexp = "estandar|premium", message = "Despacho no válido")
     @NotBlank(message = "El tipo de despacho es obligatorio")
     private String despacho; // "estandar" o "premium"
 
-    @NotBlank(message = "El mÃ©todo de pago es obligatorio")
+    @Pattern(regexp = "credito|debito|transferencia", message = "Método de pago no válido")
+    @NotBlank(message = "El método de pago es obligatorio")
     private String metodoPago; // "credito", "debito", "transferencia"
 
     @NotNull(message = "Los datos del cliente son obligatorios")
@@ -33,6 +39,7 @@ public class CrearBoletaRequest {
         @NotBlank(message = "El ID del producto es obligatorio")
         private String productoId;
 
+        @Min(value = 1, message = "La cantidad debe ser al menos 1")
         @NotNull(message = "La cantidad es obligatoria")
         private Integer cantidad;
     }
@@ -43,6 +50,8 @@ public class CrearBoletaRequest {
         private String nombre;
         @NotBlank
         private String apellidos;
+        @Email(message = "Correo no válido")
+        @Pattern(regexp = "(?i).*@(duoc\\.cl|profesor\\.duoc\\.cl|gmail\\.com)$", message = "Dominio de correo no permitido")
         @NotBlank
         private String correo;
     }
@@ -52,6 +61,7 @@ public class CrearBoletaRequest {
         @NotBlank
         private String calle;
         private String departamento; // Opcional
+        @Size(max = 200, message = "Indicaciones máximo 200 caracteres")
         private String indicaciones; // Opcional
         @NotBlank
         private String region;
