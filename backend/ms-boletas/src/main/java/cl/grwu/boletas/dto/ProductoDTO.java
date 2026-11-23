@@ -11,6 +11,6 @@ public class ProductoDTO {
     private Integer stock;
     private String imagen;
     @JsonProperty("categoria")
-    private String categoriaSlug; // Viene como "categoria" en el JSON de Mati­as
+    private String categoriaSlug; // Viene como "categoria" en el JSON de Matías
     
 }

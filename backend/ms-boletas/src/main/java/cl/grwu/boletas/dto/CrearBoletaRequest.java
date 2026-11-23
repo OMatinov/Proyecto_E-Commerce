@@ -30,7 +30,7 @@ public class CrearBoletaRequest {
     @Valid
     private ClienteRequest cliente;
 
-    @NotNull(message = "La direcciÃ³n es obligatoria")
+    @NotNull(message = "La dirección es obligatoria")
     @Valid
     private DireccionRequest direccion;
 

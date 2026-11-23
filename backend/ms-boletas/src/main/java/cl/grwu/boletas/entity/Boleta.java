@@ -71,11 +71,11 @@ public class Boleta {
     @Column(name = "motivo_rechazo", length = 255)
     private String motivoRechazo;
 
-    // RelaciÃ³n con los detalles (Cascade ALL para que se guarden juntos)
+    // Relación con los detalles (Cascade ALL para que se guarden juntos)
     @OneToMany(mappedBy = "boleta", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<DetalleBoleta> items = new ArrayList<>();
 
-    // MÃ©todo auxiliar para agregar detalles y mantener la relaciÃ³n
+    // Método auxiliar para agregar detalles y mantener la relación
     public void agregarItem(DetalleBoleta item) {
         items.add(item);
         item.setBoleta(this);

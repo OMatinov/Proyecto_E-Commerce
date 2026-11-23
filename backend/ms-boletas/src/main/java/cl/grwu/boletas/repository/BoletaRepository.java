@@ -7,9 +7,9 @@ import java.util.Optional;
 
 public interface BoletaRepository extends JpaRepository<Boleta, String> {
     
-    // Buscar boletas de un usuario especÃ­fico (Historial de compras)
+    // Buscar boletas de un usuario específico (Historial de compras)
     List<Boleta> findByUsuarioRunOrderByFechaDesc(String usuarioRun);
     
-    // Obtener el Ãºltimo nÃºmero de boleta para generar el siguiente
+    // Obtener el último número de boleta para generar el siguiente
     Optional<Boleta> findTopByOrderByNumeroDesc();
 }

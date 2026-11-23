@@ -35,7 +35,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         final String userRun;
         final String userRole;
 
-        // Si no hay token, dejamos pasar la peticiÃ³n (el SecurityConfig decidirÃ¡ si la bloquea)
+        // Si no hay token, dejamos pasar la petición (el SecurityConfig decidirá si la bloquea)
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
             filterChain.doFilter(request, response);
             return;
@@ -47,7 +47,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             userRun = jwtService.extractUsername(jwt);
             userRole = jwtService.extractRole(jwt);
 
-            // Si el usuario no estÃ¡ autenticado aÃºn en el contexto, lo autenticamos
+            // Si el usuario no está autenticado aún en el contexto, lo autenticamos
             if (userRun != null && SecurityContextHolder.getContext().getAuthentication() == null) {
                 if (jwtService.isTokenValid(jwt)) {
                     // Spring Security espera los roles con el prefijo ROLE_

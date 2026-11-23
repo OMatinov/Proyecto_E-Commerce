@@ -26,8 +26,8 @@ public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
         body.put("timestamp", Instant.now().toString());
         body.put("status", 401);
         body.put("error", "Unauthorized");
-        body.put("message", "No estÃ¡s autenticado o el token es invÃ¡lido");
-        body.put("path", request.getServletPath());
+        body.put("message", "No estás autenticado o el token es inválido");
+        body.put("path", request.getRequestURI());
 
         ObjectMapper mapper = new ObjectMapper();
         mapper.writeValue(response.getOutputStream(), body);

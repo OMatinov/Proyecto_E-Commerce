@@ -14,7 +14,7 @@ public class BoletaResponse {
     // Datos del cliente
     private ClienteResponse cliente;
     
-    // Datos de direcciÃ³n
+    // Datos de dirección
     private DireccionResponse direccion;
     
     // Montos
