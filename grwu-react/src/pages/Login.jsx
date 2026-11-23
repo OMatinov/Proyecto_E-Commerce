@@ -1,8 +1,9 @@
 // Login.jsx - Vista "Iniciar sesión" (tienda).
 // Autor: César
 //
-// Estado propio: valores del formulario, errores por campo y error general de credenciales.
-// Al entrar bien: administradores van al panel (rutaAdmin), el resto a la tienda (rutaInicio).
+// Estado propio: valores del formulario, errores por campo, error general (credenciales) y "enviando".
+// Al entrar bien: Administrador -> panel (rutaAdmin), Vendedor -> órdenes (rutaVendedor), Cliente -> tienda (rutaInicio).
+// El Vendedor no tiene acceso al dashboard, por eso va directo a Órdenes.
 
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
@@ -10,30 +11,36 @@ import CampoFormulario from "../components/CampoFormulario.jsx";
 import { useSesion } from "../context/SesionContext.jsx";
 import { validarLogin } from "../utils/formularios.js";
 
-export default function Login({ rutaInicio = "/", rutaAdmin = "/admin" }) {
+export default function Login({ rutaInicio = "/", rutaAdmin = "/admin", rutaVendedor = "/admin/ordenes" }) {
   const { iniciarSesion } = useSesion();
   const navigate = useNavigate();
   const [valores, setValores] = useState({ correo: "", clave: "" });
   const [errores, setErrores] = useState({});
   const [errorGeneral, setErrorGeneral] = useState("");
+  const [enviando, setEnviando] = useState(false);
 
   const manejarCambio = (e) => {
     setValores({ ...valores, [e.target.name]: e.target.value });
   };
 
-  const manejarEnvio = (e) => {
+  const manejarEnvio = async (e) => {
     e.preventDefault();
     setErrorGeneral("");
     const erroresNuevos = validarLogin(valores);
     setErrores(erroresNuevos);
     if (Object.keys(erroresNuevos).length > 0) return;
 
-    const resultado = iniciarSesion(valores.correo, valores.clave);
+    setEnviando(true);
+    const resultado = await iniciarSesion(valores.correo, valores.clave);
+    setEnviando(false);
     if (!resultado.ok) {
       setErrorGeneral(resultado.mensaje);
       return;
     }
-    navigate(resultado.usuario.tipoUsuario === "Administrador" ? rutaAdmin : rutaInicio);
+    const tipo = resultado.usuario.tipoUsuario;
+    if (tipo === "Administrador") navigate(rutaAdmin);
+    else if (tipo === "Vendedor") navigate(rutaVendedor);
+    else navigate(rutaInicio);
   };
 
   return (
@@ -47,10 +54,11 @@ export default function Login({ rutaInicio = "/", rutaAdmin = "/admin" }) {
 
         {errorGeneral && <div className="alert alert-danger" role="alert">{errorGeneral}</div>}
 
-        <button type="submit" className="btn btn-primary w-100">Iniciar sesión</button>
+        <button type="submit" className="btn btn-primary w-100" disabled={enviando}>
+          {enviando ? "Ingresando..." : "Iniciar sesión"}
+        </button>
       </form>
       <p className="mt-3 mb-1">¿Aún no tienes cuenta? <Link to="/registro">Regístrate aquí</Link>.</p>
-      <p><Link to="/recuperar-clave">¿Olvidaste tu contraseña?</Link></p>
     </main>
   );
 }

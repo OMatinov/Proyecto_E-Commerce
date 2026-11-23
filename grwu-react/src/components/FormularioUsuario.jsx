@@ -28,13 +28,17 @@ export default function FormularioUsuario({ valores, errores, onChange, runEdita
         <CampoFormulario id="nombre" etiqueta="Nombre" maxLength={50} value={valores.nombre} onChange={onChange} error={errores.nombre} />
       </div>
       <div className="col-md-4">
-        <CampoFormulario id="apellidos" etiqueta="Apellidos" maxLength={100} value={valores.apellidos} onChange={onChange} error={errores.apellidos} />
+        <CampoFormulario id="apellidos" etiqueta="Apellidos" maxLength={80} value={valores.apellidos} onChange={onChange} error={errores.apellidos} />
       </div>
-      <div className="col-md-6">
+      <div className="col-md-4">
         <CampoFormulario id="correo" etiqueta="Correo electrónico" type="email" maxLength={100}
           value={valores.correo} onChange={onChange} error={errores.correo} />
       </div>
-      <div className="col-md-6">
+      <div className="col-md-4">
+        <CampoFormulario id="fechaNacimiento" etiqueta="Fecha de nacimiento" type="date" max={new Date().toISOString().slice(0, 10)}
+          value={valores.fechaNacimiento} onChange={onChange} error={errores.fechaNacimiento} />
+      </div>
+      <div className="col-md-4">
         <CampoFormulario id="telefono" etiqueta="Teléfono (opcional)" type="tel" value={valores.telefono} onChange={onChange} error={errores.telefono} />
       </div>
       <div className="col-md-4">
@@ -48,6 +52,10 @@ export default function FormularioUsuario({ valores, errores, onChange, runEdita
       <div className="col-md-4">
         <CampoFormulario id="comuna" etiqueta="Comuna" opciones={opcionesComuna} placeholderOpcion="-- Seleccione la comuna --"
           value={valores.comuna} onChange={onChange} error={errores.comuna} disabled={!valores.region} />
+      </div>
+      <div className="col-12">
+        <CampoFormulario id="direccion" etiqueta="Dirección (opcional)" maxLength={150}
+          value={valores.direccion ?? ""} onChange={onChange} error={errores.direccion} />
       </div>
       <div className="col-md-6">
         <CampoFormulario id="clave" etiqueta={`Contraseña${sufijoClave}`} type="password"

@@ -1,16 +1,16 @@
 // Checkout.jsx - Vista "Carrito de compra / datos de entrega" (paso de pago).
-// Autor: César
+// Autor: César (conectado a ms-boletas por Katerine; manejo de sesión y errores por César)
 //
 // Flujo al presionar "Pagar ahora":
 //   1. validarCheckout()  -> errores por campo
-//   2. procesarPago()     -> aprobado / rechazado (simulado)
-//   3. crearOrden()       -> se guarda SIEMPRE (pagada o rechazada)
-//   4. aprobado -> vacía el carrito y va a /pago-correcto/:id
-//      rechazado -> conserva el carrito y va a /pago-error/:id
-// Si hay sesión iniciada, los datos del cliente y la dirección vienen prellenados.
+//   2. POST /api/v1/boletas (ms-boletas) -> valida stock, procesa el pago simulado y guarda la boleta
+//   3. pagada    -> vacía el carrito y va a /pago-correcto/:id
+//      rechazada -> conserva el carrito y va a /pago-error/:id
+//      error     -> 401 sesión vencida, 403 no es Cliente, 409 stock agotado: se muestra en pantalla
+// La ruta exige rol Cliente (RutaPorRol); los datos del cliente y la dirección vienen prellenados.
 
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import CampoFormulario from "../components/CampoFormulario.jsx";
 import MensajeVacio from "../components/MensajeVacio.jsx";
 import TablaItems from "../components/TablaItems.jsx";
@@ -18,10 +18,13 @@ import ResumenTotales from "../components/ResumenTotales.jsx";
 import { useCarrito } from "../context/CarritoContext.jsx";
 import { useSesion } from "../context/SesionContext.jsx";
 import { REGIONES, comunasDeRegion } from "../data/regiones.js";
-import { crearOrden } from "../data/ordenesData.js";
 import { COSTO_ENVIO_PREMIUM, formatearCLP } from "../data/carritoData.js";
-import { procesarPago, METODOS_PAGO } from "../services/pago.js";
+import { METODOS_PAGO } from "../services/pago.js";
 import { validarCheckout } from "../utils/formularios.js";
+
+import { aSolicitudBoleta } from "../services/adapters.js";
+import boletasService from "../services/boletas.js";
+import { normalizarError } from "../services/errores.js";
 
 function valoresIniciales(usuario) {
   return {
@@ -49,6 +52,8 @@ export default function Checkout() {
   const navigate = useNavigate();
   const [valores, setValores] = useState(() => valoresIniciales(usuario));
   const [errores, setErrores] = useState({});
+  const [cargando, setCargando] = useState(false); // Para deshabilitar el botón mientras carga
+  const [errorEnvio, setErrorEnvio] = useState("");
 
   if (items.length === 0) {
     return (
@@ -65,31 +70,34 @@ export default function Checkout() {
     else setValores({ ...valores, [name]: value });
   };
 
-  const manejarEnvio = (e) => {
+  const manejarEnvio = async (e) => {
     e.preventDefault();
     const erroresNuevos = validarCheckout(valores);
     setErrores(erroresNuevos);
     if (Object.keys(erroresNuevos).length > 0) return;
 
-    const pago = procesarPago({ metodoPago: valores.metodoPago, total });
-    const orden = crearOrden({
-      usuarioRun: usuario?.run ?? null,
-      cliente: { nombre: valores.nombre.trim(), apellidos: valores.apellidos.trim(), correo: valores.correo.trim() },
-      direccion: {
-        calle: valores.calle.trim(), departamento: valores.departamento.trim(),
-        region: valores.region, comuna: valores.comuna, indicaciones: valores.indicaciones.trim()
-      },
-      items, subtotal, envio, total,
-      despacho: valores.despacho,
-      metodoPago: valores.metodoPago,
-      estado: pago.aprobado ? "pagada" : "rechazada"
-    });
+    setErrorEnvio("");
+    setCargando(true);
 
-    if (pago.aprobado) {
-      vaciar();
-      navigate(`/pago-correcto/${orden.id}`);
-    } else {
-      navigate(`/pago-error/${orden.id}`, { state: { motivo: pago.motivo } });
+    try {
+      // ms-boletas toma el RUN del token (no del body) y recalcula precios y totales con el catálogo.
+      const boleta = await boletasService.crear(aSolicitudBoleta({ items, valores }));
+
+      if (boleta.estado === "pagada") {
+        vaciar();
+        navigate(`/pago-correcto/${boleta.id}`);
+      } else {
+        // Pago rechazado por la pasarela: se conserva el carrito y se permite reintentar.
+        navigate(`/pago-error/${boleta.id}`, { state: { motivo: boleta.motivoRechazo } });
+      }
+    } catch (error) {
+      const { mensaje, status, errores } = normalizarError(error);
+      if (status === 400 && errores) setErrores(errores);
+      if (status === 401) setErrorEnvio("Tu sesión expiró. Inicia sesión de nuevo para pagar.");
+      else if (status === 403) setErrorEnvio("Tu cuenta no puede realizar compras: solo los clientes pueden pagar.");
+      else setErrorEnvio(mensaje); // 409 stock agotado, 404 producto, 503 catálogo caído, red, etc.
+    } finally {
+      setCargando(false);
     }
   };
 
@@ -100,11 +108,7 @@ export default function Checkout() {
   return (
     <main className="container py-4">
       <h1 className="h3 mb-3">Finalizar compra</h1>
-      {!usuario && (
-        <div className="alert alert-info">
-          ¿Ya tienes cuenta? <Link to="/login">Inicia sesión</Link> y completaremos tus datos automáticamente.
-        </div>
-      )}
+      {errorEnvio && <div className="alert alert-danger" role="alert">{errorEnvio}</div>}
       <form onSubmit={manejarEnvio} noValidate>
         <div className="row g-4">
           <div className="col-lg-7">
@@ -160,7 +164,9 @@ export default function Checkout() {
                 <h2 className="h5">Resumen de tu compra</h2>
                 <TablaItems items={items} />
                 <ResumenTotales subtotal={subtotal} envio={envio} total={total} />
-                <button type="submit" className="btn btn-success w-100 mt-3">Pagar ahora {formatearCLP(total)}</button>
+                <button type="submit" className="btn btn-success w-100 mt-3" disabled={cargando}>
+                  {cargando ? "Procesando pago..." : `Pagar ahora ${formatearCLP(total)}`}
+                </button>
               </div>
             </div>
           </aside>

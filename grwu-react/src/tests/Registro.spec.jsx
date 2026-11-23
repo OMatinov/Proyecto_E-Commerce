@@ -1,9 +1,10 @@
 import { render, screen, fireEvent, cleanup } from "@testing-library/react";
 import { MemoryRouter, Routes, Route } from "react-router-dom";
 import Registro from "../pages/Registro.jsx";
-import { SesionProvider, CLAVE_SESION } from "../context/SesionContext.jsx";
-import { CLAVE_USUARIOS, obtenerUsuario } from "../data/usuariosData.js";
-import { borrar, leer } from "../data/storage.js";
+import { SesionProvider } from "../context/SesionContext.jsx";
+import auth from "../services/auth.js";
+import { limpiarTokens } from "../services/tokenStore.js";
+import { CLIENTE, errorApi } from "./apoyo.jsx";
 
 function montar() {
   return render(
@@ -12,91 +13,102 @@ function montar() {
         <Routes>
           <Route path="/registro" element={<Registro />} />
           <Route path="/" element={<h1>Página de inicio</h1>} />
+          <Route path="/login" element={<h1>Login</h1>} />
         </Routes>
       </MemoryRouter>
     </SesionProvider>
   );
 }
 
-function escribir(etiqueta, valor) {
-  fireEvent.change(screen.getByLabelText(etiqueta), { target: { value: valor } });
-}
+const escribir = (etiqueta, valor) => fireEvent.change(screen.getByLabelText(etiqueta), { target: { value: valor } });
 
-function completarFormulario(run = "123456785", correo = "nuevo@gmail.com") {
-  escribir("RUN", run);
-  escribir("Nombre", "Nuevo");
-  escribir("Apellidos", "Usuario Prueba");
-  escribir("Correo electrónico", correo);
-  escribir("Región", "Región del Biobío");
-  escribir("Comuna", "Concepción");
+function completarValido() {
+  escribir("RUN", "205558993");
+  escribir("Nombre", "Javiera");
+  escribir("Apellidos", "Contreras Lara");
+  escribir("Correo electrónico", "javiera.contreras@gmail.com");
+  escribir("Fecha de nacimiento", "2000-06-25");
+  escribir("Región", "Región de la Araucanía");
+  escribir("Comuna", "Temuco");
   escribir("Contraseña", "abcd");
   escribir("Confirmar contraseña", "abcd");
 }
-
 const enviar = () => fireEvent.click(screen.getByRole("button", { name: "Registrarse" }));
 
 describe("Registro", () => {
-  beforeEach(() => { borrar(CLAVE_USUARIOS); borrar(CLAVE_SESION); });
-  afterEach(cleanup);
+  beforeEach(limpiarTokens);
+  afterEach(() => { cleanup(); limpiarTokens(); });
 
-  it("renderiza todos los campos del formulario", () => {
+  it("renderiza todos los campos, incluida la fecha de nacimiento que exige el backend", () => {
     montar();
-    ["RUN", "Nombre", "Apellidos", "Correo electrónico", "Teléfono (opcional)", "Región", "Comuna", "Contraseña", "Confirmar contraseña"]
-      .forEach((etiqueta) => expect(screen.getByLabelText(etiqueta)).toBeTruthy());
+    ["RUN", "Nombre", "Apellidos", "Correo electrónico", "Fecha de nacimiento", "Teléfono (opcional)", "Región", "Comuna", "Contraseña", "Confirmar contraseña"]
+      .forEach((e) => expect(screen.getByLabelText(e)).toBeTruthy());
   });
 
-  it("la comuna está deshabilitada hasta elegir una región", () => {
+  it("la comuna está deshabilitada hasta elegir región y se vacía al cambiar de región", () => {
     montar();
-    expect(screen.getByLabelText("Comuna").disabled).toBe(true);
+    expect(screen.getByLabelText("Comuna").disabled).toBeTrue();
+    escribir("Región", "Región de la Araucanía");
+    expect(screen.getByLabelText("Comuna").disabled).toBeFalse();
+    escribir("Comuna", "Temuco");
     escribir("Región", "Región del Biobío");
-    expect(screen.getByLabelText("Comuna").disabled).toBe(false);
-  });
-
-  it("al elegir región se cargan solo las comunas de esa región", () => {
-    montar();
-    escribir("Región", "Región del Maule");
-    const textos = Array.from(screen.getByLabelText("Comuna").options).map((o) => o.textContent);
-    expect(textos).toContain("Talca");
-    expect(textos).not.toContain("Concepción");
-  });
-
-  it("al cambiar de región se vacía la comuna elegida", () => {
-    montar();
-    escribir("Región", "Región del Biobío");
-    escribir("Comuna", "Concepción");
-    escribir("Región", "Región del Maule");
     expect(screen.getByLabelText("Comuna").value).toBe("");
   });
 
-  it("muestra errores y no crea el usuario si el formulario está vacío", () => {
+  it("con el formulario vacío muestra errores y NO llama al servidor", () => {
+    const registro = spyOn(auth, "registro");
     montar();
     enviar();
     expect(screen.getAllByRole("alert").length).toBeGreaterThan(5);
-    expect(obtenerUsuario("123456785")).toBeNull();
+    expect(screen.getByText("La fecha de nacimiento es obligatoria.")).toBeTruthy();
+    expect(registro).not.toHaveBeenCalled();
   });
 
-  it("muestra error si las contraseñas no coinciden", () => {
+  it("registra al cliente, inicia sesión y va al inicio", async () => {
+    const registro = spyOn(auth, "registro").and.resolveTo(CLIENTE);
+    spyOn(auth, "login").and.resolveTo(CLIENTE);
     montar();
-    completarFormulario();
-    escribir("Confirmar contraseña", "otra");
+    completarValido();
     enviar();
-    expect(screen.getByText("Las contraseñas no coinciden.")).toBeTruthy();
+    expect(await screen.findByText("Página de inicio")).toBeTruthy();
+    const enviado = registro.calls.argsFor(0)[0];
+    expect(enviado.run).toBe("205558993");
+    expect(enviado.fechaNacimiento).toBe("2000-06-25");
+    expect("clave2" in enviado).toBeFalse(); // la confirmación no viaja al servidor
+    expect("tipoUsuario" in enviado).toBeFalse(); // el rol lo fuerza el backend
   });
 
-  it("un registro válido crea el cliente, inicia sesión y va al inicio", () => {
+  it("muestra el error en el campo RUN cuando el backend responde 409 por RUN duplicado", async () => {
+    spyOn(auth, "registro").and.rejectWith(errorApi(409, "Ya existe un usuario con ese RUN."));
     montar();
-    completarFormulario();
+    completarValido();
     enviar();
-    expect(screen.getByText("Página de inicio")).toBeTruthy();
-    expect(obtenerUsuario("123456785").tipoUsuario).toBe("Cliente");
-    expect(leer(CLAVE_SESION)).toBe("123456785");
+    expect(await screen.findByText("Ya existe un usuario con ese RUN.")).toBeTruthy();
+    expect(screen.getByLabelText("RUN").getAttribute("aria-invalid")).toBe("true");
   });
 
-  it("muestra el error del servidor de datos si el correo ya existe", () => {
+  it("muestra el error en el campo correo cuando el correo ya existe", async () => {
+    spyOn(auth, "registro").and.rejectWith(errorApi(409, "Ya existe un usuario con ese correo."));
     montar();
-    completarFormulario("123456785", "javiera.contreras@gmail.com");
+    completarValido();
     enviar();
-    expect(screen.getByText("Ya existe un usuario con ese correo.")).toBeTruthy();
-    expect(leer(CLAVE_SESION)).toBeNull();
+    expect(await screen.findByText("Ya existe un usuario con ese correo.")).toBeTruthy();
+    expect(screen.getByLabelText("Correo electrónico").getAttribute("aria-invalid")).toBe("true");
+  });
+
+  it("reparte los errores por campo que devuelve el backend (400)", async () => {
+    spyOn(auth, "registro").and.rejectWith(errorApi(400, "Datos inválidos", { telefono: "Ingresa un teléfono válido, ej: +56 9 1234 5678." }));
+    montar();
+    completarValido();
+    enviar();
+    expect(await screen.findByText(/Ingresa un teléfono válido/)).toBeTruthy();
+  });
+
+  it("si el servicio está caído muestra un aviso general", async () => {
+    spyOn(auth, "registro").and.rejectWith({ message: "Network Error" });
+    montar();
+    completarValido();
+    enviar();
+    expect(await screen.findByText(/No se pudo conectar/)).toBeTruthy();
   });
 });

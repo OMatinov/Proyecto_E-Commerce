@@ -7,6 +7,19 @@
 
 import { validarRun, validarCorreo, validarPassword, validarTelefono } from "./validaciones.js";
 
+// Largos máximos alineados con el backend (ms-usuarios): nombre 60 (aquí 50), apellidos 80, dirección 150.
+const APELLIDOS_MAX = 80;
+
+// La fecha de nacimiento es obligatoria en el backend. Llega como "AAAA-MM-DD" (input type="date").
+export function validarFechaNacimiento(valor, hoy = new Date()) {
+  if (!valor) return { valido: false, mensaje: "La fecha de nacimiento es obligatoria." };
+  const fecha = new Date(`${valor}T00:00:00`);
+  if (Number.isNaN(fecha.getTime())) return { valido: false, mensaje: "La fecha de nacimiento no es válida." };
+  if (fecha > hoy) return { valido: false, mensaje: "La fecha de nacimiento no puede ser futura." };
+  if (fecha < new Date("1900-01-01T00:00:00")) return { valido: false, mensaje: "La fecha de nacimiento no es válida." };
+  return { valido: true, mensaje: "" };
+}
+
 export function validarLogin({ correo, clave }) {
   const errores = {};
   const c = validarCorreo(correo);
@@ -25,7 +38,7 @@ export function validarRegistro(d) {
   else if (d.nombre.length > 50) errores.nombre = "El nombre no puede superar los 50 caracteres.";
 
   if (!d.apellidos?.trim()) errores.apellidos = "Los apellidos son obligatorios.";
-  else if (d.apellidos.length > 100) errores.apellidos = "Los apellidos no pueden superar los 100 caracteres.";
+  else if (d.apellidos.length > APELLIDOS_MAX) errores.apellidos = `Los apellidos no pueden superar los ${APELLIDOS_MAX} caracteres.`;
 
   const correo = validarCorreo(d.correo);
   if (!correo.valido) errores.correo = correo.mensaje;
@@ -35,6 +48,9 @@ export function validarRegistro(d) {
     const tel = validarTelefono(d.telefono);
     if (!tel.valido) errores.telefono = tel.mensaje;
   }
+
+  const fecha = validarFechaNacimiento(d.fechaNacimiento);
+  if (!fecha.valido) errores.fechaNacimiento = fecha.mensaje;
 
   if (!d.region) errores.region = "Selecciona una región.";
   if (!d.comuna) errores.comuna = "Selecciona una comuna.";
@@ -70,7 +86,7 @@ export function validarEdicionUsuario(d) {
   else if (d.nombre.length > 50) errores.nombre = "El nombre no puede superar los 50 caracteres.";
 
   if (!d.apellidos?.trim()) errores.apellidos = "Los apellidos son obligatorios.";
-  else if (d.apellidos.length > 100) errores.apellidos = "Los apellidos no pueden superar los 100 caracteres.";
+  else if (d.apellidos.length > APELLIDOS_MAX) errores.apellidos = `Los apellidos no pueden superar los ${APELLIDOS_MAX} caracteres.`;
 
   const correo = validarCorreo(d.correo);
   if (!correo.valido) errores.correo = correo.mensaje;
@@ -79,6 +95,9 @@ export function validarEdicionUsuario(d) {
     const tel = validarTelefono(d.telefono);
     if (!tel.valido) errores.telefono = tel.mensaje;
   }
+
+  const fecha = validarFechaNacimiento(d.fechaNacimiento);
+  if (!fecha.valido) errores.fechaNacimiento = fecha.mensaje;
 
   if (!d.region) errores.region = "Selecciona una región.";
   if (!d.comuna) errores.comuna = "Selecciona una comuna.";
@@ -98,7 +117,7 @@ export function validarPerfil(d) {
   if (!d.nombre?.trim()) errores.nombre = "El nombre es obligatorio.";
   else if (d.nombre.length > 50) errores.nombre = "El nombre no puede superar los 50 caracteres.";
   if (!d.apellidos?.trim()) errores.apellidos = "Los apellidos son obligatorios.";
-  else if (d.apellidos.length > 100) errores.apellidos = "Los apellidos no pueden superar los 100 caracteres.";
+  else if (d.apellidos.length > APELLIDOS_MAX) errores.apellidos = `Los apellidos no pueden superar los ${APELLIDOS_MAX} caracteres.`;
   const correo = validarCorreo(d.correo);
   if (!correo.valido) errores.correo = correo.mensaje;
   if (d.telefono?.trim()) {

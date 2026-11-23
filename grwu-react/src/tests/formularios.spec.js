@@ -1,7 +1,7 @@
 import { validarLogin, validarRegistro } from "../utils/formularios.js";
 
 const registroValido = {
-  run: "190110222", nombre: "Ana", apellidos: "Pérez", correo: "ana@gmail.com", telefono: "",
+  run: "190110222", nombre: "Ana", apellidos: "Pérez", correo: "ana@gmail.com", telefono: "", fechaNacimiento: "1995-03-02",
   region: "Región del Biobío", comuna: "Concepción", clave: "abcd", clave2: "abcd"
 };
 
@@ -35,5 +35,20 @@ describe("validarRegistro", () => {
   it("valida el teléfono solo si se escribió", () => {
     expect(validarRegistro({ ...registroValido, telefono: "hola" }).telefono).toBeTruthy();
     expect(validarRegistro({ ...registroValido, telefono: "+56 9 1234 5678" }).telefono).toBeUndefined();
+  });
+});
+
+describe("validarRegistro: campos que exige el backend", () => {
+  it("exige la fecha de nacimiento", () => {
+    expect(validarRegistro({ ...registroValido, fechaNacimiento: "" }).fechaNacimiento).toBe("La fecha de nacimiento es obligatoria.");
+  });
+
+  it("rechaza una fecha futura", () => {
+    expect(validarRegistro({ ...registroValido, fechaNacimiento: "2999-01-01" }).fechaNacimiento).toMatch(/futura/);
+  });
+
+  it("limita los apellidos a 80 caracteres (largo del backend)", () => {
+    expect(validarRegistro({ ...registroValido, apellidos: "a".repeat(81) }).apellidos).toMatch(/80/);
+    expect(validarRegistro({ ...registroValido, apellidos: "a".repeat(80) }).apellidos).toBeUndefined();
   });
 });

@@ -1,16 +1,27 @@
-﻿import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { listarOrdenes } from '../../data/ordenesData';
+﻿import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import api from "../../services/api"; // Ajusta la ruta si es necesario
 
-const AdminOrdenes = () => {
+export default function AdminOrdenes() {
   const [ordenes, setOrdenes] = useState([]);
+  const [cargando, setCargando] = useState(true);
+  const [error, setError] = useState("");
 
   useEffect(() => {
-    // Cargamos las órdenes desde la base de datos de César
-    setOrdenes(listarOrdenes());
+    const cargarOrdenes = async () => {
+      try {
+        const respuesta = await api.get("/boletas");
+        setOrdenes(respuesta.data);
+      } catch (err) {
+        console.error("Error al cargar órdenes:", err);
+        setError("No se pudieron cargar las órdenes. Revisa si el backend está levantado.");
+      } finally {
+        setCargando(false);
+      }
+    };
+    cargarOrdenes();
   }, []);
 
-  // Función auxiliar para pintar el color del badge según el estado
   const getBadgeClass = (estado) => {
     switch (estado) {
       case 'pagada': return 'bg-success';
@@ -21,6 +32,9 @@ const AdminOrdenes = () => {
       default: return 'bg-warning text-dark';
     }
   };
+
+  if (cargando) return <div className="p-4">Cargando órdenes...</div>;
+  if (error) return <div className="p-4 text-danger">{error}</div>;
 
   return (
     <div>
@@ -51,8 +65,8 @@ const AdminOrdenes = () => {
                 ordenes.map(orden => (
                   <tr key={orden.id}>
                     <td className="fw-bold">{orden.id}</td>
-                    {/* César guarda el nombre dentro de cliente.nombre */}
-                    <td>{orden.cliente?.nombre || 'Cliente sin nombre'}</td> 
+                    {/* En el DTO, el cliente viene como objeto */}
+                    <td>{orden.cliente ? `${orden.cliente.nombre} ${orden.cliente.apellidos}` : 'Cliente sin nombre'}</td> 
                     <td>{new Date(orden.fecha).toLocaleDateString('es-CL')}</td>
                     <td>${orden.total?.toLocaleString('es-CL')}</td>
                     <td>
@@ -74,6 +88,4 @@ const AdminOrdenes = () => {
       </div>
     </div>
   );
-};
-
-export default AdminOrdenes;
+}

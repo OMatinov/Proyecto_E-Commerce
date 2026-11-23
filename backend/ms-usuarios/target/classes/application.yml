@@ -1,0 +1,45 @@
+# ms-usuarios - configuración. Los valores con ${VAR:defecto} se pueden sobreescribir con variables de entorno
+# (ver .env.example del repositorio). Nada secreto vive en este archivo.
+server:
+  port: ${SERVER_PORT:8081}
+
+spring:
+  application:
+    name: ms-usuarios
+  autoconfigure:
+    # Sin esto Spring Security inventa un usuario "user" con clave aleatoria (el aviso "generated security password").
+    # No lo necesitamos: la autenticación la hacemos nosotros con JWT.
+    exclude: org.springframework.boot.autoconfigure.security.servlet.UserDetailsServiceAutoConfiguration
+  datasource:
+    # Un esquema por servicio (decisión D1/D2): este servicio usa "grwu_usuarios".
+    # createDatabaseIfNotExist=true crea el esquema si no existe (el usuario MySQL necesita permiso CREATE).
+    url: jdbc:mysql://${DB_HOST:localhost}:${DB_PORT:3306}/grwu_usuarios?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+    username: ${DB_USER:grwu}
+    password: ${DB_PASSWORD:}
+  jpa:
+    hibernate:
+      # "update": Hibernate crea o ajusta la tabla USUARIO a partir de la entidad.
+      ddl-auto: update
+    # Evita consultas "perezosas" fuera de la capa de servicio (buena práctica en APIs REST).
+    open-in-view: false
+    properties:
+      hibernate:
+        jdbc:
+          time_zone: UTC
+
+# JWT (sección 9.1 del contexto). JWT_SECRET NO tiene valor por defecto a propósito:
+# no puede haber secretos en el repositorio y debe ser IDÉNTICO en los tres servicios (mínimo 32 caracteres).
+jwt:
+  secret: ${JWT_SECRET}
+  issuer: grwu-auth
+  access-minutes: ${JWT_ACCESS_MINUTES:15}
+  refresh-days: ${JWT_REFRESH_DAYS:7}
+
+# Origen del frontend permitido por CORS (en desarrollo normalmente se usa el proxy de Vite y no hace falta).
+cors:
+  allowed-origin: ${CORS_ALLOWED_ORIGIN:http://localhost:5173}
+
+# Swagger UI: http://localhost:8081/swagger-ui/index.html
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
