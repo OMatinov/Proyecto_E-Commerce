@@ -1,0 +1,34 @@
+server:
+  port: ${SERVER_PORT:8082}
+
+spring:
+  application:
+    name: ms-catalogo
+  datasource:
+    url: jdbc:mysql://${DB_HOST:localhost}:${DB_PORT:3306}/${DB_NAME:grwu_catalogo}?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+    username: ${DB_USER:grwu}
+    password: ${DB_PASSWORD:grwu}
+  jpa:
+    hibernate:
+      ddl-auto: ${DDL_AUTO:update}
+    open-in-view: false
+    properties:
+      hibernate:
+        format_sql: true
+  jackson:
+    time-zone: UTC
+
+grwu:
+  jwt:
+    # Debe ser identico en los tres servicios. En la entrega se define por variable de entorno.
+    secret: ${JWT_SECRET:cambiar-por-un-secreto-de-al-menos-32-caracteres}
+    issuer: ${JWT_ISSUER:grwu-auth}
+  service-key:
+    # Secreto compartido para el endpoint interno de stock que consume ms-boletas.
+    value: ${SERVICE_KEY:cambiar-por-una-clave-interna}
+
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
