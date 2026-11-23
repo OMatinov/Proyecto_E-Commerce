@@ -25,7 +25,11 @@ api.interceptors.request.use(
 // Refresh compartido: si varias peticiones fallan con 401 a la vez, se hace un solo refresh.
 let refrescando = null;
 
+<<<<<<< HEAD
 export function refrescarTokens() {
+=======
+function refrescarTokens() {
+>>>>>>> 2daae4278814af8fc303cf0d34463c77d8af70dc
   if (!refrescando) {
     const refreshToken = getRefreshToken();
     if (!refreshToken) return Promise.reject(new Error('Sin refresh token'));
@@ -67,4 +71,8 @@ api.interceptors.response.use(
   }
 );
 
+<<<<<<< HEAD
 export default api;
+=======
+export default api;
+>>>>>>> 2daae4278814af8fc303cf0d34463c77d8af70dc

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 // tokenStore.js - Almacén de tokens de la sesión (archivo nuevo).
 // Autor: César
 //
@@ -5,6 +6,8 @@
 // al recargar, SesionContext pide uno nuevo con el refresh token).
 // El refresh token se guarda en localStorage porque debe sobrevivir a la recarga.
 
+=======
+>>>>>>> 2daae4278814af8fc303cf0d34463c77d8af70dc
 const CLAVE_REFRESH = "GRWU_RefreshToken";
 
 let accessToken = null;
@@ -42,4 +45,8 @@ export function guardarTokens({ accessToken: access, refreshToken: refresh }) {
 export function limpiarTokens() {
   accessToken = null;
   setRefreshToken(null);
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 2daae4278814af8fc303cf0d34463c77d8af70dc
