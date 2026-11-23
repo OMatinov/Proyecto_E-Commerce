@@ -45,6 +45,13 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         String header = request.getHeader(HttpHeaders.AUTHORIZATION);
 
+        // Si otro filtro ya autentico (por ejemplo el X-Service-Key del stock),
+        // no se sobrescribe la autenticacion.
+        if (SecurityContextHolder.getContext().getAuthentication() != null) {
+            filterChain.doFilter(request, response);
+            return;
+        }
+
         if (header == null || !header.startsWith(PREFIJO_BEARER)) {
             filterChain.doFilter(request, response);
             return;
