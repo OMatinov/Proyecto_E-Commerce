@@ -19,7 +19,9 @@ import java.util.List;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.lenient;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -53,6 +55,40 @@ class BoletaControllerSecurityTest {
                 .andExpect(status().isForbidden())
                 .andExpect(jsonPath("$.status").value(403))
                 .andExpect(jsonPath("$.error").value("Forbidden"));
+    }
+
+    @Test
+    void vendedorPuedeListarBoletas() throws Exception {
+        lenient().when(boletaService.listarBoletasResponse(any(), any(), any(), any()))
+                .thenReturn(List.of());
+
+        mockMvc.perform(get("/api/v1/boletas").with(user("172076920").roles("VENDEDOR")))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    void clienteNoPuedeCambiarEstadoDeBoleta() throws Exception {
+        mockMvc.perform(patch("/api/v1/boletas/ORD-20260001/estado")
+                        .with(user("205558993").roles("CLIENTE"))
+                        .contentType("application/json")
+                        .content("{\"estado\": \"enviada\"}"))
+                .andExpect(status().isForbidden());
+    }
+
+    @Test
+    void vendedorNoPuedeCambiarEstadoDeBoleta() throws Exception {
+        mockMvc.perform(patch("/api/v1/boletas/ORD-20260001/estado")
+                        .with(user("172076920").roles("VENDEDOR"))
+                        .contentType("application/json")
+                        .content("{\"estado\": \"enviada\"}"))
+                .andExpect(status().isForbidden());
+    }
+
+    @Test
+    void clienteNoPuedeCancelarBoleta() throws Exception {
+        mockMvc.perform(delete("/api/v1/boletas/ORD-20260001")
+                        .with(user("205558993").roles("CLIENTE")))
+                .andExpect(status().isForbidden());
     }
 
     @Test
