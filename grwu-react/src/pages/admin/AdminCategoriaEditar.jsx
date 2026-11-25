@@ -1,34 +1,73 @@
-﻿import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import {
-  actualizarCategoria,
-  obtenerCategoria,
-} from '../../data/categoriasData';
-import { listarPorCategoria } from '../../data/productosData';
+import { actualizarCategoria, obtenerCategoria } from '../../services/categorias';
+import { listarPorCategoria } from '../../services/productos';
 import { validarCategoria, slugify } from '../../utils/validacionesAdmin';
 import CampoFormulario from '../../components/CampoFormulario';
 import { normalizarImagen } from '../../components/ProductCard';
 
 export default function AdminCategoriaEditar() {
   const { id } = useParams();
-  const original = obtenerCategoria(id);
   const navigate = useNavigate();
 
-  // Precarga inicial a partir de la categoría existente
-  const [valores, setValores] = useState(() =>
-    original
-      ? {
-          nombre: original.nombre || '',
-          slug: original.slug || '',
-          descripcion: original.descripcion || '',
-          imagen: original.imagen || '',
-        }
-      : null
-  );
+  const [original, setOriginal] = useState(null);
+  const [valores, setValores] = useState(null);
+  const [productosAsociados, setProductosAsociados] = useState([]);
   const [errores, setErrores] = useState({});
+  const [errorGeneral, setErrorGeneral] = useState('');
+  const [cargando, setCargando] = useState(true);
+  const [guardando, setGuardando] = useState(false);
   const [slugBloqueado, setSlugBloqueado] = useState(true);
 
-  // Renderizado condicional si el ID no existe (cubre el test de error)
+  useEffect(() => {
+    let vigente = true;
+
+    setCargando(true);
+    setErrorGeneral('');
+
+    obtenerCategoria(id)
+      .then(async (categoria) => {
+        if (!vigente) return;
+        setOriginal(categoria);
+        if (!categoria) return;
+
+        setValores({
+          nombre: categoria.nombre || '',
+          slug: categoria.slug || '',
+          descripcion: categoria.descripcion || '',
+          imagen: categoria.imagen || '',
+          // Se conserva el genero actual para no borrarlo al guardar.
+          genero: categoria.genero || '',
+        });
+
+        const productos = await listarPorCategoria(categoria.slug);
+        if (vigente) setProductosAsociados(productos);
+      })
+      .catch((fallo) => {
+        if (vigente) setErrorGeneral(fallo.mensaje);
+      })
+      .finally(() => {
+        if (vigente) setCargando(false);
+      });
+
+    return () => {
+      vigente = false;
+    };
+  }, [id]);
+
+  if (cargando) {
+    return <p className="p-4 text-muted">Cargando categoría...</p>;
+  }
+
+  if (errorGeneral && !original) {
+    return (
+      <div className="p-4">
+        <div className="alert alert-danger" role="alert">{errorGeneral}</div>
+        <Link to="/admin/categorias" className="btn btn-primary">Volver a categorías</Link>
+      </div>
+    );
+  }
+
   if (!original || !valores) {
     return (
       <div className="p-4">
@@ -40,8 +79,6 @@ export default function AdminCategoriaEditar() {
       </div>
     );
   }
-
-  const productosAsociados = listarPorCategoria(original.slug);
 
   const cambiar = (campo) => (e) => {
     const v = e.target.value;
@@ -64,14 +101,25 @@ export default function AdminCategoriaEditar() {
     });
   };
 
-  const enviar = (e) => {
+  const enviar = async (e) => {
     e.preventDefault();
+    setErrorGeneral('');
+
     const errs = validarCategoria(valores);
     setErrores(errs);
     if (Object.keys(errs).length > 0) return;
 
-    actualizarCategoria(id, valores);
-    navigate('/admin/categorias');
+    setGuardando(true);
+    try {
+      await actualizarCategoria(id, valores);
+      navigate('/admin/categorias');
+    } catch (fallo) {
+      // 409: slug duplicado; 400: campos invalidos.
+      setErrores(fallo.errores ?? {});
+      setErrorGeneral(fallo.mensaje);
+    } finally {
+      setGuardando(false);
+    }
   };
 
   return (
@@ -79,9 +127,11 @@ export default function AdminCategoriaEditar() {
       <div className="d-flex justify-content-between align-items-center mb-4">
         <h1 className="h3 mb-0">Editar categoría</h1>
         <Link to="/admin/categorias" className="btn btn-outline-secondary">
-          ← Volver
+          ? Volver
         </Link>
       </div>
+
+      {errorGeneral && <div className="alert alert-danger" role="alert">{errorGeneral}</div>}
 
       {productosAsociados.length > 0 && (
         <div className="alert alert-warning">
@@ -95,7 +145,7 @@ export default function AdminCategoriaEditar() {
         <div className="col-12">
           <CampoFormulario
             id="nombre"
-            label="Nombre"
+            etiqueta="Nombre"
             value={valores.nombre}
             onChange={cambiar('nombre')}
             error={errores.nombre}
@@ -105,7 +155,7 @@ export default function AdminCategoriaEditar() {
         <div className="col-12">
           <CampoFormulario
             id="slug"
-            label="Slug (URL)"
+            etiqueta="Slug (URL)"
             value={valores.slug}
             onChange={cambiar('slug')}
             error={errores.slug}
@@ -128,7 +178,7 @@ export default function AdminCategoriaEditar() {
         <div className="col-12">
           <CampoFormulario
             id="descripcion"
-            label="Descripción"
+            etiqueta="Descripción"
             value={valores.descripcion}
             onChange={cambiar('descripcion')}
           />
@@ -137,10 +187,23 @@ export default function AdminCategoriaEditar() {
         <div className="col-12">
           <CampoFormulario
             id="imagen"
-            label="Ruta de imagen"
+            etiqueta="Ruta de imagen"
             value={valores.imagen}
             onChange={cambiar('imagen')}
             error={errores.imagen}
+          />
+        </div>
+
+        <div className="col-12">
+          <CampoFormulario
+            id="genero"
+            etiqueta="Género"
+            value={valores.genero}
+            onChange={cambiar('genero')}
+            opciones={[{ valor: '', texto: 'Sin género (categoría de prenda)' },
+                       { valor: 'hombre', texto: 'Hombre' },
+                       { valor: 'mujer', texto: 'Mujer' },
+                       { valor: 'todos', texto: 'Todos' }]}
           />
         </div>
 
@@ -158,8 +221,8 @@ export default function AdminCategoriaEditar() {
         )}
 
         <div className="col-12 d-flex gap-2">
-          <button className="btn btn-primary" type="submit">
-            Actualizar
+          <button className="btn btn-primary" type="submit" disabled={guardando}>
+            {guardando ? 'Actualizando...' : 'Actualizar'}
           </button>
           <button
             className="btn btn-outline-secondary"

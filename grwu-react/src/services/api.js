@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { getAccessToken, getRefreshToken, guardarTokens, limpiarTokens } from './tokenStore';
+import { getAccessToken, getRefreshToken, guardarTokens, limpiarTokens } from './tokenStore.js';
 
 // Instancia única de Axios
 const api = axios.create({

@@ -1,13 +1,42 @@
-﻿import { Link } from 'react-router-dom';
-import { listarProductos, listarOfertas, listarPorCategoria } from '../data/productosData';
-import { listarCategorias } from '../data/categoriasData';
+﻿import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import { listarProductos, listarOfertas } from '../services/productos';
+import { listarCategorias } from '../services/categorias';
 import ProductCard, { normalizarImagen } from '../components/ProductCard';
 
 export default function Home() {
-  const productos = listarProductos().slice(0, 4);
-  const ofertas = listarOfertas().slice(0, 4);
-  const categorias = listarCategorias();
+  const [productos, setProductos] = useState([]);
+  const [ofertas, setOfertas] = useState([]);
+  const [categorias, setCategorias] = useState([]);
+  const [cargando, setCargando] = useState(true);
+  const [error, setError] = useState('');
+
+  useEffect(() => {
+    let vigente = true;
+
+    Promise.all([listarProductos(), listarOfertas(), listarCategorias()])
+      .then(([listaProductos, listaOfertas, listaCategorias]) => {
+        if (!vigente) return;
+        setProductos(listaProductos);
+        setOfertas(listaOfertas);
+        setCategorias(listaCategorias);
+      })
+      .catch((fallo) => {
+        if (vigente) setError(fallo.mensaje);
+      })
+      .finally(() => {
+        if (vigente) setCargando(false);
+      });
+
+    return () => {
+      vigente = false;
+    };
+  }, []);
+
+  const nuevos = productos.slice(0, 4);
+  const ofertasDestacadas = ofertas.slice(0, 4);
   const categoriasDestacadas = categorias.slice(0, 8);
+  const contarGenero = (genero) => productos.filter((p) => p.genero === genero).length;
 
   return (
     <>
@@ -27,6 +56,18 @@ export default function Home() {
         </div>
       </section>
 
+      {cargando && (
+        <p className="container text-center text-muted py-5">Cargando catálogo...</p>
+      )}
+
+      {!cargando && error && (
+        <div className="container py-4">
+          <div className="alert alert-danger text-center" role="alert">
+            {error}
+          </div>
+        </div>
+      )}
+
       {/* Accesos rápidos por género */}
       <section className="container py-4">
         <div className="row g-4">
@@ -36,7 +77,7 @@ export default function Home() {
                 <div className="gender-banner gender-banner--cap" data-genero={g}>
                   <div className="gender-banner-content">
                     <h2 className="gender-banner-title">{g === 'mujer' ? 'Mujer' : 'Hombre'}</h2>
-                    <p className="gender-banner-count">{listarPorCategoria(g).length} productos</p>
+                    <p className="gender-banner-count">{contarGenero(g)} productos</p>
                     <span className="btn btn-light btn-sm">Explorar →</span>
                   </div>
                 </div>
@@ -80,7 +121,7 @@ export default function Home() {
           <h2 className="section-title mb-0">Nuevos lanzamientos</h2>
         </div>
         <div className="row g-4">
-          {productos.map((p) => (
+          {nuevos.map((p) => (
             <div className="col-12 col-sm-6 col-lg-3" key={p.id}>
               <ProductCard producto={p} />
             </div>
@@ -88,7 +129,7 @@ export default function Home() {
         </div>
       </section>
 
-      {ofertas.length > 0 && (
+      {ofertasDestacadas.length > 0 && (
         <section className="ofertas-strip py-5">
           <div className="container">
             <div className="d-flex justify-content-between align-items-center mb-4">
@@ -99,7 +140,7 @@ export default function Home() {
               <Link to="/ofertas" className="btn btn-outline-primary">Ver todas</Link>
             </div>
             <div className="row g-4">
-              {ofertas.map((p) => (
+              {ofertasDestacadas.map((p) => (
                 <div className="col-12 col-sm-6 col-lg-3" key={p.id}>
                   <ProductCard producto={p} />
                 </div>

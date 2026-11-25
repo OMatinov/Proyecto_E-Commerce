@@ -1,17 +1,65 @@
-﻿import { useState } from 'react';
+﻿import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { obtenerProducto, listarPorCategoria } from '../data/productosData';
+import { obtenerProducto, listarPorCategoria } from '../services/productos';
 import { formatearCLP } from '../data/carritoData';
 import { useCarrito } from '../context/CarritoContext';
 import ProductCard, { normalizarImagen } from '../components/ProductCard';
 
 export default function DetalleProducto() {
   const { id } = useParams();
-  const producto = obtenerProducto(id);
   const { agregar } = useCarrito();
+  const [producto, setProducto] = useState(null);
+  const [relacionados, setRelacionados] = useState([]);
+  const [cargando, setCargando] = useState(true);
+  const [error, setError] = useState('');
   const [cantidad, setCantidad] = useState(1);
   // Todos los hooks van antes de cualquier return condicional (reglas de los hooks).
   const [imagenActiva, setImagenActiva] = useState(0);
+
+  useEffect(() => {
+    let vigente = true;
+
+    setCargando(true);
+    setError('');
+    setProducto(null);
+    setRelacionados([]);
+    setCantidad(1);
+    setImagenActiva(0);
+
+    obtenerProducto(id)
+      .then(async (encontrado) => {
+        if (!vigente) return;
+        setProducto(encontrado);
+        if (!encontrado) return;
+
+        const lista = await listarPorCategoria(encontrado.categoria);
+        if (!vigente) return;
+        setRelacionados(lista.filter((p) => p.id !== encontrado.id).slice(0, 4));
+      })
+      .catch((fallo) => {
+        if (vigente) setError(fallo.mensaje);
+      })
+      .finally(() => {
+        if (vigente) setCargando(false);
+      });
+
+    return () => {
+      vigente = false;
+    };
+  }, [id]);
+
+  if (cargando) {
+    return <p className="container py-5 text-center text-muted">Cargando producto...</p>;
+  }
+
+  if (error) {
+    return (
+      <div className="container py-5 text-center">
+        <div className="alert alert-danger" role="alert">{error}</div>
+        <Link to="/productos" className="btn btn-primary">Volver al catálogo</Link>
+      </div>
+    );
+  }
 
   if (!producto) {
     return (
@@ -22,10 +70,6 @@ export default function DetalleProducto() {
       </div>
     );
   }
-
-  const relacionados = listarPorCategoria(producto.categoria)
-    .filter((p) => p.id !== producto.id)
-    .slice(0, 4);
 
   const tieneOferta = Number(producto.oferta) > 0;
 

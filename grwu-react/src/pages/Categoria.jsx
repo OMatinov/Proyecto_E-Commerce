@@ -1,15 +1,58 @@
-﻿import { useState } from 'react';
+﻿import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { listarPorCategoria } from '../data/productosData';
-import { obtenerCategoriaPorSlug } from '../data/categoriasData';
+import { listarPorCategoria } from '../services/productos';
+import { obtenerCategoriaPorSlug } from '../services/categorias';
 import ProductCard from '../components/ProductCard';
 
 const CATEGORIAS_GENERO = ['hombre', 'mujer'];
 
 export default function Categoria() {
   const { slug } = useParams();
-  const categoria = obtenerCategoriaPorSlug(slug);
+  const [categoria, setCategoria] = useState(null);
+  const [productos, setProductos] = useState([]);
+  const [cargando, setCargando] = useState(true);
+  const [error, setError] = useState('');
   const [genero, setGenero] = useState('');
+
+  useEffect(() => {
+    let vigente = true;
+
+    setCargando(true);
+    setError('');
+    setCategoria(null);
+    setProductos([]);
+    setGenero('');
+
+    Promise.all([obtenerCategoriaPorSlug(slug), listarPorCategoria(slug)])
+      .then(([categoriaEncontrada, listaProductos]) => {
+        if (!vigente) return;
+        setCategoria(categoriaEncontrada);
+        setProductos(listaProductos);
+      })
+      .catch((fallo) => {
+        if (vigente) setError(fallo.mensaje);
+      })
+      .finally(() => {
+        if (vigente) setCargando(false);
+      });
+
+    return () => {
+      vigente = false;
+    };
+  }, [slug]);
+
+  if (cargando) {
+    return <p className="container py-5 text-center text-muted">Cargando categoría...</p>;
+  }
+
+  if (error) {
+    return (
+      <div className="container py-5 text-center">
+        <div className="alert alert-danger" role="alert">{error}</div>
+        <Link to="/categorias" className="btn btn-primary">Ver todas las categorías</Link>
+      </div>
+    );
+  }
 
   if (!categoria) {
     return (
@@ -20,12 +63,11 @@ export default function Categoria() {
     );
   }
 
-  let productos = listarPorCategoria(slug);
   // En categorías de género no tiene sentido volver a filtrar por el mismo género
   const mostrarFiltroGenero = !CATEGORIAS_GENERO.includes(slug);
-  if (mostrarFiltroGenero && genero) {
-    productos = productos.filter((p) => p.genero === genero);
-  }
+  const visibles = mostrarFiltroGenero && genero
+    ? productos.filter((p) => p.genero === genero)
+    : productos;
 
   return (
     <div className="container py-5">
@@ -54,13 +96,13 @@ export default function Categoria() {
         </div>
       )}
 
-      {productos.length === 0 ? (
+      {visibles.length === 0 ? (
         <p className="text-center text-muted py-5">Aún no hay productos en esta categoría.</p>
       ) : (
         <>
-          <p className="catalog-count text-muted mb-3">{productos.length} productos</p>
+          <p className="catalog-count text-muted mb-3">{visibles.length} productos</p>
           <div className="row g-4">
-            {productos.map((p) => (
+            {visibles.map((p) => (
               <div className="col-12 col-sm-6 col-lg-3" key={p.id}>
                 <ProductCard producto={p} />
               </div>

@@ -1,7 +1,8 @@
-import { render, screen, fireEvent } from '@testing-library/react'; // ✅ 1. Usamos fireEvent en lugar de userEvent
+import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
-import AdminProductoNuevo from '../pages/admin/AdminProductoNuevo.jsx'; // ✅ 2. Agregada extensión .jsx
-import { listarProductos } from '../data/productosData.js'; // ✅ 2. Agregada extensión .js
+import api from '../services/api';
+import AdminProductoNuevo from '../pages/admin/AdminProductoNuevo.jsx';
+import { CATEGORIAS_SEMILLA } from '../data/categoriasData.js';
 
 const renderForm = () =>
     render(
@@ -12,28 +13,34 @@ const renderForm = () =>
 
 describe('<AdminProductoNuevo />', () => {
   beforeEach(() => {
-    localStorage.clear();
+    spyOn(api, 'get').and.callFake((url) => {
+      if (url === '/categorias') return Promise.resolve({ data: CATEGORIAS_SEMILLA });
+      return Promise.reject(new Error(`URL no esperada en la prueba: ${url}`));
+    });
+    spyOn(api, 'post').and.callFake((url, cuerpo) =>
+      Promise.resolve({ data: { id: 'p-999', ...cuerpo } })
+    );
   });
 
-  it('muestra errores al enviar vacío', () => {
+  it('muestra errores al enviar vacío', async () => {
     renderForm();
+    // Se espera a que el formulario cargue las categorías de la API.
+    await screen.findByRole('option', { name: 'Poleras' });
 
-    // ✅ 3. Usamos fireEvent.click en lugar de userEvent.click
     fireEvent.click(screen.getByRole('button', { name: /Guardar/i }));
 
-    // ✅ 4. Cambiado .toBeInTheDocument() por .toBeTruthy() (Nativo de Jasmine)
-    // Nota: Ajusta el texto según el mensaje de error real que muestre tu componente
     const mensajeError = screen.queryByText(/al menos 3 caracteres/i) ||
         screen.queryByText(/es requerido/i) ||
-        screen.queryByText(/campo obligatorio/i);
+        screen.queryByText(/campo obligatorio/i) ||
+        screen.queryByText(/Selecciona una categoría/i);
     expect(mensajeError).toBeTruthy();
+    expect(api.post).not.toHaveBeenCalled();
   });
 
-  it('crea un producto al enviar datos válidos (evento + mock)', () => {
+  it('crea un producto al enviar datos válidos (POST a la API)', async () => {
     renderForm();
-    const antes = listarProductos().length;
+    await screen.findByRole('option', { name: 'Poleras' });
 
-    // ✅ Usamos getElementById directamente porque los <label> están vacíos en el HTML
     const nombreInput = document.getElementById('nombre');
     const categoriaSelect = document.getElementById('categoria');
     const descripcionInput = document.getElementById('descripcion');
@@ -42,7 +49,6 @@ describe('<AdminProductoNuevo />', () => {
     const imagenInput = document.getElementById('imagen');
     const generoSelect = document.getElementById('genero');
 
-    // Disparamos los eventos de cambio
     fireEvent.change(nombreInput, { target: { value: 'Polera Test' } });
     fireEvent.change(categoriaSelect, { target: { value: 'poleras' } });
     fireEvent.change(descripcionInput, { target: { value: 'Descripción de prueba válida de más de 3 caracteres' } });
@@ -51,10 +57,17 @@ describe('<AdminProductoNuevo />', () => {
     fireEvent.change(imagenInput, { target: { value: 'img/test.png' } });
     fireEvent.change(generoSelect, { target: { value: 'mujer' } });
 
-    // Clic en guardar
     fireEvent.click(screen.getByRole('button', { name: /Guardar/i }));
 
-    // ✅ Verificamos que se haya creado al menos 1 producto nuevo
-    expect(listarProductos().length).toBeGreaterThanOrEqual(antes);
+    await waitFor(() => expect(api.post).toHaveBeenCalled());
+
+    const [url, cuerpo] = api.post.calls.mostRecent().args;
+    expect(url).toBe('/productos');
+    expect(cuerpo.nombre).toBe('Polera Test');
+    expect(cuerpo.categoria).toBe('poleras');
+    expect(cuerpo.genero).toBe('mujer');
+    expect(cuerpo.precio).toBe(1500);
+    expect(cuerpo.stock).toBe(4);
+    expect(cuerpo.imagenes).toEqual(['img/test.png']);
   });
 });

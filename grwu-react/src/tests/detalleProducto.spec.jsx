@@ -1,7 +1,46 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import { MemoryRouter, Routes, Route, useNavigate } from 'react-router-dom';
-import DetalleProducto from '../pages/DetalleProducto.jsx'; // ✅ 1. Agregada extensión .jsx
-import { CarritoProvider } from '../context/CarritoContext.jsx'; // ✅ 1. Agregada extensión .jsx
+import api from '../services/api';
+import DetalleProducto from '../pages/DetalleProducto.jsx';
+import { CarritoProvider } from '../context/CarritoContext.jsx';
+import { PRODUCTOS_SEMILLA } from '../data/productosData.js';
+import { CATEGORIAS_SEMILLA } from '../data/categoriasData.js';
+
+// Las paginas consumen ms-catalogo por Axios. La prueba intercepta api.get y
+// responde con las semillas, sin backend ni base de datos.
+const error404 = (mensaje) => {
+  const error = new Error('404');
+  error.response = { status: 404, data: { status: 404, message: mensaje } };
+  return error;
+};
+
+const responderGet = (url, config) => {
+  if (url === '/productos') {
+    const params = config?.params ?? {};
+    let lista = PRODUCTOS_SEMILLA;
+    if (params.categoria) lista = lista.filter((p) => p.categoria === params.categoria);
+    if (params.genero) lista = lista.filter((p) => p.genero === params.genero);
+    return { data: lista };
+  }
+
+  if (url.startsWith('/productos/')) {
+    const id = decodeURIComponent(url.split('/')[2]);
+    const producto = PRODUCTOS_SEMILLA.find((p) => p.id === id);
+    if (!producto) throw error404(`Producto no encontrado: ${id}`);
+    return { data: producto };
+  }
+
+  if (url.startsWith('/categorias/slug/')) {
+    const slug = decodeURIComponent(url.split('/')[3]);
+    const categoria = CATEGORIAS_SEMILLA.find((c) => c.slug === slug);
+    if (!categoria) throw error404(`Categoria no encontrada: ${slug}`);
+    return { data: categoria };
+  }
+
+  if (url === '/categorias') return { data: CATEGORIAS_SEMILLA };
+
+  throw new Error(`URL no esperada en la prueba: ${url}`);
+};
 
 const renderConId = (id) =>
     render(
@@ -21,25 +60,29 @@ function IrAlProducto() {
 }
 
 describe('<DetalleProducto />', () => {
-  it('renderiza el producto cuando existe', () => {
-    renderConId('p-001');
-
-    // ✅ 2. Cambiado .toBeInTheDocument() por .toBeTruthy() (Nativo de Jasmine)
-    // Usar getByRole es la mejor práctica y evita el error de "múltiples elementos"
-      expect(screen.getByRole('heading', { name: /Abrigo Largo Paño/i })).toBeTruthy();
+  beforeEach(() => {
+    spyOn(api, 'get').and.callFake((url, config) => {
+      try {
+        return Promise.resolve(responderGet(url, config));
+      } catch (error) {
+        return Promise.reject(error);
+      }
+    });
   });
 
-  it('renderiza mensaje de error cuando no existe (renderizado condicional)', () => {
+  it('renderiza el producto cuando existe', async () => {
+    renderConId('p-001');
+    expect(await screen.findByRole('heading', { name: /Abrigo Largo Paño/i })).toBeTruthy();
+  });
+
+  it('renderiza mensaje de error cuando no existe (renderizado condicional)', async () => {
     renderConId('no-existe');
 
-    // ✅ 3. Cambiado .toBeInTheDocument() por .toBeTruthy()
-    expect(screen.getByText(/Producto no encontrado/i)).toBeTruthy();
-
-    // ✅ 4. Cambiado .not.toBeInTheDocument() por .toBeNull() (Nativo de Jasmine para verificar ausencia)
+    expect(await screen.findByText(/Producto no encontrado/i)).toBeTruthy();
     expect(screen.queryByRole('button', { name: /Agregar al carrito/i })).toBeNull();
   });
 
-  it('no falla al pasar de un producto inexistente a uno existente (los hooks van antes del return)', () => {
+  it('no falla al pasar de un producto inexistente a uno existente (los hooks van antes del return)', async () => {
     // El mismo componente sigue montado al cambiar el :id; si un hook estuviera después del
     // "return" de producto no encontrado, React lanzaría "Rendered more hooks than during the previous render".
     render(
@@ -52,24 +95,26 @@ describe('<DetalleProducto />', () => {
         </CarritoProvider>
       </MemoryRouter>
     );
-    expect(screen.getByText(/Producto no encontrado/i)).toBeTruthy();
+    expect(await screen.findByText(/Producto no encontrado/i)).toBeTruthy();
 
     fireEvent.click(screen.getByRole('button', { name: /ir al producto/i }));
 
-    expect(screen.getByRole('heading', { name: /Abrigo Largo Paño/i })).toBeTruthy();
+    expect(await screen.findByRole('heading', { name: /Abrigo Largo Paño/i })).toBeTruthy();
   });
 
-  it('usa rutas absolutas para las imágenes (corrige la carga en /productos/:id)', () => {
+  it('usa rutas absolutas para las imágenes (corrige la carga en /productos/:id)', async () => {
     renderConId('p-001');
 
-    const img = screen.getByRole('img', { name: /Abrigo Largo Paño/i });
+    const img = await screen.findByRole('img', { name: /Abrigo Largo Paño/i });
     // El dato guarda 'img/mujer/abrigo1.png' (relativa); en una ruta anidada
     // el navegador la resolvería como '/productos/img/...' y nunca cargaría.
     expect(img.getAttribute('src')).toBe('/img/mujer/abrigo1.png');
   });
 
-  it('muestra la galería de imágenes adicionales del producto', () => {
+  it('muestra la galería de imágenes adicionales del producto', async () => {
     renderConId('p-002'); // p-002 tiene imagenes: abrigo2-1, abrigo2-2, abrigo2-3
+
+    await screen.findByRole('heading', { name: /Abrigo Sastronil/i });
 
     const srcs = screen.getAllByRole('img').map((i) => i.getAttribute('src'));
     expect(srcs).toContain('/img/mujer/abrigo2.png');
@@ -80,7 +125,18 @@ describe('<DetalleProducto />', () => {
     expect(domSrcs.filter((s) => s && s.startsWith('/img/')).length).toBeGreaterThanOrEqual(4);
   });
 });
+
 describe('regresión: imágenes absolutas en vistas anidadas', () => {
+  beforeEach(() => {
+    spyOn(api, 'get').and.callFake((url, config) => {
+      try {
+        return Promise.resolve(responderGet(url, config));
+      } catch (error) {
+        return Promise.reject(error);
+      }
+    });
+  });
+
   it('"También te puede gustar" usa rutas absolutas en /productos/:id', async () => {
     render(
       <MemoryRouter initialEntries={['/productos/p-001']}>
@@ -92,6 +148,8 @@ describe('regresión: imágenes absolutas en vistas anidadas', () => {
       </MemoryRouter>
     );
     // p-001 es abrigo/mujer; los relacionados son otros abrigos (p-002, p-003)
+    await screen.findByRole('heading', { name: /Abrigo Largo Paño/i });
+
     const domSrcs = Array.from(document.querySelectorAll('img')).map((i) => i.getAttribute('src'));
     expect(domSrcs).toContain('/img/mujer/abrigo2.png');
     // Ninguna imagen debe quedar con ruta relativa 'img/...' (fallaría en ruta anidada)
@@ -110,6 +168,9 @@ describe('regresión: imágenes absolutas en vistas anidadas', () => {
         </CarritoProvider>
       </MemoryRouter>
     );
+
+    await screen.findByRole('heading', { name: /Abrigos/i });
+
     const domSrcs = Array.from(document.querySelectorAll('img')).map((i) => i.getAttribute('src'));
     expect(domSrcs.length).toBeGreaterThan(0);
     expect(domSrcs.every((s) => !s || s.startsWith('/') || /^(https?:|data:|blob:)/i.test(s))).toBe(true);
@@ -117,23 +178,15 @@ describe('regresión: imágenes absolutas en vistas anidadas', () => {
   });
 
   it('el home enlaza las categorías de género hombre/mujer existentes', async () => {
-    const { obtenerCategoriaPorSlug } = await import('../data/categoriasData.js');
-    expect(obtenerCategoriaPorSlug('hombre')).toBeTruthy();
-    expect(obtenerCategoriaPorSlug('mujer')).toBeTruthy();
+    const { obtenerCategoriaPorSlug } = await import('../services/categorias.js');
+    expect(await obtenerCategoriaPorSlug('hombre')).toBeTruthy();
+    expect(await obtenerCategoriaPorSlug('mujer')).toBeTruthy();
   });
 
-  it('migración: re-inyecta categorías de género ausentes en localStorage sin duplicar', async () => {
-    const { listarCategorias, CATEGORIAS_SEMILLA } = await import('../data/categoriasData.js');
-    // Simula el seed antiguo (sin hombre/mujer) persistido en localStorage
-    const antiguas = CATEGORIAS_SEMILLA.filter((c) => c.slug !== 'hombre' && c.slug !== 'mujer');
-    localStorage.setItem('grwu_categorias', JSON.stringify(antiguas));
-
-    const actualizadas = listarCategorias();
-    expect(actualizadas.some((c) => c.slug === 'hombre')).toBe(true);
-    expect(actualizadas.some((c) => c.slug === 'mujer')).toBe(true);
-
-    // Segunda lectura: no debe duplicarlas
-    const otraVez = listarCategorias();
-    expect(otraVez.filter((c) => c.slug === 'hombre').length).toBe(1);
+  it('la API entrega las categorías de género sin duplicarlas', async () => {
+    const { listarCategorias } = await import('../services/categorias.js');
+    const categorias = await listarCategorias();
+    expect(categorias.filter((c) => c.slug === 'hombre').length).toBe(1);
+    expect(categorias.filter((c) => c.slug === 'mujer').length).toBe(1);
   });
 });

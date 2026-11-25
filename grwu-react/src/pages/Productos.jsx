@@ -1,6 +1,6 @@
-﻿import { useMemo, useState } from 'react';
-import { listarProductos } from '../data/productosData';
-import { listarCategorias } from '../data/categoriasData';
+﻿import { useEffect, useMemo, useState } from 'react';
+import { listarProductos } from '../services/productos';
+import { listarCategorias } from '../services/categorias';
 import ProductCard from '../components/ProductCard';
 
 const CATEGORIAS_GENERO = ['hombre', 'mujer'];
@@ -11,8 +11,31 @@ export default function Productos() {
   const [genero, setGenero] = useState('');
   const [orden, setOrden] = useState('relevancia');
 
-  const categorias = listarCategorias();
-  const productos = listarProductos();
+  const [categorias, setCategorias] = useState([]);
+  const [productos, setProductos] = useState([]);
+  const [cargando, setCargando] = useState(true);
+  const [error, setError] = useState('');
+
+  useEffect(() => {
+    let vigente = true;
+
+    Promise.all([listarProductos(), listarCategorias()])
+      .then(([listaProductos, listaCategorias]) => {
+        if (!vigente) return;
+        setProductos(listaProductos);
+        setCategorias(listaCategorias);
+      })
+      .catch((fallo) => {
+        if (vigente) setError(fallo.mensaje);
+      })
+      .finally(() => {
+        if (vigente) setCargando(false);
+      });
+
+    return () => {
+      vigente = false;
+    };
+  }, []);
 
   const filtrados = useMemo(() => {
     let lista = productos;
@@ -95,9 +118,21 @@ export default function Productos() {
         </div>
       </div>
 
-      {filtrados.length === 0 ? (
+      {cargando && (
+        <p className="text-center text-muted py-5">Cargando productos...</p>
+      )}
+
+      {!cargando && error && (
+        <div className="alert alert-danger text-center" role="alert">
+          {error}
+        </div>
+      )}
+
+      {!cargando && !error && filtrados.length === 0 && (
         <p className="text-center text-muted py-5">No se encontraron productos.</p>
-      ) : (
+      )}
+
+      {!cargando && !error && filtrados.length > 0 && (
         <>
           <p className="catalog-count text-muted mb-3">{filtrados.length} productos</p>
           <div className="row g-4">

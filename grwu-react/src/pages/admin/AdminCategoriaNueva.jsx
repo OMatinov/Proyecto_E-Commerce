@@ -1,46 +1,106 @@
-﻿import { Link } from 'react-router-dom';
 import { useState } from 'react';
-import { listarCategorias, eliminarCategoria } from '../../data/categoriasData';
+import { Link, useNavigate } from 'react-router-dom';
+import { crearCategoria } from '../../services/categorias';
+import { validarCategoria, slugify } from '../../utils/validacionesAdmin';
+import CampoFormulario from '../../components/CampoFormulario';
 
-export default function AdminCategorias() {
-  const [categorias, setCategorias] = useState(listarCategorias());
+const VACIO = { nombre: '', slug: '', descripcion: '', imagen: '', genero: '' };
 
-  const borrar = (id, nombre) => {
-    if (!window.confirm(`¿Eliminar categoría "${nombre}"?`)) return;
-    eliminarCategoria(id);
-    setCategorias(listarCategorias());
+export default function AdminCategoriaNueva() {
+  const [valores, setValores] = useState(VACIO);
+  const [errores, setErrores] = useState({});
+  const [errorGeneral, setErrorGeneral] = useState('');
+  const [guardando, setGuardando] = useState(false);
+  const [slugBloqueado, setSlugBloqueado] = useState(false);
+  const navigate = useNavigate();
+
+  const cambiar = (campo) => (e) => {
+    const v = e.target.value;
+    setValores((prev) => ({
+      ...prev,
+      [campo]: v,
+      // Mientras el slug no se edite a mano, se genera desde el nombre.
+      ...(campo === 'nombre' && !slugBloqueado ? { slug: slugify(v) } : {}),
+    }));
+  };
+
+  const enviar = async (e) => {
+    e.preventDefault();
+    setErrorGeneral('');
+
+    const errs = validarCategoria(valores);
+    setErrores(errs);
+    if (Object.keys(errs).length > 0) return;
+
+    setGuardando(true);
+    try {
+      await crearCategoria(valores);
+      navigate('/admin/categorias');
+    } catch (fallo) {
+      // 409: slug duplicado; 400: campos invalidos.
+      setErrores(fallo.errores ?? {});
+      setErrorGeneral(fallo.mensaje);
+    } finally {
+      setGuardando(false);
+    }
   };
 
   return (
     <div className="p-4">
-      <div className="d-flex justify-content-between align-items-center mb-3">
-        <h1 className="h3 mb-0">Categorías</h1>
-        <Link to="/admin/categorias/nueva" className="btn btn-primary">+ Nueva categoría</Link>
+      <div className="d-flex justify-content-between align-items-center mb-4">
+        <h1 className="h3 mb-0">Nueva categoría</h1>
+        <Link to="/admin/categorias" className="btn btn-outline-secondary">? Volver</Link>
       </div>
-      <div className="table-responsive">
-        <table className="table table-striped align-middle">
-          <thead><tr><th>Imagen</th><th>Nombre</th><th>Slug</th><th></th></tr></thead>
-          <tbody>
-            {categorias.map((c) => (
-              <tr key={c.id}>
-                <td>
-                  <img src={c.imagen} alt={c.nombre} width="48" height="48"
-                       style={{ objectFit: 'cover' }}
-                       onError={(e) => { e.currentTarget.src = '/img/logoGRWU.png'; }} />
-                </td>
-                <td>{c.nombre}</td>
-                <td><code>{c.slug}</code></td>
-                <td className="text-end">
-                  <Link to={`/admin/categorias/${c.id}/editar`}
-                        className="btn btn-sm btn-outline-primary me-2">Editar</Link>
-                  <button className="btn btn-sm btn-outline-danger"
-                          onClick={() => borrar(c.id, c.nombre)}>Eliminar</button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+
+      {errorGeneral && <div className="alert alert-danger" role="alert">{errorGeneral}</div>}
+
+      <form onSubmit={enviar} noValidate className="row g-3" style={{ maxWidth: 700 }}>
+        <div className="col-12">
+          <CampoFormulario id="nombre" etiqueta="Nombre" value={valores.nombre}
+            onChange={cambiar('nombre')} error={errores.nombre} />
+        </div>
+
+        <div className="col-12">
+          <CampoFormulario id="slug" etiqueta="Slug (URL)" value={valores.slug}
+            onChange={(e) => {
+              setSlugBloqueado(true);
+              setValores((prev) => ({ ...prev, slug: slugify(e.target.value) }));
+            }}
+            error={errores.slug} />
+          <div className="form-text">
+            URL pública: <code>/categorias/{valores.slug || '...'}</code>
+          </div>
+        </div>
+
+        <div className="col-12">
+          <CampoFormulario id="descripcion" etiqueta="Descripción" value={valores.descripcion}
+            onChange={cambiar('descripcion')} />
+        </div>
+
+        <div className="col-12">
+          <CampoFormulario id="imagen" etiqueta="Ruta de imagen" value={valores.imagen}
+            onChange={cambiar('imagen')} error={errores.imagen} />
+        </div>
+
+        <div className="col-12">
+          <CampoFormulario id="genero" etiqueta="Género" value={valores.genero}
+            onChange={cambiar('genero')}
+            opciones={[{ valor: '', texto: 'Sin género (categoría de prenda)' },
+                       { valor: 'hombre', texto: 'Hombre' },
+                       { valor: 'mujer', texto: 'Mujer' },
+                       { valor: 'todos', texto: 'Todos' }]} />
+        </div>
+
+        <div className="col-12 d-flex gap-2">
+          <button className="btn btn-primary" type="submit" disabled={guardando}>
+            {guardando ? 'Guardando...' : 'Guardar'}
+          </button>
+          <button className="btn btn-outline-secondary" type="button"
+                  onClick={() => navigate('/admin/categorias')}>
+            Cancelar
+          </button>
+        </div>
+      </form>
     </div>
   );
 }

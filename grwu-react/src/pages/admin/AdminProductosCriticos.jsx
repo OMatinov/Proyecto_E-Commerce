@@ -1,16 +1,45 @@
-﻿import { Link } from 'react-router-dom';
-import { listarProductosCriticos } from '../../data/productosData';
+﻿import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import { listarProductosCriticos } from '../../services/productos';
 import { formatearCLP } from '../../data/carritoData';
 
 export default function AdminProductosCriticos() {
-  const criticos = listarProductosCriticos(5);
+  const [criticos, setCriticos] = useState([]);
+  const [cargando, setCargando] = useState(true);
+  const [error, setError] = useState('');
+
+  useEffect(() => {
+    let vigente = true;
+
+    listarProductosCriticos(5)
+      .then((lista) => {
+        if (vigente) setCriticos(lista);
+      })
+      .catch((fallo) => {
+        if (vigente) setError(fallo.mensaje);
+      })
+      .finally(() => {
+        if (vigente) setCargando(false);
+      });
+
+    return () => {
+      vigente = false;
+    };
+  }, []);
 
   return (
     <div className="p-4">
-      <h1 className="h3 mb-3">Productos con stock crítico (≤ 5)</h1>
-      {criticos.length === 0 ? (
+      <h1 className="h3 mb-3">Productos con stock crítico (= 5)</h1>
+
+      {cargando && <p className="text-muted">Cargando productos...</p>}
+
+      {!cargando && error && <div className="alert alert-danger" role="alert">{error}</div>}
+
+      {!cargando && !error && criticos.length === 0 && (
         <div className="alert alert-success">Todo el inventario está por sobre el umbral.</div>
-      ) : (
+      )}
+
+      {!cargando && !error && criticos.length > 0 && (
         <div className="table-responsive">
           <table className="table table-bordered align-middle">
             <thead className="table-warning">
