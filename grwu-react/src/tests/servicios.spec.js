@@ -90,7 +90,7 @@ describe("servicio usuarios", () => {
   });
 });
 
-describe("servicio boletas", () => {
+describe("servicio boletas: URLs y cuerpos", () => {
   it("usa las rutas del contrato (crear, mías, detalle, historial, reintento)", async () => {
     const get = spyOn(api, "get").and.resolveTo({ data: [] });
     const post = spyOn(api, "post").and.resolveTo({ data: { id: "ORD-1" } });
@@ -104,7 +104,7 @@ describe("servicio boletas", () => {
     await boletas.mias();
     expect(get).toHaveBeenCalledWith("/boletas/mias");
     await boletas.listar();
-    expect(get).toHaveBeenCalledWith("/boletas");
+    expect(get).toHaveBeenCalledWith("/boletas", { params: {} });
     await boletas.porUsuario("205558993");
     expect(get).toHaveBeenCalledWith("/boletas", { params: { usuarioRun: "205558993" } });
   });

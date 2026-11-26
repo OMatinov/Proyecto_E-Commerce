@@ -1,7 +1,6 @@
 import { Routes, Route } from 'react-router-dom';
 import Layout from './components/Layout';
 import AdminLayout from './components/AdminLayout';
-import RutaProtegida from './components/RutaProtegida';
 import RutaPorRol from './components/RutaPorRol';
 
 // Tienda
@@ -55,11 +54,9 @@ export default function App() {
         <Route path="/ofertas" element={<Ofertas />} />
         <Route path="/carrito" element={<Carrito />} />
         
-        {/* Rutas Protegidas para Cliente (Checkout) */}
+        {/* Rutas exclusivas de Cliente: checkout y resultado del pago */}
         <Route element={<RutaPorRol rolesPermitidos={['Cliente']} />}>
           <Route path="/checkout" element={<Checkout />} />
-        </Route>
-        <Route element={<RutaProtegida />}>
           <Route path="/pago-correcto/:id" element={<PagoCorrecto />} />
           <Route path="/pago-error/:id" element={<PagoError />} />
         </Route>

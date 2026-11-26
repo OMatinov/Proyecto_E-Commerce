@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { getAccessToken, getRefreshToken, guardarTokens, limpiarTokens } from './tokenStore';
+import { getAccessToken, getRefreshToken, guardarTokens, limpiarTokens } from './tokenStore.js';
 
 // Instancia única de Axios
 const api = axios.create({
@@ -25,11 +25,7 @@ api.interceptors.request.use(
 // Refresh compartido: si varias peticiones fallan con 401 a la vez, se hace un solo refresh.
 let refrescando = null;
 
-<<<<<<< HEAD
 export function refrescarTokens() {
-=======
-function refrescarTokens() {
->>>>>>> 2daae4278814af8fc303cf0d34463c77d8af70dc
   if (!refrescando) {
     const refreshToken = getRefreshToken();
     if (!refreshToken) return Promise.reject(new Error('Sin refresh token'));
@@ -56,6 +52,14 @@ api.interceptors.response.use(
     const status = error.response?.status;
     const esAuth = original?.url?.includes('/auth/');
 
+    // 403: avisamos a la capa de UI para que redirija según el rol.
+    // No normalizamos ni reemplazamos el error: Checkout lee error.response.status.
+    if (status === 403 && typeof window !== 'undefined') {
+      window.dispatchEvent(new CustomEvent('grwu:sin-permisos', {
+        detail: { url: original?.url }
+      }));
+    }
+
     if (status === 401 && original && !original._reintentado && !esAuth) {
       original._reintentado = true;
       try {
@@ -71,8 +75,4 @@ api.interceptors.response.use(
   }
 );
 
-<<<<<<< HEAD
 export default api;
-=======
-export default api;
->>>>>>> 2daae4278814af8fc303cf0d34463c77d8af70dc

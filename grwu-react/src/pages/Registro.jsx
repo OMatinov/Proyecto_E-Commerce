@@ -10,7 +10,7 @@ import { Link, useNavigate } from "react-router-dom";
 import CampoFormulario from "../components/CampoFormulario.jsx";
 import { useSesion } from "../context/SesionContext.jsx";
 import { REGIONES, comunasDeRegion } from "../data/regiones.js";
-import { aSolicitudUsuario } from "../services/adapters.js";
+import { aSolicitudUsuario } from "../services/adaptadoresUsuario.js";
 import { validarRegistro } from "../utils/formularios.js";
 
 const VALORES_INICIALES = {

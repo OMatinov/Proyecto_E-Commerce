@@ -1,0 +1,11 @@
+# Dependencias y compilados
+node_modules/
+target/
+dist/
+coverage/
+
+# IDE y archivos locales
+.idea/
+*.iml
+.env
+*.log

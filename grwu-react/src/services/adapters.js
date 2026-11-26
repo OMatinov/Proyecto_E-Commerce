@@ -1,11 +1,63 @@
-// adapters.js - Traduce entre el contrato de la API y las formas que usan los componentes.
-// Se aplica en el límite de los servicios/páginas, para no cambiar el carrito entero por un nombre.
-//   Carrito local:  { id, nombre, precio, imagen, qty }
-//   API de boletas: { productoId, cantidad } al enviar; { productoId, nombre, precioUnitario, cantidad, subtotal } al recibir
+// adapters.js - Traducción entre el contrato de ms-boletas y las formas que ya usan las vistas.
+// La API entrega items con `cantidad` y `precioUnitario`; el carrito local y utils/reportes.js
+// usan `qty` y `precio`. La conversión ocurre acá, en el límite del servicio.
 
-import { limpiarRun } from "../utils/validaciones.js";
+const texto = (valor) => (valor == null ? "" : String(valor));
 
-// qty -> cantidad (envío de la compra)
+/**
+ * Normaliza cualquier error de Axios a { mensaje, status, errores }.
+ * No reemplaza el error original en api.js: Checkout (César) lee error.response.status.
+ */
+export function normalizarError(error) {
+  const datos = error?.response?.data || {};
+  return {
+    mensaje: texto(datos.message || error?.message || "Error inesperado"),
+    status: error?.response?.status ?? 0,
+    errores: datos.errores || null
+  };
+}
+
+/** Agrega los alias `precio` y `qty` sin quitar los campos del contrato. */
+export function adaptarItem(item) {
+  if (!item) return item;
+  return {
+    ...item,
+    id: item.productoId ?? item.id,
+    nombre: item.nombre ?? item.nombreProducto ?? "",
+    precio: item.precioUnitario ?? item.precio ?? 0,
+    qty: item.cantidad ?? item.qty ?? 0
+  };
+}
+
+export function adaptarBoleta(boleta) {
+  if (!boleta) return boleta;
+  return {
+    ...boleta,
+    items: (boleta.items || []).map(adaptarItem)
+  };
+}
+
+export function adaptarBoletas(lista) {
+  return (lista || []).map(adaptarBoleta);
+}
+
+/**
+ * Convierte el carrito local a CrearBoletaRequest.
+ * Acepta items con `qty` (carrito) o con `cantidad` (ya adaptados).
+ */
+export function aRequestBoleta({ items = [], ...resto }) {
+  return {
+    ...resto,
+    items: items.map((item) => ({
+      productoId: item.productoId ?? item.id,
+      cantidad: Number(item.cantidad ?? item.qty ?? 1)
+    }))
+  };
+}
+
+// --- Contrato alternativo de ms-boletas (consumido por Checkout/Pago* vinculados a main) ---
+
+// Valores del formulario de boleta -> cuerpo CrearBoletaRequest.
 export function aSolicitudBoleta({ items, valores }) {
   return {
     items: items.map((i) => ({ productoId: i.id, cantidad: i.qty || 1 })),
@@ -26,7 +78,7 @@ export function aSolicitudBoleta({ items, valores }) {
   };
 }
 
-// cantidad -> qty, precioUnitario -> precio (para ResumenOrden / TablaItems)
+// Boleta de ms-boletas -> forma que usan ResumenOrden/TablaItems.
 export function desdeBoleta(boleta) {
   if (!boleta) return null;
   return {
@@ -39,14 +91,4 @@ export function desdeBoleta(boleta) {
       qty: i.cantidad
     }))
   };
-}
-
-// Valores del formulario de usuario -> cuerpo de UsuarioSolicitud.
-// Quita la confirmación de clave y, si la clave viene vacía (edición), no la envía.
-export function aSolicitudUsuario(valores) {
-  const { clave2: _clave2, clave, run, ...resto } = valores;
-  const cuerpo = { ...resto };
-  if (run) cuerpo.run = limpiarRun(run);
-  if (clave) cuerpo.clave = clave;
-  return cuerpo;
 }

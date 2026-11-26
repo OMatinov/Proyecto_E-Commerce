@@ -10,7 +10,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import FormularioUsuario from "../../components/FormularioUsuario.jsx";
 import MensajeVacio from "../../components/MensajeVacio.jsx";
 import { useSesion } from "../../context/SesionContext.jsx";
-import { aSolicitudUsuario } from "../../services/adapters.js";
+import { aSolicitudUsuario } from "../../services/adaptadoresUsuario.js";
 import { normalizarError, repartirError } from "../../services/errores.js";
 import usuariosService from "../../services/usuarios.js";
 import { validarEdicionUsuario } from "../../utils/formularios.js";

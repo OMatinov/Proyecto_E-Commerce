@@ -8,7 +8,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import FormularioUsuario from "../../components/FormularioUsuario.jsx";
-import { aSolicitudUsuario } from "../../services/adapters.js";
+import { aSolicitudUsuario } from "../../services/adaptadoresUsuario.js";
 import { normalizarError, repartirError } from "../../services/errores.js";
 import usuariosService from "../../services/usuarios.js";
 import { validarRegistro } from "../../utils/formularios.js";

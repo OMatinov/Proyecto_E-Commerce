@@ -1,4 +1,0 @@
--------------------------------------------------------------------------------
-Test set: cl.grwu.usuarios.service.UsuarioServiceTest
--------------------------------------------------------------------------------
-Tests run: 24, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 2.237 s -- in cl.grwu.usuarios.service.UsuarioServiceTest

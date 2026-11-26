@@ -1,0 +1,39 @@
+{
+  "properties": [
+    {
+      "name": "jwt.secret",
+      "type": "java.lang.String",
+      "description": "Secreto usado por HS256 para firmar los JWT; minimo de 32 caracteres y debe ser igual en los tres microservicios (env: JWT_SECRET)."
+    },
+    {
+      "name": "jwt.issuer",
+      "type": "java.lang.String",
+      "description": "Emisor del token JWT (claim iss). Valor por defecto: grwu-auth.",
+      "defaultValue": "grwu-auth"
+    },
+    {
+      "name": "pasarela.probabilidad-rechazo",
+      "type": "java.lang.Double",
+      "description": "Probabilidad de rechazo de la pasarela simulada; valor 0-1. Valor por defecto 0.10 (env: PASARELA_PROBABILIDAD_RECHAZO).",
+      "defaultValue": 0.10
+    },
+    {
+      "name": "pasarela.limite-monto",
+      "type": "java.lang.Integer",
+      "description": "Montos en CLP por encima de este valor son rechazados por la pasarela. Valor por defecto 100000 (env: PASARELA_LIMITE_MONTO).",
+      "defaultValue": 100000
+    },
+    {
+      "name": "servicios.catalogo.url",
+      "type": "java.lang.String",
+      "description": "URL base de la API de ms-catalogo usada por las consultas internas de stock. Valor por defecto http://localhost:8082/api/v1 (env: CATALOGO_URL).",
+      "defaultValue": "http://localhost:8082/api/v1"
+    },
+    {
+      "name": "servicios.catalogo.service-key",
+      "type": "java.lang.String",
+      "description": "Secreto compartido para el endpoint interno de ms-catalogo. Se lee del entorno (env: SERVICE_KEY); sin env configurado, queda vacio.",
+      "defaultValue": ""
+    }
+  ]
+}

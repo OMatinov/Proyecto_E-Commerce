@@ -1,4 +1,5 @@
-import { aSolicitudBoleta, desdeBoleta, aSolicitudUsuario } from "../services/adapters.js";
+import { aSolicitudBoleta, desdeBoleta } from "../services/adapters.js";
+import { aSolicitudUsuario } from "../services/adaptadoresUsuario.js";
 
 const valores = {
   nombre: " Ana ", apellidos: " Pérez ", correo: " ana@gmail.com ", calle: " Los Robles 12 ", departamento: "",

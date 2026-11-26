@@ -1,9 +1,5 @@
 // Checkout.jsx - Vista "Carrito de compra / datos de entrega" (paso de pago).
-<<<<<<< HEAD
 // Autor: César (conectado a ms-boletas por Katerine; manejo de sesión y errores por César)
-=======
-// Autor: César (modificado por Katerine para conectar con ms-boletas)
->>>>>>> 2daae4278814af8fc303cf0d34463c77d8af70dc
 //
 // Flujo al presionar "Pagar ahora":
 //   1. validarCheckout()  -> errores por campo
@@ -26,14 +22,9 @@ import { COSTO_ENVIO_PREMIUM, formatearCLP } from "../data/carritoData.js";
 import { METODOS_PAGO } from "../services/pago.js";
 import { validarCheckout } from "../utils/formularios.js";
 
-<<<<<<< HEAD
 import { aSolicitudBoleta } from "../services/adapters.js";
 import boletasService from "../services/boletas.js";
 import { normalizarError } from "../services/errores.js";
-=======
-// IMPORTAMOS AXIOS
-import api from "../services/api.js";
->>>>>>> 2daae4278814af8fc303cf0d34463c77d8af70dc
 
 function valoresIniciales(usuario) {
   return {
@@ -62,10 +53,7 @@ export default function Checkout() {
   const [valores, setValores] = useState(() => valoresIniciales(usuario));
   const [errores, setErrores] = useState({});
   const [cargando, setCargando] = useState(false); // Para deshabilitar el botón mientras carga
-<<<<<<< HEAD
   const [errorEnvio, setErrorEnvio] = useState("");
-=======
->>>>>>> 2daae4278814af8fc303cf0d34463c77d8af70dc
 
   if (items.length === 0) {
     return (
@@ -82,17 +70,12 @@ export default function Checkout() {
     else setValores({ ...valores, [name]: value });
   };
 
-<<<<<<< HEAD
-=======
-  // AQUÍ ESTÁ LA MAGIA: Ahora es una función asíncrona que llama a la API
->>>>>>> 2daae4278814af8fc303cf0d34463c77d8af70dc
   const manejarEnvio = async (e) => {
     e.preventDefault();
     const erroresNuevos = validarCheckout(valores);
     setErrores(erroresNuevos);
     if (Object.keys(erroresNuevos).length > 0) return;
 
-<<<<<<< HEAD
     setErrorEnvio("");
     setCargando(true);
 
@@ -113,61 +96,6 @@ export default function Checkout() {
       if (status === 401) setErrorEnvio("Tu sesión expiró. Inicia sesión de nuevo para pagar.");
       else if (status === 403) setErrorEnvio("Tu cuenta no puede realizar compras: solo los clientes pueden pagar.");
       else setErrorEnvio(mensaje); // 409 stock agotado, 404 producto, 503 catálogo caído, red, etc.
-=======
-    // Si no hay usuario logueado, no dejamos comprar (Regla de negocio EV3)
-    if (!usuario) {
-      alert("Debes iniciar sesión para poder pagar.");
-      navigate("/login");
-      return;
-    }
-
-    setCargando(true);
-
-    try {
-      // 1. Armamos el body exactamente como lo espera tu DTO (CrearBoletaRequest)
-      const requestBody = {
-        items: items.map(item => ({
-          productoId: item.id,
-          cantidad: item.qty || 1
-        })),
-        despacho: valores.despacho,
-        metodoPago: valores.metodoPago,
-        cliente: {
-          nombre: valores.nombre.trim(),
-          apellidos: valores.apellidos.trim(),
-          correo: valores.correo.trim()
-        },
-        direccion: {
-          calle: valores.calle.trim(),
-          departamento: valores.departamento.trim(),
-          indicaciones: valores.indicaciones.trim(),
-          region: valores.region,
-          comuna: valores.comuna
-        }
-      };
-
-      // 2. Llamamos a ms-boletas (el proxy de Vite lo redirige al puerto 8083)
-      const respuesta = await api.post('/boletas', requestBody);
-      const boleta = respuesta.data;
-
-      // 3. Evaluamos la respuesta del backend
-      if (boleta.estado === "pagada") {
-        vaciar(); // Vaciamos el carrito
-        navigate(`/pago-correcto/${boleta.id}`);
-      } else {
-        navigate(`/pago-error/${boleta.id}`, { state: { motivo: boleta.motivoRechazo } });
-      }
-
-    } catch (error) {
-      console.error("Error al crear la boleta:", error);
-      // Aquí atrapamos errores 401 (sin token), 403 (sin permisos) o 500 (error del server)
-      if (error.response && error.response.status === 401) {
-        alert("Tu sesión ha expirado. Por favor, inicia sesión de nuevo.");
-        navigate("/login");
-      } else {
-        alert("Hubo un problema al procesar tu compra. Intenta nuevamente.");
-      }
->>>>>>> 2daae4278814af8fc303cf0d34463c77d8af70dc
     } finally {
       setCargando(false);
     }

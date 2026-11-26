@@ -5,13 +5,13 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>4.0.10</version> 
+		<version>3.5.16</version> 
 		<relativePath/> 
 	</parent>
-	<groupId>cl.grwru</groupId>
-	<artifactId>ms_boletas</artifactId>
+	<groupId>cl.grwu</groupId>
+	<artifactId>ms-boletas</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>ms_boletas</name>
+	<name>ms-boletas</name>
 	<description>Microservicio de Boletas</description>
 	
 	<properties>
@@ -30,7 +30,7 @@
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-webmvc</artifactId>
+			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>com.mysql</groupId>
@@ -72,7 +72,7 @@
 		<dependency>
 			<groupId>org.springdoc</groupId>
 			<artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
-			<version>3.0.3</version>
+			<version>2.10.1</version>
 		</dependency>
 
 		<!-- Tests (JUnit 5 + Mockito) -->
@@ -98,16 +98,15 @@
 	<build>
 		<plugins>
 			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
-					<annotationProcessorPaths>
-						<path>
+					<excludes>
+						<exclude>
 							<groupId>org.projectlombok</groupId>
 							<artifactId>lombok</artifactId>
-							<version>${lombok.version}</version>
-						</path>
-					</annotationProcessorPaths>
+						</exclude>
+					</excludes>
 				</configuration>
 			</plugin>
 		</plugins>
